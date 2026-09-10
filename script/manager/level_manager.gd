@@ -37,8 +37,6 @@ func get_level_data_by_id(levelId: int) -> LevelData:
 	var levelToReturn: LevelData = null
 	
 	for level in levels:
-		print(level)
-		print(level.levelId)
 		if level.levelId == levelId:
 			levelToReturn = level
 	

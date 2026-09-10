@@ -5,7 +5,7 @@ extends Node
 @export var startPosition: Marker2D = null
 
 var levelData: LevelData
-#var player: Player
+var player: Player
 var currentAreaId: int
 
 func _ready():
@@ -26,12 +26,12 @@ func _ready():
 func set_current_area(areaId: int):
 	currentAreaId = areaId
 
-func _process(_delta):
+#func _process(_delta):
 	#if Input.is_action_just_pressed("play_song"):
 		#MusicManager.play_song_from_list()
 	#
-	if Input.is_action_just_pressed("quit"):
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+	#if Input.is_action_just_pressed("quit"):
+		#get_tree().change_scene_to_file("res://scenes/main.tscn")
 		#MusicManager.stop()
 
 #func _on_player_died():

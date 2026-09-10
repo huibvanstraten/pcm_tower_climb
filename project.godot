@@ -19,7 +19,8 @@ config/icon="res://icon.svg"
 
 EventManager="*uid://cbrhrdt0o5tid"
 LevelManager="*uid://dkonjo2tb0itj"
-SfxManager="uid://dufcq48oqk1l8"
+SfxManager="*uid://dufcq48oqk1l8"
+MusicManager="*uid://dgdcppubhrp3b"
 
 [display]
 
