@@ -1,6 +1,7 @@
 class_name Area
 extends Node2D
 
+#TODO: improve by removing path hardcoding
 @onready var background: ParallaxBackground = $"../../Ruined_City"
 
 @export var areaId: int

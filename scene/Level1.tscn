@@ -11,6 +11,9 @@ size = Vector2(227, 9353)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ni43k"]
 size = Vector2(2848.5, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dr4yn"]
+size = Vector2(2365.5, 20)
+
 [node name="Level1" type="Node2D" unique_id=1036665347]
 script = ExtResource("1_7tnty")
 levelId = 1
@@ -54,7 +57,16 @@ shape = SubResource("RectangleShape2D_ni43k")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="Ruined_City" unique_id=440749067]
 
-[node name="Sprite2D" type="Sprite2D" parent="Ruined_City/ParallaxLayer" unique_id=338125472]
-position = Vector2(606.5, 351.5)
-scale = Vector2(2.3395834, 2.3444445)
+[node name="TextureRect" type="TextureRect" parent="Ruined_City/ParallaxLayer" unique_id=1016598393]
+offset_right = 40.0
+offset_bottom = 40.0
 texture = ExtResource("4_oj781")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Ruined_City/ParallaxLayer/TextureRect" unique_id=1399553679]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ruined_City/ParallaxLayer/TextureRect/StaticBody2D" unique_id=927497898]
+position = Vector2(1194.25, 1869)
+shape = SubResource("RectangleShape2D_dr4yn")
+debug_color = Color(0.674176, 0.40751508, 0.7823852, 0.41960785)

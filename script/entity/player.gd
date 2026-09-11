@@ -8,7 +8,7 @@ func _ready():
 
 func _physics_process(delta):
 	#var inputAxis = Input.get_axis("move_left", "move_right")
-	var currentState = stateMachine.currentState
+	#var currentState = stateMachine.currentState
 	bodyCollisionShape.rotation_degrees = physicsComponent.collisionRotation
 	
 	
