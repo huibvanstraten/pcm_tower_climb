@@ -1,14 +1,25 @@
 class_name Area
 extends Node2D
 
-@onready var background: ParallaxBackground = $"../../BackgroundCity"
+@onready var background: ParallaxBackground = $"../../Ruined_City"
 
 @export var areaId: int
 
-@onready var left_boundary: StaticBody2D = $AreaBoundaries/Left
-@onready var right_boundary: StaticBody2D = $AreaBoundaries/Right
-@onready var top_boundary: StaticBody2D = $AreaBoundaries/Top
-@onready var bottom_boundary: StaticBody2D = $AreaBoundaries/Bottom
+var left_boundary: Node2D:
+	get:
+		return $AreaBoundaries/Left
+
+var right_boundary: Node2D:
+	get:
+		return $AreaBoundaries/Right
+
+var top_boundary: Node2D:
+	get:
+		return $AreaBoundaries/Top
+
+var bottom_boundary: Node2D:
+	get:
+		return $AreaBoundaries/Bottom
 
 @export var areaBackgroundFileName: String
 @export var scaleY: float

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bdu8cynu5p5ca" path="res://script/level/level_1.gd" id="1_7tnty"]
 [ext_resource type="Script" uid="uid://r0xgpm08oh15" path="res://script/level/area.gd" id="2_pu4bb"]
 [ext_resource type="PackedScene" uid="uid://drd68b3s75ss2" path="res://scene/player.tscn" id="2_vjs2m"]
+[ext_resource type="Texture2D" uid="uid://d38p2net68ij7" path="res://asset/background/Ruined city.png" id="4_oj781"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
 size = Vector2(227, 9353)
@@ -48,3 +49,12 @@ shape = SubResource("RectangleShape2D_ni43k")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Area/AreaBoundaries/Bottom" unique_id=1594912929]
 position = Vector2(1179.75, 2046)
 shape = SubResource("RectangleShape2D_ni43k")
+
+[node name="Ruined_City" type="ParallaxBackground" parent="." unique_id=434831725]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Ruined_City" unique_id=440749067]
+
+[node name="Sprite2D" type="Sprite2D" parent="Ruined_City/ParallaxLayer" unique_id=338125472]
+position = Vector2(606.5, 351.5)
+scale = Vector2(2.3395834, 2.3444445)
+texture = ExtResource("4_oj781")
