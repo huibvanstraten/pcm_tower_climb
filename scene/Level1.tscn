@@ -5,18 +5,25 @@
 [ext_resource type="PackedScene" uid="uid://drd68b3s75ss2" path="res://scene/player.tscn" id="2_vjs2m"]
 [ext_resource type="Texture2D" uid="uid://d38p2net68ij7" path="res://asset/background/Ruined city.png" id="4_oj781"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dr4yn"]
+size = Vector2(2365.5, 20)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
 size = Vector2(227, 9353)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ni43k"]
 size = Vector2(2848.5, 20)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dr4yn"]
-size = Vector2(2365.5, 20)
-
 [node name="Level1" type="Node2D" unique_id=1036665347]
 script = ExtResource("1_7tnty")
 levelId = 1
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1399553679]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=927497898]
+position = Vector2(1194.25, 1869)
+shape = SubResource("RectangleShape2D_dr4yn")
+debug_color = Color(0.674176, 0.40751508, 0.7823852, 0.41960785)
 
 [node name="Player" parent="." unique_id=1680716946 instance=ExtResource("2_vjs2m")]
 position = Vector2(621, 365)
@@ -57,16 +64,5 @@ shape = SubResource("RectangleShape2D_ni43k")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="Ruined_City" unique_id=440749067]
 
-[node name="TextureRect" type="TextureRect" parent="Ruined_City/ParallaxLayer" unique_id=1016598393]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="TextureRect" type="Sprite2D" parent="Ruined_City/ParallaxLayer" unique_id=1520590463]
 texture = ExtResource("4_oj781")
-expand_mode = 1
-stretch_mode = 6
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Ruined_City/ParallaxLayer/TextureRect" unique_id=1399553679]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ruined_City/ParallaxLayer/TextureRect/StaticBody2D" unique_id=927497898]
-position = Vector2(1194.25, 1869)
-shape = SubResource("RectangleShape2D_dr4yn")
-debug_color = Color(0.674176, 0.40751508, 0.7823852, 0.41960785)

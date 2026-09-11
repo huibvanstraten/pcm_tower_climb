@@ -71,10 +71,11 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4toet"]
 
-[node name="Player" type="CharacterBody2D" unique_id=1680716946 node_paths=PackedStringArray("bodyCollisionShape", "physicsComponent")]
+[node name="Player" type="CharacterBody2D" unique_id=1680716946 node_paths=PackedStringArray("bodyCollisionShape", "physicsComponent", "animationComponent")]
 script = ExtResource("1_ct4mp")
 bodyCollisionShape = NodePath("CollisionShape2D")
 physicsComponent = NodePath("components/physics")
+animationComponent = NodePath("AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2123559278]
 position = Vector2(0, 1)
