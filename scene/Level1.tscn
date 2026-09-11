@@ -4,19 +4,18 @@
 [ext_resource type="Script" uid="uid://r0xgpm08oh15" path="res://script/level/area.gd" id="2_pu4bb"]
 [ext_resource type="PackedScene" uid="uid://drd68b3s75ss2" path="res://scene/player.tscn" id="2_vjs2m"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_ni43k"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
+size = Vector2(227, 9353)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_4toet"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_maa0i"]
-size = Vector2(306, 84)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ni43k"]
+size = Vector2(2848.5, 20)
 
 [node name="Level1" type="Node2D" unique_id=1036665347]
 script = ExtResource("1_7tnty")
 levelId = 1
 
 [node name="Player" parent="." unique_id=1680716946 instance=ExtResource("2_vjs2m")]
-position = Vector2(627, 356)
+position = Vector2(621, 365)
 
 [node name="Areas" type="Node2D" parent="." unique_id=42172917]
 
@@ -24,21 +23,28 @@ position = Vector2(627, 356)
 script = ExtResource("2_pu4bb")
 areaId = 1
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Areas/Area" unique_id=1295897023]
-modulate = Color(1, 0.45490196, 1, 1)
-self_modulate = Color(1, 0.3764706, 1, 1)
-material = SubResource("CanvasItemMaterial_ni43k")
-physics_material_override = SubResource("PhysicsMaterial_4toet")
+[node name="AreaBoundaries" type="Node2D" parent="Areas/Area" unique_id=391874351]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Area/StaticBody2D" unique_id=725446229]
-position = Vector2(612, 464)
-shape = SubResource("RectangleShape2D_maa0i")
+[node name="Left" type="Area2D" parent="Areas/Area/AreaBoundaries" unique_id=1264169827]
 
-[node name="Polygon2D" type="Polygon2D" parent="Areas/Area/StaticBody2D" unique_id=27950798]
-position = Vector2(515, 282)
-color = Color(0.13465348, 0.43203425, 0.49750596, 1)
-offset = Vector2(10, 10)
-polygon = PackedVector2Array(-79, 125, 268, 135, 277, 212, -101, 209, -74, 137)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Area/AreaBoundaries/Left" unique_id=1634313728]
+position = Vector2(-126.5, -2647.5)
+shape = SubResource("RectangleShape2D_4toet")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=2107289189]
-position = Vector2(573, 327)
+[node name="Right" type="Area2D" parent="Areas/Area/AreaBoundaries" unique_id=519250650]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Area/AreaBoundaries/Right" unique_id=668807336]
+position = Vector2(2494, -2665)
+shape = SubResource("RectangleShape2D_4toet")
+
+[node name="Top" type="Area2D" parent="Areas/Area/AreaBoundaries" unique_id=42409071]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Area/AreaBoundaries/Top" unique_id=1132962367]
+position = Vector2(1189, -7343)
+shape = SubResource("RectangleShape2D_ni43k")
+
+[node name="Bottom" type="Area2D" parent="Areas/Area/AreaBoundaries" unique_id=933676463]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Area/AreaBoundaries/Bottom" unique_id=1594912929]
+position = Vector2(1179.75, 2046)
+shape = SubResource("RectangleShape2D_ni43k")

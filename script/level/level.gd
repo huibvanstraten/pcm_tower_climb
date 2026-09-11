@@ -2,17 +2,26 @@ class_name Level
 extends Node
 
 @export var levelId: int
+@export var startAreaId: int = 1
 @export var startPosition: Marker2D = null
 
 var levelData: LevelData
 var player: Player
 var currentAreaId: int
 
+func _enter_tree():
+	currentAreaId = startAreaId
+
 func _ready():
-	#InputMapManager.load_input_mapping("res://input_map/input_config_8bitdo_pro2.json")
-	
 	levelData = LevelManager.get_level_data_by_id(levelId)
-	set_current_area(1)
+
+func set_current_area(areaId: int):
+	currentAreaId = areaId
+#func _ready():
+	##InputMapManager.load_input_mapping("res://input_map/input_config_8bitdo_pro2.json")
+	#
+	#levelData = LevelManager.get_level_data_by_id(levelId)
+	#set_current_area(1)
 	
 	#EventManager.connect("player_died", _on_player_died)
 	#EventManager.connect("game_paused", _on_game_paused)
@@ -22,9 +31,6 @@ func _ready():
 	
 	#MusicManager.stop()
 	#MusicManager._get_all_songs()
-
-func set_current_area(areaId: int):
-	currentAreaId = areaId
 
 #func _process(_delta):
 	#if Input.is_action_just_pressed("play_song"):

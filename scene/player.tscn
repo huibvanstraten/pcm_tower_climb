@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://drd68b3s75ss2"]
 
 [ext_resource type="Texture2D" uid="uid://cnbgbwvqaktsd" path="res://asset/slime.png" id="1_maa0i"]
+[ext_resource type="Script" uid="uid://j1xdoltackmu" path="res://scene/camera_2d.gd" id="2_fvtld"]
+[ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ct4mp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mbv8e"]
 atlas = ExtResource("1_maa0i")
@@ -80,3 +82,11 @@ frame_progress = 0.55825335
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2119576815]
 position = Vector2(-2, 16)
 shape = SubResource("CircleShape2D_4toet")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1905789795]
+script = ExtResource("2_fvtld")
+
+[node name="components" type="Node2D" parent="." unique_id=2140004751]
+
+[node name="physics" type="Node2D" parent="components" unique_id=1726400795]
+script = ExtResource("3_ct4mp")

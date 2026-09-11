@@ -58,12 +58,3 @@ func get_current_area() -> Area:
 			currentArea = i as Area
 	
 	return currentArea
-
-func get_level_boundaries() -> Array[StaticBody2D]:
-	var area = get_current_area()
-	
-	var boundaries: Array[StaticBody2D] 
-	for i in area.areaBoundaries.get_children():
-		boundaries.append(i as StaticBody2D)
-		
-	return boundaries
