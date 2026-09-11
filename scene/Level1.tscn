@@ -9,7 +9,7 @@
 size = Vector2(2365.5, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
-size = Vector2(227, 9353)
+size = Vector2(278.5, 9353)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ni43k"]
 size = Vector2(2848.5, 20)
@@ -37,27 +37,31 @@ areaId = 1
 [node name="AreaBoundaries" type="Node2D" parent="Areas/Area" unique_id=391874351]
 
 [node name="Left" type="Area2D" parent="Areas/Area/AreaBoundaries" unique_id=1264169827]
+position = Vector2(-192, -2546)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Area/AreaBoundaries/Left" unique_id=1634313728]
-position = Vector2(-126.5, -2647.5)
+position = Vector2(-24, -67)
 shape = SubResource("RectangleShape2D_4toet")
 
 [node name="Right" type="Area2D" parent="Areas/Area/AreaBoundaries" unique_id=519250650]
+position = Vector2(2805, -2601)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Area/AreaBoundaries/Right" unique_id=668807336]
-position = Vector2(2494, -2665)
+position = Vector2(-32, -8)
 shape = SubResource("RectangleShape2D_4toet")
 
 [node name="Top" type="Area2D" parent="Areas/Area/AreaBoundaries" unique_id=42409071]
+position = Vector2(1329, -7332)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Area/AreaBoundaries/Top" unique_id=1132962367]
-position = Vector2(1189, -7343)
+position = Vector2(14, -36)
 shape = SubResource("RectangleShape2D_ni43k")
 
 [node name="Bottom" type="Area2D" parent="Areas/Area/AreaBoundaries" unique_id=933676463]
+position = Vector2(1354, 2044)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Areas/Area/AreaBoundaries/Bottom" unique_id=1594912929]
-position = Vector2(1179.75, 2046)
+position = Vector2(5, 2)
 shape = SubResource("RectangleShape2D_ni43k")
 
 [node name="Ruined_City" type="ParallaxBackground" parent="." unique_id=434831725]
@@ -65,4 +69,6 @@ shape = SubResource("RectangleShape2D_ni43k")
 [node name="ParallaxLayer" type="ParallaxLayer" parent="Ruined_City" unique_id=440749067]
 
 [node name="TextureRect" type="Sprite2D" parent="Ruined_City/ParallaxLayer" unique_id=1520590463]
+position = Vector2(1285.5, 1056)
+scale = Vector2(6.89375, 7.577778)
 texture = ExtResource("4_oj781")

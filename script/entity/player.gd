@@ -5,6 +5,11 @@ var playerFreeze: bool = false
 
 func _ready():
 	EventManager.connect("freeze_player", freeze)
+	print("PLAYER READY")
+	print("player global position: ", global_position)
+	print("camera global position: ", $Camera2D.global_position)
+	print("camera enabled: ", $Camera2D.enabled)
+	print("physics component: ", physicsComponent)
 
 func _physics_process(delta):
 	#var inputAxis = Input.get_axis("move_left", "move_right")
