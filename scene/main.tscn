@@ -15,3 +15,5 @@ script = ExtResource("1_itxqv")
 availableLevels = Array[ExtResource("2_v0l8b")]([SubResource("Resource_pu4bb")])
 
 [node name="LevelContainer" type="Node2D" parent="." unique_id=1837073497]
+
+[node name="PlayerContainer" type="Node2D" parent="." unique_id=872466284]

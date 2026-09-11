@@ -17,32 +17,22 @@ func _ready():
 
 func set_current_area(areaId: int):
 	currentAreaId = areaId
-#func _ready():
-	##InputMapManager.load_input_mapping("res://input_map/input_config_8bitdo_pro2.json")
-	#
-	#levelData = LevelManager.get_level_data_by_id(levelId)
-	#set_current_area(1)
 	
-	#EventManager.connect("player_died", _on_player_died)
-	#EventManager.connect("game_paused", _on_game_paused)
-	#EventManager.transition_to_area.connect(set_current_area)
-	
-	#player = PlayerManager.spawn_player(startPosition.global_position)
-	
-	#MusicManager.stop()
-	#MusicManager._get_all_songs()
+func get_player_start_position(player_id: int) -> Vector2:
+	var marker_name := "Start_%s" % player_id
 
-#func _process(_delta):
-	#if Input.is_action_just_pressed("play_song"):
-		#MusicManager.play_song_from_list()
-	#
-	#if Input.is_action_just_pressed("quit"):
-		#get_tree().change_scene_to_file("res://scenes/main.tscn")
-		#MusicManager.stop()
+	var marker := get_node_or_null(
+		"SpawnPoints/%s" % marker_name
+	) as Marker2D
 
-#func _on_player_died():
-	##PlayerManager.spawn_player(startPosition.global_position)
-	##EventManager.transition_to_area.emit(1)
+	if marker == null:
+		push_error("No spawn position found for player %s" % player_id)
+		return Vector2.ZERO
+
+	return marker.global_position
+
+func _on_player_died(player: Player):
+	print("Player %s died" % player.player_id)
 
 func _on_game_paused(isPaused: bool):
 	get_tree().paused = isPaused

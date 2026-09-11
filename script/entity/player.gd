@@ -1,6 +1,7 @@
 class_name Player
 extends Entity
 
+var player_id: int
 var playerFreeze: bool = false
 
 func _ready():

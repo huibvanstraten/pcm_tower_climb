@@ -8,9 +8,10 @@ signal freeze_player(freeze: bool)
 signal game_paused(isPaused: bool)
 
 signal spawn_player(player: Player)
+signal player_died(player: Player)
+
 
 signal init_health_bar(entity: CharacterBody2D, startHealth: int)
-signal player_died
 signal entity_hit(entity: CharacterBody2D, newHealth: int)
 signal health_changed(entity: CharacterBody2D, newHealth: int)
 signal health_depleted(entity: CharacterBody2D)
