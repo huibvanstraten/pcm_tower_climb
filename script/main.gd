@@ -10,33 +10,19 @@ extends Node
 
 
 func _input(event: InputEvent) -> void:
-	var discovered_device := PlayerInputDevice.from_event(event)
+	var device := PlayerInputDevice.from_event(event)
 
-	if discovered_device == null:
+	if device == null:
 		return
 
-	for child in input_session_container.get_children():
-		var session := child as PlayerInputSession
+	if is_device_assigned(device):
+		return
 
-		if session == null:
-			continue
-
-		if session.input_device == null:
-			continue
-
-	
 	if not event.is_action_pressed("jump"):
 		return
 
-	var available_session := get_available_input_session()
-
-	if available_session == null:
-		print("JOIN REQUEST REJECTED: no available input session")
-		return
-
-	available_session.assign_device(discovered_device)
+	join_device(device)
 	
-	activate_session_player(available_session)
 
 func _ready() -> void:
 	
@@ -58,37 +44,8 @@ func _ready() -> void:
 func load_level(level_id: int) -> void:
 	LevelManager.load_level(level_id)
 
-	var level = LevelManager.get_current_level()
+	position_joined_players()
 
-
-func ensure_player(
-	player_id: int,
-	position: Vector2
-) -> void:
-	var player := SpawnManager.get_player(player_id)
-
-	if player == null:
-		player = SpawnManager.spawn_player(
-			player_id,
-			position
-		)
-
-		get_input_session(player_id).set_control_target(player)
-		
-	else:
-		SpawnManager.position_player(
-			player_id,
-			position
-		)
-
-
-func get_input_session(
-	player_id: int
-) -> PlayerInputSession:
-	return input_session_container.get_node(
-		"PlayerInputSession%d" % player_id
-	) as PlayerInputSession
-	
 
 func get_available_input_session() -> PlayerInputSession:
 	for child in input_session_container.get_children():
@@ -97,7 +54,7 @@ func get_available_input_session() -> PlayerInputSession:
 		if session == null:
 			continue
 
-		if session.input_device == null:
+		if not session.is_joined():
 			return session
 
 	return null
@@ -105,11 +62,76 @@ func get_available_input_session() -> PlayerInputSession:
 	
 func activate_session_player(session: PlayerInputSession) -> void:
 	var level = LevelManager.get_current_level()
+
 	var spawn_position: Vector2 = level.get_player_start_position(
 		session.player_slot
 	)
 
-	ensure_player(
-		session.player_slot,
-		spawn_position
-	)
+	var player := SpawnManager.get_player(session.player_slot)
+
+	if player == null:
+		player = SpawnManager.spawn_player(
+			session.player_slot,
+			spawn_position
+		)
+	else:
+		SpawnManager.position_player(
+			session.player_slot,
+			spawn_position
+		)
+
+	session.set_control_target(player)
+	
+	
+func is_device_assigned(device: PlayerInputDevice) -> bool:
+	for child in input_session_container.get_children():
+		var session := child as PlayerInputSession
+
+		if session == null:
+			continue
+
+		if not session.is_joined():
+			continue
+
+		if session.input_device.matches(device):
+			return true
+
+	return false
+	
+	
+func join_device(device: PlayerInputDevice) -> void:
+	var session := get_available_input_session()
+
+	if session == null:
+		print("JOIN REQUEST REJECTED: no available input session")
+		return
+
+	session.assign_device(device)
+	activate_session_player(session)
+	
+	
+func position_joined_players() -> void:
+	var level = LevelManager.get_current_level()
+
+	for child in input_session_container.get_children():
+		var session := child as PlayerInputSession
+
+		if session == null:
+			continue
+
+		if session.input_device == null:
+			continue
+
+		var player := SpawnManager.get_player(session.player_slot)
+
+		if player == null:
+			continue
+
+		var spawn_position: Vector2 = level.get_player_start_position(
+			session.player_slot
+		)
+
+		SpawnManager.position_player(
+			session.player_slot,
+			spawn_position
+		)
