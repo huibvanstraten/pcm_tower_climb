@@ -9,6 +9,57 @@ extends Node
 @onready var input_session_container: Node = $PlayerInputSessionContainer
 
 
+func _input(event: InputEvent) -> void:
+	var discovered_device := PlayerInputDevice.from_event(event)
+
+	if discovered_device == null:
+		return
+
+	for child in input_session_container.get_children():
+		var session := child as PlayerInputSession
+
+		if session == null:
+			continue
+
+		if session.input_device == null:
+			continue
+
+		if session.input_device.matches(discovered_device):
+			print(
+				"DEVICE ALREADY ASSIGNED: ",
+				PlayerInputDevice.Type.keys()[discovered_device.type],
+				" ",
+				discovered_device.device_id
+			)
+			return
+
+	print(
+		"UNASSIGNED DEVICE: ",
+		PlayerInputDevice.Type.keys()[discovered_device.type],
+		" ",
+		discovered_device.device_id
+	)
+	
+	if not event.is_action_pressed("jump"):
+		return
+
+	var available_session := get_available_input_session()
+
+	if available_session == null:
+		print("JOIN REQUEST REJECTED: no available input session")
+		return
+
+	available_session.assign_device(discovered_device)
+
+	print(
+		"DEVICE JOINED: ",
+		PlayerInputDevice.Type.keys()[discovered_device.type],
+		" ",
+		discovered_device.device_id,
+		" -> ",
+		available_session.name
+	)
+
 func _ready() -> void:
 	
 	EventManager.connect("level", load_level)
@@ -17,19 +68,6 @@ func _ready() -> void:
 	LevelManager.levels = availableLevels
 
 	SpawnManager.player_container = player_container
-	
-	get_input_session(1).assign_device(
-		PlayerInputDevice.new(
-			PlayerInputDevice.Type.KEYBOARD
-		)
-	)
-
-	get_input_session(2).assign_device(
-		PlayerInputDevice.new(
-			PlayerInputDevice.Type.JOYPAD,
-			0
-		)
-	)
 
 	MusicManager.stream = load(
 		"res://asset/audio/music/Bzzt bzzt mf 3 full.wav"
@@ -76,3 +114,16 @@ func get_input_session(
 	return input_session_container.get_node(
 		"PlayerInputSession%d" % player_id
 	) as PlayerInputSession
+	
+
+func get_available_input_session() -> PlayerInputSession:
+	for child in input_session_container.get_children():
+		var session := child as PlayerInputSession
+
+		if session == null:
+			continue
+
+		if session.input_device == null:
+			return session
+
+	return null
