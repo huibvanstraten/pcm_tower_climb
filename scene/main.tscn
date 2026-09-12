@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bir72lhl7ctyk" path="res://script/main.gd" id="1_itxqv"]
 [ext_resource type="Script" uid="uid://ys0ho1wihei4" path="res://script/level/level_data.gd" id="2_v0l8b"]
+[ext_resource type="Script" uid="uid://drtmci2fdibgf" path="res://script/input/controller_input_source.gd" id="3_0ha60"]
 [ext_resource type="Script" uid="uid://puiu4xs3dbdy" path="res://script/input/player_input_session.gd" id="3_brvut"]
-[ext_resource type="Script" uid="uid://coi2j8ybddscm" path="res://script/input/player_input_source.gd" id="4_0ha60"]
-[ext_resource type="Script" uid="uid://badv6wohslixx" path="res://script/input/debug_input_source.gd" id="4_4j5ol"]
 
 [sub_resource type="Resource" id="Resource_pu4bb"]
 script = ExtResource("2_v0l8b")
@@ -27,10 +26,18 @@ availableLevels = Array[ExtResource("2_v0l8b")]([SubResource("Resource_pu4bb")])
 script = ExtResource("3_brvut")
 
 [node name="InputSource" type="Node2D" parent="PlayerInputSessionContainer/PlayerInputSession1" unique_id=1837898211]
-script = ExtResource("4_4j5ol")
+script = ExtResource("3_0ha60")
+move_left_action = &"move_left"
+move_right_action = &"move_right"
+jump_action = &"jump"
+interact_action = &"interact"
 
 [node name="PlayerInputSession2" type="Node2D" parent="PlayerInputSessionContainer" unique_id=321568490]
 script = ExtResource("3_brvut")
 
 [node name="InputSource" type="Node2D" parent="PlayerInputSessionContainer/PlayerInputSession2" unique_id=213174047]
-script = ExtResource("4_0ha60")
+script = ExtResource("3_0ha60")
+move_left_action = &"move_left"
+move_right_action = &"move_right"
+jump_action = &"jump"
+interact_action = &"interact"

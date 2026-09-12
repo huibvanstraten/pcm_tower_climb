@@ -10,12 +10,26 @@ extends Node
 
 
 func _ready() -> void:
+	
 	EventManager.connect("level", load_level)
 
 	LevelManager.mainScene = level_container
 	LevelManager.levels = availableLevels
 
 	SpawnManager.player_container = player_container
+	
+	get_input_session(1).assign_device(
+		PlayerInputDevice.new(
+			PlayerInputDevice.Type.KEYBOARD
+		)
+	)
+
+	get_input_session(2).assign_device(
+		PlayerInputDevice.new(
+			PlayerInputDevice.Type.JOYPAD,
+			0
+		)
+	)
 
 	MusicManager.stream = load(
 		"res://asset/audio/music/Bzzt bzzt mf 3 full.wav"

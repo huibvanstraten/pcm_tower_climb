@@ -17,6 +17,7 @@ func handle_command(
 	delta: float,
 	command: PlayerCommand
 ) -> void:
+
 	state_machine.physics_update(delta, command)
 
 func _physics_process(delta: float) -> void:
