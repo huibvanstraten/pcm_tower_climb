@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cnbgbwvqaktsd" path="res://asset/slime.png" id="1_maa0i"]
 [ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ct4mp"]
 [ext_resource type="Script" uid="uid://wcry361dwr8a" path="res://script/player_camera.gd" id="3_s4jxa"]
+[ext_resource type="Script" uid="uid://drtmci2fdibgf" path="res://script/input/controller_input_source.gd" id="5_s4jxa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mbv8e"]
 atlas = ExtResource("1_maa0i")
@@ -74,7 +75,7 @@ animations = [{
 [node name="Player" type="CharacterBody2D" unique_id=1680716946 node_paths=PackedStringArray("bodyCollisionShape", "physicsComponent", "animationComponent")]
 script = ExtResource("1_ct4mp")
 bodyCollisionShape = NodePath("CollisionShape2D")
-physicsComponent = NodePath("components/physics")
+physicsComponent = NodePath("Components/Physics")
 animationComponent = NodePath("AnimatedSprite2D")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2123559278]
@@ -91,7 +92,10 @@ shape = SubResource("CircleShape2D_4toet")
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1905789795]
 script = ExtResource("3_s4jxa")
 
-[node name="components" type="Node2D" parent="." unique_id=2140004751]
+[node name="Components" type="Node2D" parent="." unique_id=2140004751]
 
-[node name="physics" type="Node2D" parent="components" unique_id=1726400795]
+[node name="Physics" type="Node2D" parent="Components" unique_id=1726400795]
 script = ExtResource("3_ct4mp")
+
+[node name="ControllerInputSource" type="Node2D" parent="." unique_id=1514953828]
+script = ExtResource("5_s4jxa")
