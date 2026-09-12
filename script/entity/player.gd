@@ -1,7 +1,6 @@
 class_name Player
 extends Entity
 
-@onready var input_source: PlayerInputSource = $Input
 @onready var jump_component: JumpComponent = $Components/Jump
 @onready var physics_component: PhysicsComponent = $Components/Physics
 @onready var flip_component: FlipComponent = $Components/Flip
@@ -14,16 +13,15 @@ var is_frozen: bool = false
 func _ready() -> void:
 	EventManager.connect("freeze_player", freeze)
 
+func handle_command(
+	delta: float,
+	command: PlayerCommand
+) -> void:
+	state_machine.physics_update(delta, command)
 
 func _physics_process(delta: float) -> void:
 	if is_frozen:
 		return
-
-	var command := input_source.get_command()
-
-	jump_component.physics_update(delta, command)
-	physics_component.apply_gravity(delta)
-	state_machine.physics_update(delta, command)
 
 	move_and_slide()
 

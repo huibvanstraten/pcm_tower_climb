@@ -17,7 +17,8 @@ func _ready():
 
 func set_current_area(areaId: int):
 	currentAreaId = areaId
-	
+
+
 func get_player_start_position(player_id: int) -> Vector2:
 	var marker_name := "Start_%s" % player_id
 

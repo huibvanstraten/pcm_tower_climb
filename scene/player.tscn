@@ -5,7 +5,6 @@
 [ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ct4mp"]
 [ext_resource type="Script" uid="uid://wcry361dwr8a" path="res://script/player_camera.gd" id="3_s4jxa"]
 [ext_resource type="Script" uid="uid://i5unc1xq0tfr" path="res://script/component/jump_component.gd" id="5_g2vtq"]
-[ext_resource type="Script" uid="uid://drtmci2fdibgf" path="res://script/input/controller_input_source.gd" id="5_s4jxa"]
 [ext_resource type="Script" uid="uid://c1mxmnssq41rd" path="res://script/component/flip_component.gd" id="6_2fvbb"]
 [ext_resource type="Script" uid="uid://ccqwa7tm8x3pw" path="res://script/state/player/player_state_machine.gd" id="7_2fvbb"]
 [ext_resource type="Script" uid="uid://cwdrpk0n635ul" path="res://script/state/player/jump_state.gd" id="8_ml7e8"]
@@ -111,9 +110,6 @@ character_body = NodePath("../..")
 script = ExtResource("6_2fvbb")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 flip_marker = NodePath("../../FlipMarker")
-
-[node name="Input" type="Node2D" parent="." unique_id=1514953828]
-script = ExtResource("5_s4jxa")
 
 [node name="StateMachine" type="Node2D" parent="." unique_id=870998138 node_paths=PackedStringArray("jump_state", "character")]
 script = ExtResource("7_2fvbb")
