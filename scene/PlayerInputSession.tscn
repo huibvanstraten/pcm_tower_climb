@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://boalx4k4mb5dx"]
+
+[ext_resource type="Script" uid="uid://puiu4xs3dbdy" path="res://script/input/player_input_session.gd" id="1_7x50f"]
+[ext_resource type="Script" uid="uid://drtmci2fdibgf" path="res://script/input/controller_input_source.gd" id="2_j74rb"]
+
+[node name="PlayerInputSession" type="Node2D" unique_id=75229303]
+script = ExtResource("1_7x50f")
+
+[node name="InputSource" type="Node2D" parent="." unique_id=482032851]
+script = ExtResource("2_j74rb")
+move_left_action = &"move_left"
+move_right_action = &"move_right"
+jump_action = &"jump"
+interact_action = &"interact"
