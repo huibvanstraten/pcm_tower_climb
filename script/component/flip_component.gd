@@ -1,27 +1,30 @@
 class_name FlipComponent
-extends Node2D
+extends Node
 
-@export var bodyCollisionShape: CollisionShape2D = null
-@export var flipMarker: Marker2D = null
-@export var stateMachine: StateMachine = null
+@export var animated_sprite: AnimatedSprite2D
+@export var flip_marker: Node2D
 
-@export var animationComponent: AnimatedSprite2D = null
-@export var physicsComponent: PhysicsComponent = null
+var facing_direction: int = 1
 
-func flip():
-	bodyCollisionShape = stateMachine.currentState.collisionshape
-	var facingDirection = sign(physicsComponent.direction.x)
-	var facingRight = facingDirection > 0
-	physicsComponent.facingDirection = facingDirection
-	
-	if !facingRight:
-		bodyCollisionShape.rotation_degrees = physicsComponent.collisionRotation * -1
-		animationComponent.set_flip_h(facingRight)
-		flipMarker.scale.x = -1
-	else:
-		bodyCollisionShape.rotation_degrees = physicsComponent.collisionRotation
-		flipMarker.scale.x = 1
-		animationComponent.set_flip_h(!facingRight)
 
-func knockbackFlip():
-	pass
+func update_facing(input_direction: float) -> void:
+	if input_direction == 0.0:
+		return
+
+	var new_direction := int(sign(input_direction))
+
+	if new_direction == facing_direction:
+		return
+
+	facing_direction = new_direction
+	_apply_flip()
+
+
+func _apply_flip() -> void:
+	var facing_left := facing_direction < 0
+
+	if animated_sprite != null:
+		animated_sprite.flip_h = facing_left
+
+	if flip_marker != null:
+		flip_marker.scale.x = facing_direction

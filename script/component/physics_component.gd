@@ -1,64 +1,72 @@
 class_name PhysicsComponent
 extends Node
 
-@export var velocityX: float
-@export var velocityY: float
-@export var gravity: float
-@export var acceleration: float = 25.0
-@export var airAcceleration: float = 25.0
+@export var character_body: CharacterBody2D
+
+@export_group("Horizontal Movement")
+@export var speed: float = 300.0
+@export var acceleration: float = 2000.0
 @export var friction: float = 2000.0
-@export var airFriction: float = 3.0
-@export var knockbackVelocity: Vector2 = Vector2(20, -10)
-@export var knockbackDirection: int 
-@export var speed = 300.0
-@export var airSpeed = 150.0
-@export var direction: Vector2 = Vector2.RIGHT
 
-@export var collisionRotation: float = 0
+@export_group("Air Movement")
+@export var air_speed: float = 150.0
+@export var air_acceleration: float = 1000.0
+@export var air_friction: float = 300.0
 
-var facingDirection: int = 1
-var defaultGravity: float = ProjectSettings.get_setting("physics/2d/default_gravity")
+@export_group("Gravity")
+@export var gravity_multiplier: float = 1.0
 
-func _ready():
-	gravity = defaultGravity
+var direction: float = 0.0
 
-func reset_gravity():
-	gravity = defaultGravity
+var gravity: float:
+	get:
+		return ProjectSettings.get_setting("physics/2d/default_gravity") * gravity_multiplier
 
-func set_velocity(delta: float):
-	velocityY += gravity * delta
 
-func reset_velocity():
-	velocityY = 0
+func apply_gravity(delta: float) -> void:
+	if character_body.is_on_floor():
+		return
 
-func set_knockback_direction(knockback_direction: int):
-	knockbackDirection = knockback_direction
+	character_body.velocity.y += gravity * delta
 
-func knock_back(): 
-	velocityX = knockbackVelocity.x * knockbackDirection
-	
-func move(_delta, inputAxis: float = direction.x):
-	velocityX += acceleration * inputAxis
-	direction.x = inputAxis
-	velocityX = clampf(velocityX, -speed, speed)
 
-func move_in_air(_delta, inputAxis):
-	velocityX += airAcceleration * inputAxis
-	direction.x = inputAxis
-	velocityX = clampf(velocityX, -airSpeed, airSpeed)
+func move(delta: float, input_direction: float) -> void:
+	direction = input_direction
 
-func move_to_target(targetPosition: Vector2, delta, attackSpeed: float):
-	speed = attackSpeed
-	direction = targetPosition
-	move(delta)
+	character_body.velocity.x = move_toward(
+		character_body.velocity.x,
+		input_direction * speed,
+		acceleration * delta
+	)
 
-func stop(delta: float):
-	direction.x = 0.0
-	velocityX = move_toward(velocityX, 0, friction * delta)
 
-#func air_resistance(delta: float):
-	#velocityX = move_toward(velocityX, 0, airFriction * delta)
-	
-func air_resistance(_delta: float):
-	velocityX -= airFriction
-	velocityX = clampf(velocityX, 0, airSpeed)
+func move_in_air(delta: float, input_direction: float) -> void:
+	direction = input_direction
+
+	character_body.velocity.x = move_toward(
+		character_body.velocity.x,
+		input_direction * air_speed,
+		air_acceleration * delta
+	)
+
+
+func stop(delta: float) -> void:
+	direction = 0.0
+
+	character_body.velocity.x = move_toward(
+		character_body.velocity.x,
+		0.0,
+		friction * delta
+	)
+
+
+func apply_air_resistance(delta: float) -> void:
+	character_body.velocity.x = move_toward(
+		character_body.velocity.x,
+		0.0,
+		air_friction * delta
+	)
+
+
+func reset_velocity() -> void:
+	character_body.velocity = Vector2.ZERO
