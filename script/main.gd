@@ -24,21 +24,6 @@ func _input(event: InputEvent) -> void:
 		if session.input_device == null:
 			continue
 
-		if session.input_device.matches(discovered_device):
-			print(
-				"DEVICE ALREADY ASSIGNED: ",
-				PlayerInputDevice.Type.keys()[discovered_device.type],
-				" ",
-				discovered_device.device_id
-			)
-			return
-
-	print(
-		"UNASSIGNED DEVICE: ",
-		PlayerInputDevice.Type.keys()[discovered_device.type],
-		" ",
-		discovered_device.device_id
-	)
 	
 	if not event.is_action_pressed("jump"):
 		return
@@ -50,15 +35,8 @@ func _input(event: InputEvent) -> void:
 		return
 
 	available_session.assign_device(discovered_device)
-
-	print(
-		"DEVICE JOINED: ",
-		PlayerInputDevice.Type.keys()[discovered_device.type],
-		" ",
-		discovered_device.device_id,
-		" -> ",
-		available_session.name
-	)
+	
+	activate_session_player(available_session)
 
 func _ready() -> void:
 	
@@ -81,10 +59,6 @@ func load_level(level_id: int) -> void:
 	LevelManager.load_level(level_id)
 
 	var level = LevelManager.get_current_level()
-
-	for player_id in [1, 2]:
-		var position: Vector2 = level.get_player_start_position(player_id)
-		ensure_player(player_id, position)
 
 
 func ensure_player(
@@ -127,3 +101,15 @@ func get_available_input_session() -> PlayerInputSession:
 			return session
 
 	return null
+	
+	
+func activate_session_player(session: PlayerInputSession) -> void:
+	var level = LevelManager.get_current_level()
+	var spawn_position: Vector2 = level.get_player_start_position(
+		session.player_slot
+	)
+
+	ensure_player(
+		session.player_slot,
+		spawn_position
+	)

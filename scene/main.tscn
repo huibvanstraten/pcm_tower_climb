@@ -24,6 +24,7 @@ availableLevels = Array[ExtResource("2_v0l8b")]([SubResource("Resource_pu4bb")])
 
 [node name="PlayerInputSession1" type="Node2D" parent="PlayerInputSessionContainer" unique_id=1767801635]
 script = ExtResource("3_brvut")
+player_slot = 1
 
 [node name="InputSource" type="Node2D" parent="PlayerInputSessionContainer/PlayerInputSession1" unique_id=1837898211]
 script = ExtResource("3_0ha60")
@@ -34,6 +35,7 @@ interact_action = &"interact"
 
 [node name="PlayerInputSession2" type="Node2D" parent="PlayerInputSessionContainer" unique_id=321568490]
 script = ExtResource("3_brvut")
+player_slot = 2
 
 [node name="InputSource" type="Node2D" parent="PlayerInputSessionContainer/PlayerInputSession2" unique_id=213174047]
 script = ExtResource("3_0ha60")
