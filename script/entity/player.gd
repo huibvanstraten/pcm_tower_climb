@@ -17,6 +17,13 @@ func handle_command(
 	delta: float,
 	command: PlayerCommand
 ) -> void:
+	
+	print(
+		"PLAYER RECEIVED COMMAND: move=",
+		command.move_direction,
+		" jump=",
+		command.jump_pressed
+	)
 
 	state_machine.physics_update(delta, command)
 

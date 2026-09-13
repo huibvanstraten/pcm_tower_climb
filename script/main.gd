@@ -8,6 +8,8 @@ extends Node
 @onready var player_container: Node = $PlayerContainer
 @onready var input_session_container: Node = $PlayerInputSessionContainer
 
+@onready var test_control_target: Node = $TestControlTarget
+
 const MAX_PLAYERS := 4
 
 func _input(event: InputEvent) -> void:
@@ -97,15 +99,6 @@ func join_device(device: PlayerInputDevice) -> void:
 	)
 
 	activate_session_player(session)
-
-	print(
-		"DEVICE JOINED: ",
-		PlayerInputDevice.Type.keys()[device.type],
-		" ",
-		device.device_id,
-		" -> player slot ",
-		player_slot
-	)
 	
 
 func create_input_session(

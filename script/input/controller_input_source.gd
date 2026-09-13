@@ -66,7 +66,6 @@ func _update_jump_input(event: InputEvent) -> void:
 		return
 
 	if event.is_action_pressed(jump_action):
-		print("jump pressed")
 		jump_pressed = true
 		jump_held = true
 
