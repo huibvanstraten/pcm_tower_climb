@@ -5,6 +5,8 @@ extends Node
 @export var player_slot: int
 
 var input_contexts := InputContextStack.new()
+var game_input_contexts: InputContextStack
+
 var control_targets: Array[Node] = []
 var input_device: PlayerInputDevice
 
@@ -79,22 +81,26 @@ func clear_control_targets() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if input_device == null:
+		return
+
+	var command := input_source.get_command(input_device)
+
+	if game_input_contexts == null:
+		return
+
+	if game_input_contexts.get_context() != InputContext.Type.GAMEPLAY:
+		return
+
+	if not input_contexts.is_empty():
+		return
+
 	var control_target := get_control_target()
 
 	if control_target == null:
 		return
 
-	if input_device == null:
-		return
-
-	var command := input_source.get_command(
-		input_device
-	)
-
-	control_target.handle_command(
-		delta,
-		command
-	)
+	control_target.handle_command(delta, command)
 
 
 func is_joined() -> bool:

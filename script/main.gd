@@ -47,11 +47,14 @@ func _ready() -> void:
 	
 	
 
-func get_first_session() -> PlayerInputSession:
-	if input_session_container.get_child_count() == 0:
-		return null
+func get_session(player_slot: int) -> PlayerInputSession:
+	for child in input_session_container.get_children():
+		var session := child as PlayerInputSession
 
-	return input_session_container.get_child(0)
+		if session != null and session.player_slot == player_slot:
+			return session
+
+	return null
 	
 	
 func _unhandled_key_input(event: InputEvent) -> void:
@@ -69,13 +72,25 @@ func _unhandled_key_input(event: InputEvent) -> void:
 	print("GAME CONTEXT: ", game_input_contexts.get_context())
 		
 	if event.keycode == KEY_I:
-		var session := get_first_session()
+		var session := get_session(1)
 
 		if session != null:
 			session.debug_push_inventory()
 
 	if event.keycode == KEY_U:
-		var session := get_first_session()
+		var session := get_session(1)
+
+		if session != null:
+			session.debug_pop_context()
+			
+	if event.keycode == KEY_Y:
+		var session := get_session(2)
+
+		if session != null:
+			session.debug_push_inventory()
+
+	if event.keycode == KEY_T:
+		var session := get_session(2)
 
 		if session != null:
 			session.debug_pop_context()
@@ -143,6 +158,8 @@ func create_input_session(
 	device: PlayerInputDevice
 ) -> PlayerInputSession:
 	var session := player_input_session_scene.instantiate() as PlayerInputSession
+	
+	session.game_input_contexts = game_input_contexts
 
 	session.player_slot = player_slot
 	session.name = "PlayerInputSession%s" % player_slot
