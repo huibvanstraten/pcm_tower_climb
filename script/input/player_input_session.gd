@@ -4,31 +4,58 @@ extends Node
 
 @export var player_slot: int
 
-var control_target: Node
+var control_targets: Array[Node] = []
 var input_device: PlayerInputDevice
 
 
 @onready var input_source: PlayerInputSource = $InputSource
 
+
 func assign_device(device: PlayerInputDevice) -> void:
 	input_device = device
 	input_source.assign_device(device)
-	
-	
+
+
 func set_control_target(target: Node) -> void:
 	assert(
 		Controllable.is_controllable(target),
 		"Control target must implement handle_command(delta, command)"
 	)
 
-	control_target = target
+	control_targets.clear()
+	control_targets.push_back(target)
 
 
-func release_control() -> void:
-	control_target = null
+func get_control_target() -> Node:
+	if control_targets.is_empty():
+		return null
+
+	return control_targets.back()
+
+
+func push_control_target(target: Node) -> void:
+	assert(
+		Controllable.is_controllable(target),
+		"Control target must implement handle_command(delta, command)"
+	)
+
+	control_targets.push_back(target)
+
+
+func pop_control_target() -> Node:
+	if control_targets.is_empty():
+		return null
+
+	return control_targets.pop_back()
+
+
+func clear_control_targets() -> void:
+	control_targets.clear()
 
 
 func _physics_process(delta: float) -> void:
+	var control_target := get_control_target()
+
 	if control_target == null:
 		return
 
