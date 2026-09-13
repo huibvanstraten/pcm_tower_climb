@@ -18,9 +18,8 @@ func handle_command(
 	command: PlayerCommand
 ) -> void:
 	
-	print(
-		"PLAYER RECEIVED COMMAND: move=",
-		command.move_direction,
+	if command.jump_pressed == true:
+		print(
 		" jump=",
 		command.jump_pressed
 	)
