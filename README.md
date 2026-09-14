@@ -698,7 +698,7 @@ Main
 │  └── Player 1 
 │  └── Player 2 
 └── LevelContainer     
-└── CurrentLevel
+   └── CurrentLevel
 ```
 
 Loading or replacing a level therefore does not inherently create or destroy the players.
@@ -709,7 +709,8 @@ This keeps these responsibilities separate:
 PlayerInputSession  
 → who joined Player              
 → gameplay entity Level               
-→ playable environment and spawn locations SpawnManager        
+→ playable environment and spawn locations
+SpawnManager        
 → player creation/positioning LevelManager        
 → loaded level
 ```
