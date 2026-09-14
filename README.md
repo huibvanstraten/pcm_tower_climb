@@ -38,7 +38,7 @@ responsibility boundaries remain clear.
 ### Architecture
 
 -   [Entities, Components and
-    Capabilities](#entities-components-and-capabilities)
+	Capabilities](#entities-components-and-capabilities)
 -   [Entity State Machines](#entity-state-machines)
 -   [Player Movement and Physics](#player-movement-and-physics)
 
@@ -50,7 +50,7 @@ responsibility boundaries remain clear.
 ### World
 
 -   [Levels, Areas and World
-    Boundaries](#levels-areas-and-world-boundaries)
+	Boundaries](#levels-areas-and-world-boundaries)
 -   [Level Loading and Transitions](#level-loading-and-transitions)
 
 ### Audio
@@ -110,9 +110,9 @@ provide the behaviour so another part of the entity can coordinate it.
 
 ``` text
 JumpComponent
-      ↑
-      │ use
-      │
+	  ↑
+	  │ use
+	  │
 JumpState
 ```
 
@@ -302,9 +302,9 @@ current situation.
 
 ``` text
 PlayerCommand
-      ↓
+	  ↓
 Current State
-      ↓
+	  ↓
 Capabilities
 ```
 
@@ -389,13 +389,13 @@ Player movement separates **player intent**, **gameplay behaviour**, and
 
 ``` text
 PlayerCommand
-      ↓
+	  ↓
 Current State
-      ↓
+	  ↓
 Movement capabilities
-      ↓
+	  ↓
 Velocity
-      ↓
+	  ↓
 Godot physics
 ```
 
@@ -429,15 +429,15 @@ current situation.
 
 ``` text
 Grounded state
-      ↓
+	  ↓
 ground movement
 
 Jump state
-      ↓
+	  ↓
 air movement + upward velocity
 
 Fall state
-      ↓
+	  ↓
 air movement + falling
 ```
 
@@ -503,13 +503,13 @@ performed.
 
 ``` text
 physics tick
-    ↓
+	↓
 read current command
-    ↓
+	↓
 update state / velocity
-    ↓
+	↓
 perform physical movement
-    ↓
+	↓
 resolve collisions
 ```
 
@@ -634,7 +634,15 @@ under **Player Lifecycle and Spawning**.
 Player participation, player entities, and spawning are separate
 lifecycle concepts.
 
-`text id="zzwwu8" Participant joins     ↓ PlayerInputSession exists     ↓ Player entity exists     ↓ Player is spawned into a level`
+```text 
+Participant joins     
+↓ 
+PlayerInputSession exists     
+↓ 
+Player entity exists     
+↓ 
+Player is spawned into a level
+```
 
 These steps may happen together, but they do not fundamentally depend on
 each other.
@@ -655,44 +663,56 @@ A `Player` is the participant's gameplay entity.
 
 Creating a Player and joining are separate concerns:
 
-\`\`\`text id="6uslht" PlayerInputSession = participant/input
-
+```text 
+PlayerInputSession = participant/input
 Player = gameplay entity
+```
 
+This allows game flow to decide when a joined participant actually needs a Player.
 
-    This allows game flow to decide when a joined participant actually needs a Player.
+### Spawning
 
-    ### Spawning
+Spawning places an existing or newly created Player into the current level.
 
-    Spawning places an existing or newly created Player into the current level.
+Levels define suitable spawn positions. The spawning system decides which position belongs to each player and positions players without making the level responsible for player lifecycle.
 
-    Levels define suitable spawn positions. The spawning system decides which position belongs to each player and positions players without making the level responsible for player lifecycle.
+This supports multiple players independently:
 
-    This supports multiple players independently:
-
-    ```text id="slgg2c"
+```text
     Level
         ├── spawn position P1
         ├── spawn position P2
         ├── spawn position P3
         └── spawn position P4
+```
 
-The same principle can later be used for level transitions, checkpoints
-and respawning: the Player belongs to the game, while the loaded level
-provides the location where that Player should appear.
+The same principle can later be used for level transitions, checkpoints and respawning: the Player belongs to the game, while the loaded level provides the location where that Player should appear.
 
 ### Level independence
 
 Players live outside loaded levels:
 
-`text id="axt1gu" Main ├── PlayerContainer │   ├── Player 1 │   └── Player 2 │ └── LevelContainer     └── CurrentLevel`
+```text
+Main 
+├── PlayerContainer 
+│  └── Player 1 
+│  └── Player 2 
+└── LevelContainer     
+└── CurrentLevel
+```
 
-Loading or replacing a level therefore does not inherently create or
-destroy the players.
+Loading or replacing a level therefore does not inherently create or destroy the players.
 
 This keeps these responsibilities separate:
 
-`text id="wfl7un" PlayerInputSession  → who joined Player              → gameplay entity Level               → playable environment and spawn locations SpawnManager        → player creation/positioning LevelManager        → loaded level`
+```text
+PlayerInputSession  
+→ who joined Player              
+→ gameplay entity Level               
+→ playable environment and spawn locations SpawnManager        
+→ player creation/positioning LevelManager        
+→ loaded level
+```
 
 ### Current implementation
 
@@ -734,10 +754,10 @@ environment, but it does not own persistent player lifecycle.
 Game
  ├── Players
  └── Current Level
-       ├── geometry
-       ├── enemies
-       ├── areas
-       └── spawn positions
+	   ├── geometry
+	   ├── enemies
+	   ├── areas
+	   └── spawn positions
 ```
 
 Replacing a level therefore changes the environment without
@@ -795,10 +815,10 @@ World boundaries describe the meaningful extent of a playable area.
 
 ``` text
 Collision geometry
-      → what blocks movement
+	  → what blocks movement
 
 Area boundaries
-      → where the playable area exists
+	  → where the playable area exists
 ```
 
 They may sometimes occupy the same physical location, but one should not
@@ -905,13 +925,13 @@ Conceptually:
 
 ``` text
 Level requested
-      ↓
+	  ↓
 Previous level removed
-      ↓
+	  ↓
 New level loaded
-      ↓
+	  ↓
 New level becomes current
-      ↓
+	  ↓
 Players positioned in level
 ```
 
@@ -932,7 +952,7 @@ Main
 │    └── Player 2
 │
 └── LevelContainer
-     └── CurrentLevel
+	 └── CurrentLevel
 ```
 
 This allows the environment to be replaced while player entities
@@ -985,9 +1005,9 @@ The same model can support different destinations:
 
 ``` text
 Level transition
-      ↓
+	  ↓
 destination
-      ↓
+	  ↓
 start / entrance / checkpoint / other position
 ```
 
