@@ -4,7 +4,7 @@ extends RefCounted
 enum Type {
 	NONE,
 	IDLE,
-	RUN,
+	MOVE,
 	JUMP,
 	FALL,
 	HIT,

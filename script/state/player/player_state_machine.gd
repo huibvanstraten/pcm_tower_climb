@@ -30,7 +30,7 @@ func physics_update(
 		PlayerTransition.Type.IDLE:
 			changeState(idle_state)
 
-		PlayerTransition.Type.RUN:
+		PlayerTransition.Type.MOVE:
 			changeState(run_state)
 
 		PlayerTransition.Type.JUMP:
