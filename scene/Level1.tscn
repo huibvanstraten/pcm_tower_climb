@@ -12,7 +12,7 @@ size = Vector2(278.5, 9353)
 size = Vector2(2848.5, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dr4yn"]
-size = Vector2(877.5, 20)
+size = Vector2(2562, 5)
 
 [node name="Level1" type="Node2D" unique_id=1036665347]
 script = ExtResource("1_nk78g")
@@ -58,10 +58,10 @@ shape = SubResource("RectangleShape2D_ni43k")
 [node name="SpawnPoints" type="Node2D" parent="." unique_id=189155125]
 
 [node name="Start_1" type="Marker2D" parent="SpawnPoints" unique_id=1098790439]
-position = Vector2(545, 1081)
+position = Vector2(575, 1445)
 
 [node name="Start_2" type="Marker2D" parent="SpawnPoints" unique_id=1998108156]
-position = Vector2(486, 1692)
+position = Vector2(673, 1085)
 
 [node name="Start_3" type="Marker2D" parent="SpawnPoints" unique_id=82525384]
 position = Vector2(942, 1681)
@@ -81,7 +81,7 @@ texture = ExtResource("5_ldwqa")
 [node name="StaticBody2D" type="StaticBody2D" parent="Ruined_City" unique_id=1399553679]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ruined_City/StaticBody2D" unique_id=927497898]
-position = Vector2(1194.25, 1869)
+position = Vector2(1345, 1848.5)
 shape = SubResource("RectangleShape2D_dr4yn")
 debug_color = Color(0.674176, 0.40751508, 0.7823852, 0.41960785)
 
@@ -89,6 +89,6 @@ debug_color = Color(0.674176, 0.40751508, 0.7823852, 0.41960785)
 position = Vector2(-574, 464)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1422167784]
-position = Vector2(963, 685)
+position = Vector2(1330.3125, 1067)
 shape = SubResource("RectangleShape2D_dr4yn")
 debug_color = Color(0.674176, 0.40751508, 0.7823852, 0.41960785)

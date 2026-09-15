@@ -1079,6 +1079,244 @@ model.
 
 ------------------------------------------------------------------------
 
+# Shared Multiplayer Camera
+
+The game uses one shared camera for all active players.
+
+The camera belongs to the loaded level rather than to an individual
+player or area. Players remain persistent outside the level, while the
+`CameraRig` tracks the players currently participating in gameplay.
+
+``` text
+Level
+ ├── CameraRig
+ │    ├── Camera2D
+ │    ├── PlayerBounds
+ │    │    ├── LeftBoundary
+ │    │    ├── RightBoundary
+ │    │    └── TopBoundary
+ │    └── DeathZone
+ └── Areas
+```
+
+### Player tracking
+
+Players register with the `CameraRig` when they join. The camera
+calculates the outer bounds of all registered players, so the same
+behaviour works for two or more players.
+
+The camera uses a tracking rectangle inside the viewport. As long as all
+players fit inside this rectangle, the camera only moves when a player
+reaches one of its margins.
+
+``` text
+viewport
+┌─────────────────────────────────────┐
+│     ┌── tracking rectangle ──┐      │
+│     │       P1    P2          │      │
+│     └─────────────────────────┘      │
+└─────────────────────────────────────┘
+```
+
+The vertical tracking margins are asymmetric. More space is reserved
+below the players than above them so upward movement remains visible
+while the camera can still follow intentional descent.
+
+### Player separation
+
+Tracking margins are preferred camera positions, not hard player limits.
+
+When the players become too far apart to fit inside the tracking
+rectangle, tracking for that axis becomes separated. The camera then
+prioritizes keeping the group within the hard viewport constraints
+instead of choosing one player to follow.
+
+``` text
+NORMAL
+   ↓ players no longer fit in tracking range
+SEPARATED
+   ↓ players fit again
+RECOVERING
+   ↓ camera reaches tracking range
+NORMAL
+```
+
+Recovery is gradual. This prevents the camera from snapping when
+separated players move back together.
+
+Horizontal and vertical tracking use the same principle independently.
+
+### Camera-relative player bounds
+
+`PlayerBounds` contains physical `StaticBody2D` boundaries that move
+with the `CameraRig`.
+
+Left and right boundaries prevent players from leaving opposite sides of
+the shared view. This allows the camera to stop when players pull in
+opposite directions without allowing one player to disappear
+indefinitely.
+
+The top boundary is placed slightly above the visible viewport. This
+gives a player room to jump toward a platform near the top of the screen
+without the visible edge behaving like a ceiling.
+
+There is deliberately no bottom boundary.
+
+``` text
+             TopBoundary
+──────────────────────────────────
+          small overflow
+
+┌────────────────────────────────┐
+│                                │
+│          visible view          │
+│                                │
+└────────────────────────────────┘
+              ↓
+         player may fall
+```
+
+The physical top overflow and the camera's visible-player constraint
+have different purposes. The camera should not deliberately move a
+stationary player out of the visible top of the screen, while the
+physical boundary may allow temporary movement above it.
+
+### Falling and the death zone
+
+A `DeathZone` follows below the camera.
+
+A player descending normally continues to pull the camera downward while
+the other players allow it. If another player prevents further downward
+camera movement, the falling player can leave the bottom of the screen
+and eventually enter the death zone.
+
+``` text
+┌────────────────────────────────┐
+│ P1                             │
+│                                │
+│                                │
+└────────────────────────────────┘
+				  P2
+				  ↓
+
+──────────────────────────────────
+			 DeathZone
+```
+
+The death zone detects that a player has fallen out of the playable
+shared camera space. It does not decide where that player should
+respawn.
+
+Respawning is part of player lifecycle and spawning rather than camera
+responsibility.
+
+------------------------------------------------------------------------
+
+# Player Respawning
+
+Respawning returns an existing player to a safe position after that
+player leaves the playable world, for example by falling into the
+camera's `DeathZone`.
+
+Respawning is part of the player lifecycle. The system that detects a
+death does not decide where the player should appear.
+
+``` text
+Player dies
+    ↓
+player lifecycle handles death
+    ↓
+select safe respawn point
+    ↓
+spawn existing Player
+```
+
+### Explicit respawn points
+
+Areas define explicit safe respawn positions rather than deriving them
+from collision geometry.
+
+``` text
+Area
+ ├── Terrain
+ ├── RespawnPoints
+ │    ├── RespawnPoint
+ │    ├── RespawnPoint
+ │    └── RespawnPoint
+ └── ...
+```
+
+A respawn point represents a location where the level designer knows
+that a player can safely return. Points should be placed on suitable
+platforms throughout an area.
+
+This avoids requiring the spawning system to inspect arbitrary
+`CollisionShape2D`s and determine whether they represent a safe floor,
+wall, ceiling, hazard or moving object.
+
+### Player progress
+
+Each player can remember their most recently reached safe respawn point.
+
+``` text
+Player reaches RespawnPoint 3
+        ↓
+RespawnPoint 3 becomes current
+        ↓
+Player continues climbing
+        ↓
+Player falls
+        ↓
+respawn at RespawnPoint 3
+```
+
+Respawn progress belongs to the individual player. In multiplayer,
+players may therefore have different current respawn points.
+
+A respawn point may use an activation area so reaching a safe platform
+updates the player's current point without requiring an explicit
+interaction.
+
+### Multiplayer respawning
+
+Respawning should return only the player that died. Other players remain
+in their current gameplay state and position.
+
+The selected respawn point must also remain compatible with the
+shared-camera gameplay. A historical respawn point should not blindly
+return a player to a location that is no longer appropriate for the
+current area or group position.
+
+The initial implementation can use the player's latest activated safe
+point. Selection rules can later consider the current area and
+shared-camera vicinity when gameplay requires it.
+
+### Responsibilities
+
+The responsibilities remain separated:
+
+``` text
+Area / Level       → defines safe respawn locations
+DeathZone          → detects a player falling out of play
+Player lifecycle   → decides that the player must respawn
+Spawning system    → positions the Player at the selected point
+CameraRig          → tracks active gameplay players
+```
+
+The `CameraRig` should not create, destroy or reposition players as part
+of respawning.
+
+### Implementation status
+
+Respawn behaviour is currently a design only.
+
+The camera death zone provides the point at which falling can be
+detected. Explicit respawn points, per-player respawn progress and the
+connection to the existing spawning lifecycle still need to be
+implemented.
+
+------------------------------------------------------------------------
+
 # Music and Sound Effects
 
 Audio is separated into **music ownership**, **sound-effect ownership**,

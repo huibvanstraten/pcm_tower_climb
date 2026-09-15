@@ -69,13 +69,10 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 	if event.keycode == KEY_P:
 		game_input_contexts.push_context(InputContext.Type.PAUSE_MENU)
-		print("GAME CONTEXT: ", game_input_contexts.get_context())
-
+		
 	if event.keycode == KEY_O:
 		if game_input_contexts.contexts.size() > 1:
 			game_input_contexts.pop_context()
-
-	print("GAME CONTEXT: ", game_input_contexts.get_context())
 		
 	if event.keycode == KEY_I:
 		var session := get_session(1)

@@ -2,7 +2,7 @@ class_name PlayerStateMachine
 extends StateMachine
 
 @export var idle_state: PlayerState
-@export var run_state: PlayerState
+@export var move_state: PlayerState
 @export var jump_state: PlayerState
 @export var fall_state: PlayerState
 
@@ -31,7 +31,7 @@ func physics_update(
 			changeState(idle_state)
 
 		PlayerTransition.Type.MOVE:
-			changeState(run_state)
+			changeState(move_state)
 
 		PlayerTransition.Type.JUMP:
 			changeState(jump_state)

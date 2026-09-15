@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://co207pvwufuqm" path="res://script/component/move_component.gd" id="6_g2vtq"]
 [ext_resource type="Script" uid="uid://ccqwa7tm8x3pw" path="res://script/state/player/player_state_machine.gd" id="7_2fvbb"]
 [ext_resource type="Script" uid="uid://cwdrpk0n635ul" path="res://script/state/player/jump_state.gd" id="8_ml7e8"]
+[ext_resource type="Script" uid="uid://ch17otwx0uqrw" path="res://script/state/player/fall_state.gd" id="9_ml7e8"]
+[ext_resource type="Script" uid="uid://dw15e7uqw7kde" path="res://script/state/player/move_state.gd" id="10_ihjo1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mbv8e"]
 atlas = ExtResource("1_maa0i")
@@ -110,14 +112,30 @@ flip_marker = NodePath("../../FlipMarker")
 script = ExtResource("6_g2vtq")
 physics_component = NodePath("../Physics")
 
-[node name="StateMachine" type="Node2D" parent="." unique_id=870998138 node_paths=PackedStringArray("jump_state", "character", "initialState")]
+[node name="StateMachine" type="Node2D" parent="." unique_id=870998138 node_paths=PackedStringArray("move_state", "jump_state", "fall_state", "character", "initialState")]
 script = ExtResource("7_2fvbb")
+move_state = NodePath("Move")
 jump_state = NodePath("Jump")
+fall_state = NodePath("Fall")
 character = NodePath("..")
-initialState = NodePath("Jump")
+initialState = NodePath("Move")
 
 [node name="Jump" type="Node2D" parent="StateMachine" unique_id=1437876539 node_paths=PackedStringArray("player", "character_body", "node_animation_sprite", "collision_shape")]
 script = ExtResource("8_ml7e8")
+player = NodePath("../..")
+character_body = NodePath("../..")
+node_animation_sprite = NodePath("../../AnimatedSprite2D")
+collision_shape = NodePath("../../CollisionShape2D")
+
+[node name="Fall" type="Node2D" parent="StateMachine" unique_id=380773811 node_paths=PackedStringArray("player", "character_body", "node_animation_sprite", "collision_shape")]
+script = ExtResource("9_ml7e8")
+player = NodePath("../..")
+character_body = NodePath("../..")
+node_animation_sprite = NodePath("../../AnimatedSprite2D")
+collision_shape = NodePath("../../CollisionShape2D")
+
+[node name="Move" type="Node2D" parent="StateMachine" unique_id=1426468706 node_paths=PackedStringArray("player", "character_body", "node_animation_sprite", "collision_shape")]
+script = ExtResource("10_ihjo1")
 player = NodePath("../..")
 character_body = NodePath("../..")
 node_animation_sprite = NodePath("../../AnimatedSprite2D")
