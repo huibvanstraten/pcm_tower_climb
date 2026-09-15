@@ -4,6 +4,10 @@ extends PlayerState
 
 func enter() -> void:
 	super()
+
+	print("JumpState player: ", player)
+	print("JumpState jump component: ", player.jump_component if player else null)
+
 	player.jump_component.jump()
 
 

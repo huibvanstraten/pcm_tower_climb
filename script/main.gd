@@ -38,7 +38,19 @@ func _ready() -> void:
 
 	SpawnManager.player_container = player_container
 
-	EventManager.emit_signal("level", 1)	
+	EventManager.emit_signal("level", 1)
+	
+	var level = LevelManager.get_current_level()
+	
+
+func get_players() -> Array[Player]:
+	var players: Array[Player] = []
+
+	for child in player_container.get_children():
+		if child is Player:
+			players.append(child)
+
+	return players
 	
 
 func get_session(player_slot: int) -> PlayerInputSession:
@@ -117,6 +129,9 @@ func activate_session_player(session: PlayerInputSession) -> void:
 		)
 
 	session.set_control_target(player)
+	
+	print("emitting")
+	EventManager.player_joined.emit(player)
 	
 	
 func is_device_assigned(device: PlayerInputDevice) -> bool:

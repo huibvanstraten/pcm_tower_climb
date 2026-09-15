@@ -5,6 +5,8 @@ extends Node
 @export var startAreaId: int = 1
 @export var startPosition: Marker2D = null
 
+@onready var camera_rig: CameraRig = $CameraRig
+
 var levelData: LevelData
 var currentAreaId: int
 

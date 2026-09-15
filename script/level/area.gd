@@ -26,9 +26,6 @@ var bottom_boundary: Node2D:
 
 @export var scaleY: float
 
-func _ready():
-	EventManager.change_background.connect(_on_change_background)
-	
 
 func activate() -> void:
 	MusicManager.play(area_music)

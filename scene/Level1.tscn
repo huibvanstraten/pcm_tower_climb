@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://dbewmbrugcnjk"]
 
-[ext_resource type="Script" uid="uid://bdu8cynu5p5ca" path="res://script/level/level_1.gd" id="1_7tnty"]
-[ext_resource type="Script" uid="uid://r0xgpm08oh15" path="res://script/level/area.gd" id="2_pu4bb"]
-[ext_resource type="AudioStream" uid="uid://c74vwgo3iuuyq" path="res://asset/audio/music/Bzzt bzzt mf 3 full.wav" id="3_oj781"]
-[ext_resource type="Texture2D" uid="uid://d38p2net68ij7" path="res://asset/background/Ruined city.png" id="4_oj781"]
+[ext_resource type="Script" uid="uid://bdu8cynu5p5ca" path="res://script/level/level_1.gd" id="1_nk78g"]
+[ext_resource type="PackedScene" uid="uid://2b8l7oadkcai" path="res://scene/cameraRig.tscn" id="2_a215g"]
+[ext_resource type="Script" uid="uid://r0xgpm08oh15" path="res://script/level/area.gd" id="3_ebr37"]
+[ext_resource type="AudioStream" uid="uid://c74vwgo3iuuyq" path="res://asset/audio/music/Bzzt bzzt mf 3 full.wav" id="4_3ud3r"]
+[ext_resource type="Texture2D" uid="uid://d38p2net68ij7" path="res://asset/background/Ruined city.png" id="5_ldwqa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
 size = Vector2(278.5, 9353)
@@ -15,15 +16,17 @@ size = Vector2(2848.5, 20)
 size = Vector2(2365.5, 20)
 
 [node name="Level1" type="Node2D" unique_id=1036665347]
-script = ExtResource("1_7tnty")
+script = ExtResource("1_nk78g")
 levelId = 1
+
+[node name="CameraRig" parent="." unique_id=1417698977 instance=ExtResource("2_a215g")]
 
 [node name="Areas" type="Node2D" parent="." unique_id=42172917]
 
 [node name="Area" type="Node2D" parent="Areas" unique_id=295783560]
-script = ExtResource("2_pu4bb")
+script = ExtResource("3_ebr37")
 areaId = 1
-area_music = ExtResource("3_oj781")
+area_music = ExtResource("4_3ud3r")
 
 [node name="AreaBoundaries" type="Node2D" parent="Areas/Area" unique_id=391874351]
 
@@ -61,7 +64,7 @@ shape = SubResource("RectangleShape2D_ni43k")
 position = Vector2(199, 1693)
 
 [node name="Start_2" type="Marker2D" parent="SpawnPoints" unique_id=1998108156]
-position = Vector2(548, 1697)
+position = Vector2(486, 1692)
 
 [node name="Start_3" type="Marker2D" parent="SpawnPoints" unique_id=82525384]
 position = Vector2(942, 1681)
@@ -76,7 +79,7 @@ position = Vector2(1423, 1663)
 [node name="TextureRect" type="Sprite2D" parent="Ruined_City/ParallaxLayer" unique_id=1520590463]
 position = Vector2(1310, 1047.9999)
 scale = Vector2(6.89375, 7.577778)
-texture = ExtResource("4_oj781")
+texture = ExtResource("5_ldwqa")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Ruined_City" unique_id=1399553679]
 

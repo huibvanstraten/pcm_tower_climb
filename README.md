@@ -698,7 +698,7 @@ Main
 │  └── Player 1 
 │  └── Player 2 
 └── LevelContainer     
-   └── CurrentLevel
+└── CurrentLevel
 ```
 
 Loading or replacing a level therefore does not inherently create or destroy the players.
@@ -709,8 +709,7 @@ This keeps these responsibilities separate:
 PlayerInputSession  
 → who joined Player              
 → gameplay entity Level               
-→ playable environment and spawn locations
-SpawnManager        
+→ playable environment and spawn locations SpawnManager        
 → player creation/positioning LevelManager        
 → loaded level
 ```
@@ -1282,167 +1281,3 @@ player.
 
 This allows audio resources and playback implementation to change
 without coupling them to gameplay behaviour.
-
-------------------------------------------------------------------------
-
-## Required implementation work
-
-The current audio managers originate from the earlier Annihilation
-implementation. The following changes bring the implementation in line
-with the architecture described above.
-
-### Use AudioStream resources
-
-`MusicManager` and `SfxManager` currently accept resource paths and load
-the audio when playback is requested.
-
-Replace path-based playback:
-
-``` text
-"path/to/jump_sound"
-       ↓
-load()
-       ↓
-play
-```
-
-with resource-based playback:
-
-``` text
-AudioStream
-    ↓
-play
-```
-
-Components, states and areas should expose their audio as exported
-`AudioStream` properties where appropriate.
-
-For example:
-
-``` gdscript
-@export var jump_sfx: AudioStream
-```
-
-and conceptually call:
-
-``` gdscript
-SfxManager.play(jump_sfx)
-```
-
-### Associate music with Areas
-
-Areas should be able to define their desired music.
-
-Conceptually:
-
-``` gdscript
-@export var music: AudioStream
-```
-
-When an Area becomes active, its music should be passed to
-`MusicManager`.
-
-``` text
-Area becomes active
-       ↓
-Area.music
-       ↓
-MusicManager
-```
-
-The Area should not directly operate an `AudioStreamPlayer`.
-
-The existing Area activation/lifecycle mechanism should be used to
-connect area changes to music selection rather than introducing a
-separate audio-specific world lifecycle.
-
-### Move gameplay SFX to their owners
-
-Existing and future sound effects should be placed with the gameplay
-behaviour that owns them.
-
-For example:
-
-``` text
-jump        → JumpComponent
-damage      → relevant damage/health capability
-stomp       → stomp capability
-```
-
-Sounds whose lifetime corresponds to a state should instead be
-controlled by that state.
-
-``` text
-enter state → start sound
-exit state  → stop sound
-```
-
-This should be decided according to behavioural ownership rather than by
-placing all audio in either components or states.
-
-### Retain SFX player pooling
-
-`SfxManager` should retain a pool of `AudioStreamPlayer`s so multiple
-one-shot sounds can play simultaneously.
-
-``` text
-SfxManager
- ├── Player
- ├── Player
- ├── Player
- └── ...
-```
-
-A requested sound receives an available player, which returns to the
-pool when playback finishes.
-
-The size of the pool remains an implementation/configuration choice
-rather than part of the gameplay architecture.
-
-### Remove delayed SFX queuing
-
-The existing queue should not cause ordinary gameplay sounds to play
-significantly after the action that produced them.
-
-The intended behaviour is:
-
-``` text
-SFX requested
-      ↓
-player available?
-   ↙        ↘
- yes        no
-  ↓          ↓
-play       discard
-```
-
-More advanced policies such as priorities or replacing less important
-sounds can be introduced later if they become necessary.
-
-### Keep the managers generic
-
-While refactoring the managers, avoid introducing gameplay-specific
-knowledge into them.
-
-The desired interfaces remain conceptually small:
-
-``` text
-MusicManager
- ├── play(stream)
- ├── stop()
- └── music playback behaviour
-
-SfxManager
- └── play(stream)
-```
-
-Additional playback options can be added when actual gameplay
-requirements demand them.
-
-The managers should not contain concepts such as players, levels, areas,
-jumping, enemies or states.
-
-Once these changes are complete, the audio system follows the same
-architectural principle used throughout the project: **gameplay objects
-own gameplay meaning, while shared infrastructure provides the mechanism
-needed to perform it.**
