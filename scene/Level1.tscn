@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bdu8cynu5p5ca" path="res://script/level/level_1.gd" id="1_7tnty"]
 [ext_resource type="Script" uid="uid://r0xgpm08oh15" path="res://script/level/area.gd" id="2_pu4bb"]
+[ext_resource type="AudioStream" uid="uid://c74vwgo3iuuyq" path="res://asset/audio/music/Bzzt bzzt mf 3 full.wav" id="3_oj781"]
 [ext_resource type="Texture2D" uid="uid://d38p2net68ij7" path="res://asset/background/Ruined city.png" id="4_oj781"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
@@ -22,6 +23,7 @@ levelId = 1
 [node name="Area" type="Node2D" parent="Areas" unique_id=295783560]
 script = ExtResource("2_pu4bb")
 areaId = 1
+area_music = ExtResource("3_oj781")
 
 [node name="AreaBoundaries" type="Node2D" parent="Areas/Area" unique_id=391874351]
 

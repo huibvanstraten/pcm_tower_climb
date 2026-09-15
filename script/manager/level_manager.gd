@@ -5,9 +5,6 @@ var levels: Array[LevelData]
 var mainScene: Node2D = null
 var loadedLevel: Level = null
 
-func _ready():
-	print("manager ready")
-	
 
 func unload_level():
 	if is_instance_valid(loadedLevel):
@@ -16,7 +13,6 @@ func unload_level():
 	loadedLevel = null
 	
 func load_level(levelId: int):
-	print("loading?")
 	push_warning("loading level: %s" % levelId)
 	unload_level()
 	

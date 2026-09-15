@@ -3,8 +3,10 @@ extends Node2D
 
 #TODO: improve by removing path hardcoding
 @onready var background: ParallaxBackground = $"../../Ruined_City"
+@export var areaBackgroundFileName: String
 
 @export var areaId: int
+@export var area_music: AudioStream
 
 var left_boundary: Node2D:
 	get:
@@ -22,12 +24,18 @@ var bottom_boundary: Node2D:
 	get:
 		return $AreaBoundaries/Bottom
 
-@export var areaBackgroundFileName: String
 @export var scaleY: float
 
-#TODO: refactor
 func _ready():
 	EventManager.change_background.connect(_on_change_background)
+	
+
+func activate() -> void:
+	MusicManager.play(area_music)
+
+
+func deactivate() -> void:
+	pass
 
 func _on_change_background(transitionAreaId: int):
 	if transitionAreaId == areaId:

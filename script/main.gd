@@ -38,13 +38,7 @@ func _ready() -> void:
 
 	SpawnManager.player_container = player_container
 
-	MusicManager.stream = load(
-		"res://asset/audio/music/Bzzt bzzt mf 3 full.wav"
-	)
-	MusicManager.play()
-
-	EventManager.emit_signal("level", 1)
-	
+	EventManager.emit_signal("level", 1)	
 	
 
 func get_session(player_slot: int) -> PlayerInputSession:

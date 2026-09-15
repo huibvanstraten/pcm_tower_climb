@@ -1,6 +1,8 @@
 class_name JumpComponent
 extends Node
 
+@export var jump_sfx: AudioStream
+
 @export var character_body: CharacterBody2D
 
 @export_group("Jump")
@@ -24,6 +26,7 @@ func physics_update(delta: float, command: PlayerCommand) -> void:
 
 func jump() -> void:
 	character_body.velocity.y = jump_velocity
+	SfxManager.play(jump_sfx)
 
 	# The buffered jump and coyote opportunity have now been consumed.
 	jump_buffer_remaining = 0.0

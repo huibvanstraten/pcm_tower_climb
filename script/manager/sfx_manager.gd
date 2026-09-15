@@ -1,28 +1,35 @@
 extends Node
 
-var numPlayers = 8
+@export var pool_size: int = 16
 
-var availablePlayers = []  # The available players.
-var queue = []  # The queue of sounds to play.
+var available_players: Array[AudioStreamPlayer] = []
 
-func _ready():
-	# Create the pool of AudioStreamPlayer nodes.
-	for amount in numPlayers:
-		var player = AudioStreamPlayer.new()
+
+func _ready() -> void:
+	for i in pool_size:
+		var player := AudioStreamPlayer.new()
 		add_child(player)
-		availablePlayers.append(player)
-		player.finished.connect(_on_stream_finished.bind(player))
 
-func _process(_delta):
-	# Play a queued sound if any players are available.
-	if not queue.is_empty() and not availablePlayers.is_empty():
-		availablePlayers[0].stream = load(queue.pop_front())
-		availablePlayers[0].play()
-		availablePlayers.pop_front()
-	
-func play(soundPath):
-	queue.append(soundPath)
-	
-func _on_stream_finished(stream):
-	# When finished playing a stream, make the player available again.
-	availablePlayers.append(stream)
+		player.finished.connect(
+			_on_stream_finished.bind(player)
+		)
+
+		available_players.append(player)
+
+
+func play(stream: AudioStream) -> void:
+	if stream == null:
+		return
+
+	if available_players.is_empty():
+		return
+
+	var player = available_players.pop_front()
+
+	player.stream = stream
+	player.play()
+
+
+func _on_stream_finished(player: AudioStreamPlayer) -> void:
+	player.stream = null
+	available_players.append(player)
