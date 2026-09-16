@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cen5vsst8ve0u"]
+
+[ext_resource type="Script" uid="uid://de8ni5ly40irp" path="res://script/entity/respawn_point.gd" id="1_53nmy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4toet"]
+radius = 33.01515
+
+[node name="RespawnPoint" type="Node2D" unique_id=1443736956]
+script = ExtResource("1_53nmy")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1165521975]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=287999226]
+position = Vector2(1, 2)
+shape = SubResource("CircleShape2D_4toet")
+debug_color = Color(0.72919697, 0.37343937, 0.9726551, 0.41960785)
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

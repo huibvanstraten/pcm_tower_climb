@@ -16,5 +16,7 @@ signal health_depleted(entity: CharacterBody2D)
 signal remove_attack_body
 
 signal programming_started(player: Player)
+signal programming_cancelled(player: Player)
+signal programming_finished(player: Player)
 
 signal respawn_requested(respawn_position: Vector2)
