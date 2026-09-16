@@ -5,6 +5,7 @@ extends StateMachine
 @export var move_state: PlayerState
 @export var jump_state: PlayerState
 @export var fall_state: PlayerState
+@export var program_state: PlayerState
 
 
 func _ready():
@@ -38,6 +39,9 @@ func physics_update(
 
 		PlayerTransition.Type.FALL:
 			changeState(fall_state)
+			
+		PlayerTransition.Type.PROGRAM:
+			changeState(program_state)
 
 
 func can_move() -> bool:

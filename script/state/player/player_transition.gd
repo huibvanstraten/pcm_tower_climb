@@ -8,5 +8,5 @@ enum Type {
 	JUMP,
 	FALL,
 	HIT,
-	DIE
+	PROGRAM,
 }

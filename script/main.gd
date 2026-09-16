@@ -12,6 +12,25 @@ var game_input_contexts := InputContextStack.new()
 
 const MAX_PLAYERS := 4
 
+
+func _ready() -> void:
+	
+	game_input_contexts.set_context(InputContext.Type.GAMEPLAY)
+	
+	EventManager.level.connect(load_level)
+	EventManager.player_died.connect(kill_player)
+	EventManager.respawn_requested.connect(respawn_players)
+
+	LevelManager.mainScene = level_container
+	LevelManager.levels = availableLevels
+
+	SpawnManager.player_container = player_container
+
+	EventManager.emit_signal("level", 1)
+	
+	var level = LevelManager.get_current_level()
+
+
 func _input(event: InputEvent) -> void:
 	var device := PlayerInputDevice.from_event(event)
 
@@ -25,23 +44,7 @@ func _input(event: InputEvent) -> void:
 		return
 
 	join_device(device)
-	
 
-func _ready() -> void:
-	
-	game_input_contexts.set_context(InputContext.Type.GAMEPLAY)
-	
-	EventManager.connect("level", load_level)
-
-	LevelManager.mainScene = level_container
-	LevelManager.levels = availableLevels
-
-	SpawnManager.player_container = player_container
-
-	EventManager.emit_signal("level", 1)
-	
-	var level = LevelManager.get_current_level()
-	
 
 func get_players() -> Array[Player]:
 	var players: Array[Player] = []
@@ -223,3 +226,35 @@ func is_player_slot_used(player_slot: int) -> bool:
 			return true
 
 	return false
+	
+	
+func kill_player(player: Player) -> void:
+	var session := get_session(player.player_id)
+
+	if session == null:
+		return
+
+	session.deactivate()
+	SpawnManager.remove_player(player.player_id)
+
+	print("PLAYER DIED: ", player.player_id)
+
+
+func respawn_players(spawn_position: Vector2) -> void:
+	for child in input_session_container.get_children():
+		var session := child as PlayerInputSession
+
+		if session == null:
+			continue
+
+		if session.is_active:
+			continue
+
+		var player := SpawnManager.spawn_player(
+			session.player_slot,
+			spawn_position
+		)
+
+		session.activate(player)
+
+		print("PLAYER RESPAWNED: ", session.player_slot)

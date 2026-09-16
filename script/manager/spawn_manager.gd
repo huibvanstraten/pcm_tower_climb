@@ -49,3 +49,15 @@ func create_player(player_id: int) -> Player:
 
 func get_player(player_id: int) -> Player:
 	return players.get(player_id)
+	
+
+
+func remove_player(player_id: int) -> void:
+	var player := get_player(player_id)
+
+	if player == null:
+		return
+
+	players.erase(player_id)
+	player.queue_free()
+	

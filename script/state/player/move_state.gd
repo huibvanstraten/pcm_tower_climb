@@ -22,6 +22,9 @@ func physics_update(
 	player.flip_component.update_facing(
 		command.move_direction
 	)
+	
+	if command.interact_pressed:
+		return PlayerTransition.Type.PROGRAM
 
 	if player.jump_component.can_jump():
 		return PlayerTransition.Type.JUMP

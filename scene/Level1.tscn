@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bdu8cynu5p5ca" path="res://script/level/level_1.gd" id="1_nk78g"]
 [ext_resource type="PackedScene" uid="uid://2b8l7oadkcai" path="res://scene/cameraRig.tscn" id="2_a215g"]
 [ext_resource type="Script" uid="uid://r0xgpm08oh15" path="res://script/level/area.gd" id="3_ebr37"]
+[ext_resource type="PackedScene" uid="uid://cen5vsst8ve0u" path="res://scene/respawnPoint.tscn" id="4_nk78g"]
 [ext_resource type="Texture2D" uid="uid://d38p2net68ij7" path="res://asset/background/Ruined city.png" id="5_ldwqa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
@@ -12,7 +13,7 @@ size = Vector2(278.5, 9353)
 size = Vector2(2848.5, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dr4yn"]
-size = Vector2(2562, 5)
+size = Vector2(1426, 14.5)
 
 [node name="Level1" type="Node2D" unique_id=1036665347]
 script = ExtResource("1_nk78g")
@@ -60,6 +61,9 @@ shape = SubResource("RectangleShape2D_ni43k")
 [node name="Start_1" type="Marker2D" parent="SpawnPoints" unique_id=1098790439]
 position = Vector2(575, 1445)
 
+[node name="RespawnPoint" parent="SpawnPoints/Start_1" unique_id=1443736956 instance=ExtResource("4_nk78g")]
+position = Vector2(405, 71)
+
 [node name="Start_2" type="Marker2D" parent="SpawnPoints" unique_id=1998108156]
 position = Vector2(673, 1085)
 
@@ -78,17 +82,10 @@ position = Vector2(1310, 1047.9999)
 scale = Vector2(6.89375, 7.577778)
 texture = ExtResource("5_ldwqa")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Ruined_City" unique_id=1399553679]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Ruined_City/StaticBody2D" unique_id=927497898]
-position = Vector2(1345, 1848.5)
-shape = SubResource("RectangleShape2D_dr4yn")
-debug_color = Color(0.674176, 0.40751508, 0.7823852, 0.41960785)
-
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=164057835]
 position = Vector2(-574, 464)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1422167784]
-position = Vector2(1330.3125, 1067)
+position = Vector2(1099, 1071.75)
 shape = SubResource("RectangleShape2D_dr4yn")
 debug_color = Color(0.674176, 0.40751508, 0.7823852, 0.41960785)

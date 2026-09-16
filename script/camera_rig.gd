@@ -97,7 +97,8 @@ func _on_death_zone_body_entered(body: Node2D) -> void:
 	if player == null:
 		return
 
-	print("PLAYER ENTERED DEATH ZONE: ", player.name)
+	unregister_player(player)
+	EventManager.player_died.emit(player)
 
 
 func register_player(player: Player) -> void:
@@ -430,3 +431,13 @@ func get_player_bounds() -> Rect2:
 			max_y - min_y
 		)
 	)
+
+
+func unregister_player(player: Player) -> void:
+	players.erase(player)
+
+	horizontal_tracking_state = TrackingState.NORMAL
+	vertical_tracking_state = TrackingState.NORMAL
+
+	print("CAMERA PLAYER UNREGISTERED: ", player.name)
+	print("CAMERA PLAYERS: ", players.size())
