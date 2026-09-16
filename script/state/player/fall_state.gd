@@ -17,12 +17,14 @@ func physics_update(
 			delta,
 			command.move_direction
 		)
-	else:
-		player.move_component.apply_air_resistance(delta)
+	else: player.move_component.apply_air_resistance(delta)
 
 	player.flip_component.update_facing(
 		command.move_direction
 	)
+	
+	if player.jump_component.can_jump():
+		return PlayerTransition.Type.JUMP
 
 	if player.is_on_floor():
 		return PlayerTransition.Type.MOVE

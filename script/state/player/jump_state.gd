@@ -5,8 +5,6 @@ extends PlayerState
 func enter() -> void:
 	super()
 
-	print("FALL STATE")
-
 	player.jump_component.jump()
 
 
@@ -14,6 +12,8 @@ func physics_update(
 	delta: float,
 	command: PlayerCommand
 ) -> PlayerTransition.Type:
+	player.physics_component.apply_gravity(delta)
+
 	player.move_component.move_in_air(
 		delta,
 		command.move_direction
@@ -23,15 +23,14 @@ func physics_update(
 		command.move_direction
 	)
 
-	if not command.jump_held:
+	if command.jump_released:
 		player.jump_component.stop_jump()
 
 	if player.is_on_ceiling():
 		player.jump_component.stop_jump()
 		return PlayerTransition.Type.FALL
-		
+
 	if player.is_on_floor():
-		player.jump_component.stop_jump()
 		return PlayerTransition.Type.MOVE
 
 	if player.velocity.y >= 0.0:

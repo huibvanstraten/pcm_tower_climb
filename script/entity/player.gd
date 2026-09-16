@@ -20,13 +20,7 @@ func handle_command(
 	delta: float,
 	command: PlayerCommand
 ) -> void:
-	
-	if command.jump_pressed == true:
-		print(
-		" jump=",
-		command.jump_pressed
-	)
-
+	jump_component.physics_update(delta, command)
 	state_machine.physics_update(delta, command)
 
 func _physics_process(delta: float) -> void:

@@ -23,7 +23,7 @@ func physics_update(
 		command.move_direction
 	)
 
-	if command.jump_pressed:
+	if player.jump_component.can_jump():
 		return PlayerTransition.Type.JUMP
 
 	if not player.is_on_floor():
