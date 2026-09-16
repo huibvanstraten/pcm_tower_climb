@@ -1212,108 +1212,263 @@ responsibility.
 
 ------------------------------------------------------------------------
 
-# Player Respawning
+# Player Death, Respawning and Programming
 
-Respawning returns an existing player to a safe position after that
-player leaves the playable world, for example by falling into the
-camera's `DeathZone`.
-
-Respawning is part of the player lifecycle. The system that detects a
-death does not decide where the player should appear.
+Death removes a Player from active gameplay without removing the
+participant from the game.
 
 ``` text
+Player falls into DeathZone
+	↓
 Player dies
-    ↓
-player lifecycle handles death
-    ↓
-select safe respawn point
-    ↓
-spawn existing Player
+	↓
+Player entity is removed
+	↓
+PlayerInputSession remains joined but inactive
+	↓
+another Player activates a RespawnPoint
+	↓
+dead Players are recreated
 ```
 
-### Explicit respawn points
+A `PlayerInputSession` represents the participant and therefore survives
+death.
 
-Areas define explicit safe respawn positions rather than deriving them
-from collision geometry.
+A `Player` represents the participant's current gameplay entity and can
+be destroyed and recreated during the game.
+
+## Death
+
+A `DeathZone` detects when a Player has fallen out of the playable
+shared-camera space.
+
+The DeathZone only detects the event. It does not own player lifecycle
+or spawning.
+
+When a Player dies:
+
+-   the Player is removed from camera tracking;
+-   the Player entity is destroyed;
+-   its `PlayerInputSession` becomes inactive;
+-   the input device remains assigned to the participant.
+
+An inactive session does not produce gameplay commands until a new
+Player has been spawned and assigned to it.
+
+Death is not a `PlayerState`. Player states describe the behaviour of an
+existing Player entity. After death, that entity no longer exists.
+
+## Programming
+
+Programming is a Player state used for interactions that require the
+Player to temporarily stop normal movement and work with another
+gameplay object.
 
 ``` text
-Area
- ├── Terrain
- ├── RespawnPoints
- │    ├── RespawnPoint
- │    ├── RespawnPoint
- │    └── RespawnPoint
- └── ...
+Player approaches programmable object
+    ↓
+Player presses interact
+    ↓
+ProgrammingState
+    ↓
+nearby object accepts programming
 ```
 
-A respawn point represents a location where the level designer knows
-that a player can safely return. Points should be placed on suitable
-platforms throughout an area.
+The Player does not need to know which specific object is being
+programmed.
 
-This avoids requiring the spawning system to inspect arbitrary
-`CollisionShape2D`s and determine whether they represent a safe floor,
-wall, ceiling, hazard or moving object.
+Programmable objects define their own interaction range and decide what
+programming means for that object.
 
-### Player progress
-
-Each player can remember their most recently reached safe respawn point.
+For example:
 
 ``` text
-Player reaches RespawnPoint 3
-        ↓
-RespawnPoint 3 becomes current
-        ↓
-Player continues climbing
-        ↓
-Player falls
-        ↓
-respawn at RespawnPoint 3
+RespawnPoint
+    → wait for programming to complete
+    → respawn dead Players
+
+ProgrammingBlock
+    → create or configure a block
+
+Crane
+    → transfer temporary control to the crane
 ```
 
-Respawn progress belongs to the individual player. In multiplayer,
-players may therefore have different current respawn points.
+This keeps `ProgrammingState` generic instead of adding object-specific
+behaviour to the Player.
 
-A respawn point may use an activation area so reaching a safe platform
-updates the player's current point without requiring an explicit
-interaction.
+## Programming lifecycle
 
-### Multiplayer respawning
+The Player decides when to start or cancel programming.
 
-Respawning should return only the player that died. Other players remain
-in their current gameplay state and position.
+The programmed object decides when programming has successfully
+completed.
 
-The selected respawn point must also remain compatible with the
-shared-camera gameplay. A historical respawn point should not blindly
-return a player to a location that is no longer appropriate for the
-current area or group position.
+``` text
+Programming starts
+    │
+    ├── object completes
+    │      ↓
+    │   programming finished
+    │      ↓
+    │   Player leaves ProgrammingState
+    │
+    └── Player cancels
+           ↓
+        object aborts interaction
+           ↓
+        Player leaves ProgrammingState
+```
 
-The initial implementation can use the player's latest activated safe
-point. Selection rules can later consider the current area and
-shared-camera vicinity when gameplay requires it.
+Programming may be instantaneous or take time.
 
-### Responsibilities
+Cancelling does not preserve partial progress unless an object's design
+explicitly requires it. A later attempt starts that object's programming
+process again.
+
+The Player cannot perform normal movement while in `ProgrammingState`.
+
+## RespawnPoint
+
+A `RespawnPoint` is a programmable world object that allows a living
+Player to bring dead participants back into the game.
+
+``` text
+RespawnPoint
+├── DetectionArea
+├── ProgrammingTimer
+└── SpawnPoints
+    ├── Spawn1
+    ├── Spawn2
+    ├── Spawn3
+    └── Spawn4
+```
+
+The `DetectionArea` determines which Players are close enough to program
+the object.
+
+Entering the area alone does not activate the RespawnPoint. The Player
+must explicitly enter `ProgrammingState`.
+
+Programming a RespawnPoint currently takes three seconds.
+
+If the Player cancels before completion, the timer is reset and no
+respawn occurs.
+
+When programming completes, all currently dead joined participants are
+respawned.
+
+## Respawn positions
+
+A RespawnPoint provides multiple explicit spawn positions.
+
+Each returning Player receives a different position:
+
+``` text
+          RespawnPoint
+
+     P2       P3       P4
+      ↓        ↓        ↓
+    Spawn1   Spawn2   Spawn3
+──────────────────────────────
+           safe floor
+```
+
+Spawn positions are defined explicitly by the level designer rather than
+inferred from collision geometry.
+
+This guarantees that the positions are intentional safe locations and
+prevents multiple Players from being spawned on top of each other.
+
+Spawn markers are available positions rather than permanently belonging
+to a particular player slot. Only Players that currently need to respawn
+consume a position.
+
+## Responsibilities
 
 The responsibilities remain separated:
 
 ``` text
-Area / Level       → defines safe respawn locations
-DeathZone          → detects a player falling out of play
-Player lifecycle   → decides that the player must respawn
-Spawning system    → positions the Player at the selected point
-CameraRig          → tracks active gameplay players
+DeathZone
+    → detects that a Player left playable space
+
+Player lifecycle
+    → deactivates/reactivates participants and their Player entities
+
+PlayerInputSession
+    → preserves participant and input-device identity
+
+ProgrammingState
+    → represents the Player performing a programming interaction
+
+Programmable object
+    → decides whether programming is accepted and when it completes
+
+RespawnPoint
+    → provides respawn interaction and safe spawn positions
+
+SpawnManager
+    → creates and positions Player entities
+
+CameraRig
+    → tracks active Player entities
 ```
 
-The `CameraRig` should not create, destroy or reposition players as part
-of respawning.
+The CameraRig does not manage spawning.
 
-### Implementation status
+The RespawnPoint does not manage participant identity or input sessions.
 
-Respawn behaviour is currently a design only.
+The Player does not contain special-case knowledge of RespawnPoints,
+cranes or other programmable objects.
 
-The camera death zone provides the point at which falling can be
-detected. Explicit respawn points, per-player respawn progress and the
-connection to the existing spawning lifecycle still need to be
-implemented.
+## Interaction design
+
+Programming is intended as the common entry point for world interactions
+that temporarily interrupt normal Player movement.
+
+Objects can build different behaviour on the same lifecycle:
+
+``` text
+start programming
+    ↓
+object accepts interaction
+    ↓
+object-specific behaviour
+    ↓
+complete or cancel
+    ↓
+return Player to normal gameplay
+```
+
+Some objects may complete after a timer, some after another condition,
+and some may temporarily move the participant's control target to
+another entity.
+
+The existing control-target stack remains responsible for temporary
+control:
+
+``` text
+[Player]
+
+		↓ program crane
+
+[Player, Crane]
+
+		↓ crane interaction ends
+
+[Player]
+```
+
+Programming and control targets therefore remain separate concepts.
+
+`ProgrammingState` describes what the Player is doing. The
+control-target stack determines which entity receives the participant's
+commands.
+
+This allows future programmable objects to introduce different
+interactions without requiring a separate Player state or input-routing
+system for every object.
+
 
 ------------------------------------------------------------------------
 

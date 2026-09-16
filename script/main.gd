@@ -240,7 +240,9 @@ func kill_player(player: Player) -> void:
 	print("PLAYER DIED: ", player.player_id)
 
 
-func respawn_players(spawn_position: Vector2) -> void:
+func respawn_players(spawn_positions: Array[Vector2]) -> void:
+	var spawn_index := 0
+
 	for child in input_session_container.get_children():
 		var session := child as PlayerInputSession
 
@@ -250,11 +252,16 @@ func respawn_players(spawn_position: Vector2) -> void:
 		if session.is_active:
 			continue
 
+		if spawn_index >= spawn_positions.size():
+			push_error("Not enough respawn positions for dead players")
+			return
+
 		var player := SpawnManager.spawn_player(
 			session.player_slot,
-			spawn_position
+			spawn_positions[spawn_index]
 		)
 
 		session.activate(player)
+		spawn_index += 1
 
 		print("PLAYER RESPAWNED: ", session.player_slot)

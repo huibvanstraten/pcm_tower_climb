@@ -15,5 +15,23 @@ position = Vector2(1, 2)
 shape = SubResource("CircleShape2D_4toet")
 debug_color = Color(0.72919697, 0.37343937, 0.9726551, 0.41960785)
 
+[node name="ProgrammingTimer" type="Timer" parent="." unique_id=1759399444]
+wait_time = 3.0
+one_shot = true
+
+[node name="SpawnPoints" type="Node2D" parent="." unique_id=1135730169]
+
+[node name="Spawn1" type="Marker2D" parent="SpawnPoints" unique_id=1939258983]
+position = Vector2(32, 0)
+
+[node name="Spawn2" type="Marker2D" parent="SpawnPoints" unique_id=1805842724]
+position = Vector2(-32, 0)
+
+[node name="Spawn3" type="Marker2D" parent="SpawnPoints" unique_id=1039956117]
+position = Vector2(-12, 0)
+
+[node name="Spawn4" type="Marker2D" parent="SpawnPoints" unique_id=405515463]
+position = Vector2(11, 0)
+
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]

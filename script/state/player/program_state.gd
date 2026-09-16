@@ -27,12 +27,13 @@ func physics_update(
 	_delta: float,
 	command: PlayerCommand
 ) -> PlayerTransition.Type:
-	if is_finished:
-		return PlayerTransition.Type.IDLE
-
 	if command.interact_pressed:
+		print("PROGRAMMING: INTERACT PRESSED AGAIN")
 		EventManager.programming_cancelled.emit(character_body)
-		return PlayerTransition.Type.IDLE
+		return PlayerTransition.Type.MOVE
+
+	if is_finished:
+		return PlayerTransition.Type.MOVE
 
 	return PlayerTransition.Type.NONE
 

@@ -19,4 +19,4 @@ signal programming_started(player: Player)
 signal programming_cancelled(player: Player)
 signal programming_finished(player: Player)
 
-signal respawn_requested(respawn_position: Vector2)
+signal respawn_requested(spawn_positions: Array[Vector2])
