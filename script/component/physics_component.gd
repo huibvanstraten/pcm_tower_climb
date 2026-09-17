@@ -15,13 +15,11 @@ var gravity: float:
 			* gravity_multiplier
 		)
 
-
 func apply_gravity(delta: float) -> void:
 	if character_body.is_on_floor():
 		return
 
 	character_body.velocity.y += gravity * delta
-
 
 func move_horizontal(
 	delta: float,
@@ -37,7 +35,6 @@ func move_horizontal(
 		acceleration * delta
 	)
 
-
 func stop_horizontal(
 	delta: float,
 	friction: float
@@ -50,9 +47,17 @@ func stop_horizontal(
 		friction * delta
 	)
 
-func halt_horiontal() -> void:
+func halt_horizontal() -> void:
 	direction = 0.0
 	character_body.velocity.x = 0.0
 
 func reset_velocity() -> void:
 	character_body.velocity = Vector2.ZERO
+
+
+func apply_knockback(
+	direction: Vector2,
+	knockback: Vector2
+) -> void:
+	character_body.velocity.x = direction.x * knockback.x
+	character_body.velocity.y = -knockback.y

@@ -26,6 +26,13 @@ func _on_programming_started(player: Player) -> void:
 
 	print("RESPAWN PROGRAMMING STARTED: ", player.name)
 	
+	player.hit(
+		Hit.new(
+			Vector2.LEFT,
+			Vector2(250.0, 300.0)
+		)
+	)
+	
 
 func _on_programming_cancelled(player: Player) -> void:
 	print("RESPAWN POINT RECEIVED CANCEL: ", player.name)

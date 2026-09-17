@@ -11,65 +11,198 @@
 [ext_resource type="Script" uid="uid://ch17otwx0uqrw" path="res://script/state/player/fall_state.gd" id="9_ml7e8"]
 [ext_resource type="Script" uid="uid://dw15e7uqw7kde" path="res://script/state/player/move_state.gd" id="10_ihjo1"]
 [ext_resource type="Script" uid="uid://d34lv7m2fxo8g" path="res://script/state/player/program_state.gd" id="11_ihjo1"]
+[ext_resource type="Script" uid="uid://beyt88c3y7u03" path="res://script/state/player/hit_state.gd" id="12_dk1vr"]
+[ext_resource type="Script" uid="uid://dt45jb0dt3xgd" path="res://script/state/player/idle_state.gd" id="13_34jf3"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mbv8e"]
+[sub_resource type="Animation" id="Animation_34jf3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"hit"]
+}
+
+[sub_resource type="Animation" id="Animation_u7b46"]
+resource_name = "hit"
+length = 0.6666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.18265837, 0.28563356, 0.36776853, 0.549201),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"hit"]
+}
+
+[sub_resource type="Animation" id="Animation_j4wxg"]
+resource_name = "idle"
+length = 0.9
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.13362257, 0.28195587, 0.41680434, 0.6448208, 0.76005495),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bup7g"]
+_data = {
+&"RESET": SubResource("Animation_34jf3"),
+&"hit": SubResource("Animation_u7b46"),
+&"idle": SubResource("Animation_j4wxg")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34jf3"]
+atlas = ExtResource("1_maa0i")
+region = Rect2(54, 67, 54, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7b46"]
+atlas = ExtResource("1_maa0i")
+region = Rect2(108, 67, 54, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j4wxg"]
+atlas = ExtResource("1_maa0i")
+region = Rect2(162, 67, 54, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wt23p"]
+atlas = ExtResource("1_maa0i")
+region = Rect2(216, 67, 54, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k8m7u"]
+atlas = ExtResource("1_maa0i")
+region = Rect2(378, 134, 54, 67)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bup7g"]
 atlas = ExtResource("1_maa0i")
 region = Rect2(0, 0, 54, 67)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_851de"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ja17"]
 atlas = ExtResource("1_maa0i")
 region = Rect2(54, 0, 54, 67)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_k7jhj"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_v4iqv"]
 atlas = ExtResource("1_maa0i")
 region = Rect2(108, 0, 54, 67)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_e2pww"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_42h83"]
 atlas = ExtResource("1_maa0i")
 region = Rect2(162, 0, 54, 67)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dnm52"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_iuf2t"]
 atlas = ExtResource("1_maa0i")
 region = Rect2(216, 0, 54, 67)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2atd3"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_jrjdb"]
 atlas = ExtResource("1_maa0i")
 region = Rect2(270, 0, 54, 67)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qgfxf"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_kk4ol"]
 atlas = ExtResource("1_maa0i")
 region = Rect2(324, 0, 54, 67)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1jn5y"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_4reak"]
 atlas = ExtResource("1_maa0i")
 region = Rect2(378, 0, 54, 67)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_5iyti"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_34jf3"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mbv8e")
+"texture": SubResource("AtlasTexture_34jf3")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_851de")
+"texture": SubResource("AtlasTexture_u7b46")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_k7jhj")
+"texture": SubResource("AtlasTexture_j4wxg")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_e2pww")
+"texture": SubResource("AtlasTexture_wt23p")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dnm52")
+"texture": SubResource("AtlasTexture_k8m7u")
+}],
+"loop": 1,
+"name": &"hit",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bup7g")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2atd3")
+"texture": SubResource("AtlasTexture_4ja17")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qgfxf")
+"texture": SubResource("AtlasTexture_v4iqv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1jn5y")
+"texture": SubResource("AtlasTexture_42h83")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iuf2t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jrjdb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kk4ol")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4reak")
 }],
 "loop": 1,
 "name": &"idle",
@@ -83,12 +216,13 @@ script = ExtResource("1_ct4mp")
 bodyCollisionShape = NodePath("CollisionShape2D")
 animationComponent = NodePath("AnimatedSprite2D")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=432452156]
+libraries/ = SubResource("AnimationLibrary_bup7g")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2123559278]
 position = Vector2(0, 1)
-sprite_frames = SubResource("SpriteFrames_5iyti")
-animation = &"idle"
-autoplay = "idle"
-frame_progress = 0.55825335
+sprite_frames = SubResource("SpriteFrames_34jf3")
+animation = &"hit"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2119576815]
 position = Vector2(-2, 16)
@@ -113,40 +247,71 @@ flip_marker = NodePath("../../FlipMarker")
 script = ExtResource("6_g2vtq")
 physics_component = NodePath("../Physics")
 
-[node name="StateMachine" type="Node2D" parent="." unique_id=870998138 node_paths=PackedStringArray("move_state", "jump_state", "fall_state", "program_state", "character", "initialState")]
+[node name="StateMachine" type="Node2D" parent="." unique_id=870998138 node_paths=PackedStringArray("idle_state", "move_state", "jump_state", "fall_state", "program_state", "hit_state", "character", "initialState")]
 script = ExtResource("7_2fvbb")
+idle_state = NodePath("Idle")
 move_state = NodePath("Move")
 jump_state = NodePath("Jump")
 fall_state = NodePath("Fall")
 program_state = NodePath("Program")
+hit_state = NodePath("Hit")
 character = NodePath("..")
-initialState = NodePath("Move")
+initialState = NodePath("Idle")
 
-[node name="Jump" type="Node2D" parent="StateMachine" unique_id=1437876539 node_paths=PackedStringArray("player", "character_body", "node_animation_sprite", "collision_shape")]
+[node name="Jump" type="Node2D" parent="StateMachine" unique_id=1437876539 node_paths=PackedStringArray("player", "character_body", "node_animation_sprite", "collision_shape", "animation_player")]
 script = ExtResource("8_ml7e8")
 player = NodePath("../..")
 character_body = NodePath("../..")
 node_animation_sprite = NodePath("../../AnimatedSprite2D")
 collision_shape = NodePath("../../CollisionShape2D")
+animation_player = NodePath("../../AnimationPlayer")
+animation_name = "idle"
 
-[node name="Fall" type="Node2D" parent="StateMachine" unique_id=380773811 node_paths=PackedStringArray("player", "character_body", "node_animation_sprite", "collision_shape")]
+[node name="Fall" type="Node2D" parent="StateMachine" unique_id=380773811 node_paths=PackedStringArray("player", "character_body", "node_animation_sprite", "collision_shape", "animation_player")]
 script = ExtResource("9_ml7e8")
 player = NodePath("../..")
 character_body = NodePath("../..")
 node_animation_sprite = NodePath("../../AnimatedSprite2D")
 collision_shape = NodePath("../../CollisionShape2D")
+animation_player = NodePath("../../AnimationPlayer")
+animation_name = "idle"
 
-[node name="Move" type="Node2D" parent="StateMachine" unique_id=1426468706 node_paths=PackedStringArray("player", "character_body", "node_animation_sprite", "collision_shape")]
+[node name="Move" type="Node2D" parent="StateMachine" unique_id=1426468706 node_paths=PackedStringArray("player", "character_body", "node_animation_sprite", "collision_shape", "animation_player")]
 script = ExtResource("10_ihjo1")
 player = NodePath("../..")
 character_body = NodePath("../..")
 node_animation_sprite = NodePath("../../AnimatedSprite2D")
 collision_shape = NodePath("../../CollisionShape2D")
+animation_player = NodePath("../../AnimationPlayer")
+animation_name = "idle"
 
-[node name="Program" type="Node2D" parent="StateMachine" unique_id=1243153786 node_paths=PackedStringArray("player", "character_body", "collision_shape")]
+[node name="Program" type="Node2D" parent="StateMachine" unique_id=1243153786 node_paths=PackedStringArray("player", "character_body", "node_animation_sprite", "collision_shape", "animation_player")]
 script = ExtResource("11_ihjo1")
 player = NodePath("../..")
 character_body = NodePath("../..")
+node_animation_sprite = NodePath("../../AnimatedSprite2D")
 collision_shape = NodePath("../../CollisionShape2D")
+animation_player = NodePath("../../AnimationPlayer")
+animation_name = "idle"
+
+[node name="Hit" type="Node2D" parent="StateMachine" unique_id=1447044027 node_paths=PackedStringArray("player", "character_body", "node_animation_sprite", "collision_shape", "animation_player")]
+script = ExtResource("12_dk1vr")
+player = NodePath("../..")
+character_body = NodePath("../..")
+node_animation_sprite = NodePath("../../AnimatedSprite2D")
+collision_shape = NodePath("../../CollisionShape2D")
+animation_player = NodePath("../../AnimationPlayer")
+animation_name = "hit"
+
+[node name="Idle" type="Node2D" parent="StateMachine" unique_id=2079761880 node_paths=PackedStringArray("player", "character_body", "node_animation_sprite", "collision_shape", "animation_player")]
+script = ExtResource("13_34jf3")
+player = NodePath("../..")
+character_body = NodePath("../..")
+node_animation_sprite = NodePath("../../AnimatedSprite2D")
+collision_shape = NodePath("../../CollisionShape2D")
+animation_player = NodePath("../../AnimationPlayer")
+animation_name = "idle"
 
 [node name="FlipMarker" type="Node2D" parent="." unique_id=490774435]
+
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Hit" method="_on_animation_player_animation_finished"]

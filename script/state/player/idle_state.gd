@@ -1,28 +1,21 @@
-class_name MoveState
+class_name IdleState
 extends PlayerState
 
 
 func enter():
 	super()
-	print("MOVE STATE")
+	print("IDLE STATE")
+	
 
 func physics_update(
 	delta: float,
 	command: PlayerCommand
 ) -> PlayerTransition.Type:
+	player.move_component.stop(delta)
 
 	if command.move_direction != 0.0:
-		player.move_component.move(
-			delta,
-			command.move_direction
-		)
-	else:
-		player.move_component.stop(delta)
-
-	player.flip_component.update_facing(
-		command.move_direction
-	)
-
+		return PlayerTransition.Type.MOVE
+	
 	if command.interact_pressed:
 		return PlayerTransition.Type.PROGRAM
 
@@ -31,8 +24,5 @@ func physics_update(
 
 	if not player.is_on_floor():
 		return PlayerTransition.Type.FALL
-
-	if command.move_direction == 0.0:
-		return PlayerTransition.Type.IDLE
 
 	return PlayerTransition.Type.NONE

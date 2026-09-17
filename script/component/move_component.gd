@@ -38,6 +38,9 @@ func stop(delta: float) -> void:
 		friction
 	)
 
+func accute_stop() -> void:
+	physics_component.halt_horizontal()
+
 
 func apply_air_resistance(delta: float) -> void:
 	physics_component.stop_horizontal(

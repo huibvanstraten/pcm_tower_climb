@@ -6,6 +6,7 @@ extends Entity
 @onready var physics_component: PhysicsComponent = $Components/Physics
 @onready var flip_component: FlipComponent = $Components/Flip
 @onready var state_machine: PlayerStateMachine = $StateMachine
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var player_id: int
 var is_frozen: bool = false
@@ -32,3 +33,6 @@ func _physics_process(delta: float) -> void:
 
 func freeze(should_freeze: bool) -> void:
 	is_frozen = should_freeze
+
+func hit(hit_data: Hit) -> void:
+	state_machine.hit(hit_data)
