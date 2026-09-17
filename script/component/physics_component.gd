@@ -50,6 +50,9 @@ func stop_horizontal(
 		friction * delta
 	)
 
+func halt_horiontal() -> void:
+	direction = 0.0
+	character_body.velocity.x = 0.0
 
 func reset_velocity() -> void:
 	character_body.velocity = Vector2.ZERO

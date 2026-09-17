@@ -19,8 +19,10 @@ func enter() -> void:
 
 	if player == null:
 		return
-
+		
 	EventManager.programming_started.emit(player)
+	
+	player.physics_component.halt_horiontal()
 
 
 func physics_update(
