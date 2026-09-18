@@ -1,0 +1,2 @@
+class_name ElectricBall
+extends Node2D

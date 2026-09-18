@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://c1mxmnssq41rd" path="res://script/component/flip_component.gd" id="6_2fvbb"]
 [ext_resource type="Script" uid="uid://co207pvwufuqm" path="res://script/component/move_component.gd" id="6_g2vtq"]
 [ext_resource type="Script" uid="uid://ccqwa7tm8x3pw" path="res://script/state/player/player_state_machine.gd" id="7_2fvbb"]
+[ext_resource type="Script" uid="uid://dvok0kakc82vy" path="res://script/component/hurt_component.gd" id="7_u7b46"]
 [ext_resource type="Script" uid="uid://cwdrpk0n635ul" path="res://script/state/player/jump_state.gd" id="8_ml7e8"]
 [ext_resource type="Script" uid="uid://ch17otwx0uqrw" path="res://script/state/player/fall_state.gd" id="9_ml7e8"]
 [ext_resource type="Script" uid="uid://dw15e7uqw7kde" path="res://script/state/player/move_state.gd" id="10_ihjo1"]
@@ -211,6 +212,8 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4toet"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ni43k"]
+
 [node name="Player" type="CharacterBody2D" unique_id=1680716946 node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
 script = ExtResource("1_ct4mp")
 bodyCollisionShape = NodePath("CollisionShape2D")
@@ -220,12 +223,11 @@ animationComponent = NodePath("AnimatedSprite2D")
 libraries/ = SubResource("AnimationLibrary_bup7g")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2123559278]
-position = Vector2(0, 1)
+position = Vector2(3, -16)
 sprite_frames = SubResource("SpriteFrames_34jf3")
 animation = &"hit"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2119576815]
-position = Vector2(-2, 16)
 shape = SubResource("CircleShape2D_4toet")
 
 [node name="Components" type="Node2D" parent="." unique_id=2140004751]
@@ -246,6 +248,14 @@ flip_marker = NodePath("../../FlipMarker")
 [node name="Move" type="Node2D" parent="Components" unique_id=943010681 node_paths=PackedStringArray("physics_component")]
 script = ExtResource("6_g2vtq")
 physics_component = NodePath("../Physics")
+
+[node name="Hurt" type="Area2D" parent="Components" unique_id=687094112 node_paths=PackedStringArray("player")]
+script = ExtResource("7_u7b46")
+player = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt" unique_id=679871071]
+shape = SubResource("CircleShape2D_ni43k")
+debug_color = Color(0.5204651, 0.5697249, 0.22021666, 0.41960785)
 
 [node name="StateMachine" type="Node2D" parent="." unique_id=870998138 node_paths=PackedStringArray("idle_state", "move_state", "jump_state", "fall_state", "program_state", "hit_state", "character", "initialState")]
 script = ExtResource("7_2fvbb")
