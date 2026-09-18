@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://dqwvg3ik2nw2a"]
+
+[ext_resource type="PackedScene" uid="uid://bqhdavfgdcwnd" path="res://scene/ui/playerHUDSlot.tscn" id="1_7n5te"]
+[ext_resource type="Script" uid="uid://og7oix2dunk4" path="res://script/hud.gd" id="1_iafo3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7n5te"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iafo3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w1l6y"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_73u6w"]
+
+[node name="Hud" type="CanvasLayer" unique_id=637391166]
+script = ExtResource("1_iafo3")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1229955603]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=361797400]
+layout_mode = 2
+
+[node name="PlayerHUDSlot1" parent="MarginContainer/HBoxContainer" unique_id=876393324 instance=ExtResource("1_7n5te")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_7n5te")
+
+[node name="PlayerHUDSlot2" parent="MarginContainer/HBoxContainer" unique_id=689558583 instance=ExtResource("1_7n5te")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_iafo3")
+
+[node name="PlayerHUDSlot3" parent="MarginContainer/HBoxContainer" unique_id=1654676823 instance=ExtResource("1_7n5te")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_w1l6y")
+
+[node name="PlayerHUDSlot4" parent="MarginContainer/HBoxContainer" unique_id=794958727 instance=ExtResource("1_7n5te")]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_73u6w")

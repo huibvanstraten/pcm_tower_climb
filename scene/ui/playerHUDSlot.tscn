@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bqhdavfgdcwnd"]
+
+[ext_resource type="Script" uid="uid://c0msmv8edep7a" path="res://script/player_hud_slot.gd" id="1_w0q0o"]
+
+[node name="PlayerHUDSlot" type="PanelContainer" unique_id=876393324]
+script = ExtResource("1_w0q0o")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=660559195]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer" unique_id=2068126361]
+layout_mode = 2
