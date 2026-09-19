@@ -9,9 +9,14 @@ var game_input_contexts: InputContextStack
 
 var control_targets: Array[Node] = []
 var input_device: PlayerInputDevice
-var is_active: bool = true
 
+enum State {
+	READY,
+	PLAYING,
+	WAITING,
+}
 
+var state: PlayerInputSession.State = State.READY
 
 @onready var input_source: PlayerInputSource = $InputSource
 
@@ -83,7 +88,7 @@ func clear_control_targets() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if not is_active:
+	if state != State.PLAYING:
 		return
 	
 	if input_device == null:
@@ -112,11 +117,11 @@ func is_joined() -> bool:
 	return input_device != null
 	
 
-func deactivate() -> void:
-	is_active = false
-	clear_control_targets()
-
-
 func activate(target: Node) -> void:
 	set_control_target(target)
-	is_active = true
+	state = PlayerInputSession.State.PLAYING
+
+
+func deactivate() -> void:
+	clear_control_targets()
+	state = State.WAITING

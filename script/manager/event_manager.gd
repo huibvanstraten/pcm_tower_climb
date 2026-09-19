@@ -5,8 +5,10 @@ signal transition_to_area(areaId: int)
 
 signal freeze_player(freeze: bool)
 
+signal player_session_joined(player_slot: int)
 signal player_joined(player: Player)
 signal player_died(player: Player)
+signal player_respawned(player: Player)
 
 signal init_health_bar(entity: CharacterBody2D, startHealth: int)
 signal entity_hit(entity: CharacterBody2D, newHealth: int)
