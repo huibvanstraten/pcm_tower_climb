@@ -4,7 +4,7 @@ extends Node
 @export var physics_component: PhysicsComponent
 
 @export_group("Ground Movement")
-@export var speed: float = 300.0
+@export var speed: float = 200.0
 @export var acceleration: float = 2000.0
 @export var friction: float = 2000.0
 
@@ -37,6 +37,9 @@ func stop(delta: float) -> void:
 		delta,
 		friction
 	)
+
+func accute_stop() -> void:
+	physics_component.halt_horizontal()
 
 
 func apply_air_resistance(delta: float) -> void:

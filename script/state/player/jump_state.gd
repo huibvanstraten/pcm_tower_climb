@@ -3,6 +3,7 @@ extends PlayerState
 
 
 func enter() -> void:
+	print("JUMP STATE")
 	super()
 
 	player.jump_component.jump()
@@ -31,7 +32,7 @@ func physics_update(
 		return PlayerTransition.Type.FALL
 
 	if player.is_on_floor():
-		return PlayerTransition.Type.MOVE
+		return PlayerTransition.Type.IDLE
 
 	if player.velocity.y >= 0.0:
 		return PlayerTransition.Type.FALL

@@ -27,7 +27,7 @@ func physics_update(
 		return PlayerTransition.Type.JUMP
 
 	if player.is_on_floor():
-		return PlayerTransition.Type.MOVE
+		return PlayerTransition.Type.IDLE
 
 
 	return PlayerTransition.Type.NONE

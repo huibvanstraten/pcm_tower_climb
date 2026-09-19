@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://r0xgpm08oh15" path="res://script/level/area.gd" id="3_ebr37"]
 [ext_resource type="PackedScene" uid="uid://cen5vsst8ve0u" path="res://scene/respawnPoint.tscn" id="4_nk78g"]
 [ext_resource type="Texture2D" uid="uid://d38p2net68ij7" path="res://asset/background/Ruined city.png" id="5_ldwqa"]
+[ext_resource type="PackedScene" uid="uid://b2kgo5yggd2m2" path="res://scene/electricBall.tscn" id="6_a215g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
 size = Vector2(278.5, 9353)
@@ -83,9 +84,12 @@ scale = Vector2(6.89375, 7.577778)
 texture = ExtResource("5_ldwqa")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=164057835]
-position = Vector2(-574, 464)
+position = Vector2(-663, 479)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1422167784]
 position = Vector2(1342.5, 1071.75)
 shape = SubResource("RectangleShape2D_dr4yn")
 debug_color = Color(0.674176, 0.40751508, 0.7823852, 0.41960785)
+
+[node name="ElectricBall" parent="StaticBody2D/CollisionShape2D" unique_id=827629883 instance=ExtResource("6_a215g")]
+position = Vector2(64.5, -21.75)

@@ -6,6 +6,7 @@ extends StateMachine
 @export var jump_state: PlayerState
 @export var fall_state: PlayerState
 @export var program_state: PlayerState
+@export var hit_state: PlayerState
 
 
 func _ready():
@@ -56,3 +57,11 @@ func can_move() -> bool:
 func _freeze_state_machine(freeze: bool):
 	if freeze:
 		changeState(initialState)
+		
+		
+func hit(hit_data: Hit) -> void:
+	if currentState == hit_state:
+		return
+
+	hit_state.set_hit(hit_data)
+	changeState(hit_state)

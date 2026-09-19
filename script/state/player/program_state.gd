@@ -7,11 +7,14 @@ var is_finished: bool = false
 
 func initialize() -> void:
 	super()
+
 	EventManager.programming_finished.connect(_on_programming_finished)
 
 
 func enter() -> void:
 	super()
+	print("PROGRAM STATE")
+
 
 	is_finished = false
 
@@ -19,8 +22,10 @@ func enter() -> void:
 
 	if player == null:
 		return
-
+		
 	EventManager.programming_started.emit(player)
+	
+	player.move_component.accute_stop()
 
 
 func physics_update(
@@ -28,12 +33,11 @@ func physics_update(
 	command: PlayerCommand
 ) -> PlayerTransition.Type:
 	if command.interact_pressed:
-		print("PROGRAMMING: INTERACT PRESSED AGAIN")
 		EventManager.programming_cancelled.emit(character_body)
-		return PlayerTransition.Type.MOVE
+		return PlayerTransition.Type.IDLE
 
 	if is_finished:
-		return PlayerTransition.Type.MOVE
+		return PlayerTransition.Type.IDLE
 
 	return PlayerTransition.Type.NONE
 

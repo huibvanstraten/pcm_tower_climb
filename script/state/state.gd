@@ -3,8 +3,8 @@ extends Node
 
 @export var character_body: CharacterBody2D = null
 @export var node_animation_sprite: AnimatedSprite2D = null
-@export var node_animation: AnimationPlayer = null
 @export var collision_shape: CollisionShape2D = null
+@export var animation_player: AnimationPlayer = null
 
 @export var state_name: String
 @export var animation_name: String
@@ -17,9 +17,9 @@ func initialize():
 	EventManager.connect("entity_hit", _on_entity_hit)
 
 
-func enter():
-	if node_animation != null and animation_name != "":
-		node_animation.play(animation_name)
+func enter() -> void:
+	if not animation_name.is_empty():
+		animation_player.play(animation_name)
 
 
 func exit():

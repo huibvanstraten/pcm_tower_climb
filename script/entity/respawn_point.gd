@@ -25,7 +25,7 @@ func _on_programming_started(player: Player) -> void:
 	programming_timer.start()
 
 	print("RESPAWN PROGRAMMING STARTED: ", player.name)
-	
+
 
 func _on_programming_cancelled(player: Player) -> void:
 	print("RESPAWN POINT RECEIVED CANCEL: ", player.name)
