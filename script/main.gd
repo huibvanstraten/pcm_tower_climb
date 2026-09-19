@@ -14,9 +14,8 @@ const MAX_PLAYERS := 4
 
 
 func _ready() -> void:
-	
 	game_input_contexts.set_context(InputContext.Type.GAMEPLAY)
-	
+
 	EventManager.level.connect(load_level)
 	EventManager.player_died.connect(kill_player)
 	EventManager.respawn_requested.connect(respawn_players)
@@ -27,8 +26,6 @@ func _ready() -> void:
 	SpawnManager.player_container = player_container
 
 	EventManager.emit_signal("level", 1)
-	
-	var level = LevelManager.get_current_level()
 
 
 func _input(event: InputEvent) -> void:
@@ -37,13 +34,18 @@ func _input(event: InputEvent) -> void:
 	if device == null:
 		return
 
-	if is_device_assigned(device):
-		return
-
 	if not event.is_action_pressed("jump"):
 		return
 
-	join_device(device)
+	var session := get_session_for_device(device)
+
+	if session == null:
+		join_device(device)
+		return
+
+
+	if session.state == PlayerInputSession.State.READY:
+		activate_session_player(session)
 
 
 func get_players() -> Array[Player]:
@@ -54,7 +56,7 @@ func get_players() -> Array[Player]:
 			players.append(child)
 
 	return players
-	
+
 
 func get_session(player_slot: int) -> PlayerInputSession:
 	for child in input_session_container.get_children():
@@ -64,19 +66,37 @@ func get_session(player_slot: int) -> PlayerInputSession:
 			return session
 
 	return null
-	
-	
+
+
+func get_session_for_device(
+	device: PlayerInputDevice
+) -> PlayerInputSession:
+	for child in input_session_container.get_children():
+		var session := child as PlayerInputSession
+
+		if session == null:
+			continue
+
+		if session.input_device == null:
+			continue
+
+		if session.input_device.matches(device):
+			return session
+
+	return null
+
+
 func _unhandled_key_input(event: InputEvent) -> void:
 	if not event.pressed:
 		return
 
 	if event.keycode == KEY_P:
 		game_input_contexts.push_context(InputContext.Type.PAUSE_MENU)
-		
+
 	if event.keycode == KEY_O:
 		if game_input_contexts.contexts.size() > 1:
 			game_input_contexts.pop_context()
-		
+
 	if event.keycode == KEY_I:
 		var session := get_session(1)
 
@@ -88,7 +108,7 @@ func _unhandled_key_input(event: InputEvent) -> void:
 
 		if session != null:
 			session.debug_pop_context()
-			
+
 	if event.keycode == KEY_Y:
 		var session := get_session(2)
 
@@ -106,8 +126,8 @@ func load_level(level_id: int) -> void:
 	LevelManager.load_level(level_id)
 
 	position_joined_players()
-	
-	
+
+
 func activate_session_player(session: PlayerInputSession) -> void:
 	var level = LevelManager.get_current_level()
 
@@ -128,25 +148,11 @@ func activate_session_player(session: PlayerInputSession) -> void:
 			spawn_position
 		)
 
-	session.set_control_target(player)
-	
-	print("emitting")
+	session.activate(player)
+
 	EventManager.player_joined.emit(player)
-	
-	
-func is_device_assigned(device: PlayerInputDevice) -> bool:
-	for child in input_session_container.get_children():
-		var session := child as PlayerInputSession
 
-		if session == null:
-			continue
 
-		if session.input_device.matches(device):
-			return true
-
-	return false
-	
-	
 func join_device(device: PlayerInputDevice) -> void:
 	var player_slot := get_available_player_slot()
 
@@ -154,20 +160,20 @@ func join_device(device: PlayerInputDevice) -> void:
 		print("JOIN REQUEST REJECTED: no available player slot")
 		return
 
-	var session := create_input_session(
+	create_input_session(
 		player_slot,
 		device
 	)
 
-	activate_session_player(session)
-	
+	EventManager.player_session_joined.emit(player_slot)
+
 
 func create_input_session(
 	player_slot: int,
 	device: PlayerInputDevice
 ) -> PlayerInputSession:
 	var session := player_input_session_scene.instantiate() as PlayerInputSession
-	
+
 	session.game_input_contexts = game_input_contexts
 
 	session.player_slot = player_slot
@@ -186,8 +192,8 @@ func get_available_player_slot() -> int:
 			return player_slot
 
 	return -1
-	
-	
+
+
 func position_joined_players() -> void:
 	var level = LevelManager.get_current_level()
 
@@ -213,7 +219,7 @@ func position_joined_players() -> void:
 			session.player_slot,
 			spawn_position
 		)
-	
+
 
 func is_player_slot_used(player_slot: int) -> bool:
 	for child in input_session_container.get_children():
@@ -226,8 +232,8 @@ func is_player_slot_used(player_slot: int) -> bool:
 			return true
 
 	return false
-	
-	
+
+
 func kill_player(player: Player) -> void:
 	var session := get_session(player.player_id)
 
@@ -249,7 +255,7 @@ func respawn_players(spawn_positions: Array[Vector2]) -> void:
 		if session == null:
 			continue
 
-		if session.is_active:
+		if session.state == PlayerInputSession.State.PLAYING:
 			continue
 
 		if spawn_index >= spawn_positions.size():
@@ -264,4 +270,4 @@ func respawn_players(spawn_positions: Array[Vector2]) -> void:
 		session.activate(player)
 		spawn_index += 1
 
-		print("PLAYER RESPAWNED: ", session.player_slot)
+		EventManager.player_respawned.emit(player)

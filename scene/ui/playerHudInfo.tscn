@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://b0i0y551rj7un"]
+
+[ext_resource type="Script" uid="uid://boid57sm4atgm" path="res://script/player_hud_info.gd" id="1_1er7l"]
+[ext_resource type="Texture2D" uid="uid://cg0lr5joctidy" path="res://icon.svg" id="2_eh55v"]
+
+[node name="PlayerHudInfo" type="MarginContainer" unique_id=1553156446]
+script = ExtResource("1_1er7l")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=754865059]
+layout_mode = 2
+
+[node name="PortraitPanel" type="PanelContainer" parent="HBoxContainer" unique_id=572340370]
+layout_mode = 2
+
+[node name="Portrait" type="TextureRect" parent="HBoxContainer/PortraitPanel" unique_id=1728586661]
+layout_mode = 2
+texture = ExtResource("2_eh55v")
+
+[node name="Info" type="VBoxContainer" parent="HBoxContainer" unique_id=50146298]
+layout_mode = 2
+
+[node name="PlayerName" type="Label" parent="HBoxContainer/Info" unique_id=1069408660]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="HealthRow" type="HBoxContainer" parent="HBoxContainer/Info" unique_id=1882854899]
+layout_mode = 2
+
+[node name="HealthTitle" type="Label" parent="HBoxContainer/Info/HealthRow" unique_id=341739045]
+layout_mode = 2
+text = "HEALTH"
+
+[node name="HealthValue" type="Label" parent="HBoxContainer/Info/HealthRow" unique_id=317450699]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="AbilityRow" type="HBoxContainer" parent="HBoxContainer/Info" unique_id=1616240191]
+layout_mode = 2
+
+[node name="AbilityTitle" type="Label" parent="HBoxContainer/Info/AbilityRow" unique_id=376206028]
+layout_mode = 2
+text = "ABILITY"
+
+[node name="AbilityValue" type="Label" parent="HBoxContainer/Info/AbilityRow" unique_id=238123917]
+unique_name_in_owner = true
+layout_mode = 2
