@@ -22,7 +22,6 @@ func update(delta: float) -> void:
 
 func physics_update(delta: float) -> void:
 	physics_component.apply_gravity(delta)
-	move_component.move_in_air(delta, direction)
 	
 	if direction != 0.0:
 		move_component.move_in_air(delta, direction)
