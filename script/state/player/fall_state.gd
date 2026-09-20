@@ -1,33 +1,32 @@
 class_name FallState
-extends PlayerState
+extends State
 
-func enter():
+@export var physics_component: PhysicsComponent
+@export var move_component: MoveComponent
+@export var flip_component: FlipComponent
+var direction = 1
+
+func enter() -> void:
 	super()
-	print("FALL STATE")
 
+func exit() -> void:
+	super()
 
-func physics_update(
-	delta: float,
-	command: PlayerCommand
-) -> PlayerTransition.Type:
-	player.physics_component.apply_gravity(delta)
-	
+func handle_command(command: PlayerCommand) -> void:
+	direction = command.move_direction
 	if command.move_direction != 0.0:
-		player.move_component.move_in_air(
-			delta,
-			command.move_direction
-		)
-	else: player.move_component.apply_air_resistance(delta)
+		flip_component.update_facing(direction)
 
-	player.flip_component.update_facing(
-		command.move_direction
-	)
+func update(delta: float) -> void:
+	pass
+
+func physics_update(delta: float) -> void:
+	physics_component.apply_gravity(delta)
+	move_component.move_in_air(delta, direction)
 	
-	if player.jump_component.can_jump():
-		return PlayerTransition.Type.JUMP
-
-	if player.is_on_floor():
-		return PlayerTransition.Type.IDLE
-
-
-	return PlayerTransition.Type.NONE
+	if direction != 0.0:
+		move_component.move_in_air(delta, direction)
+	else: move_component.apply_air_resistance(delta)
+	
+	if entity.is_on_floor():
+		state_machine.change_state("Idle")

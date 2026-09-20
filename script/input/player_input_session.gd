@@ -86,8 +86,8 @@ func pop_control_target() -> Node:
 func clear_control_targets() -> void:
 	control_targets.clear()
 
-
-func _physics_process(delta: float) -> void:
+# TODO: use state machine for executing correct actions per state
+func _input(event: InputEvent) -> void:	
 	if state != State.PLAYING:
 		return
 	
@@ -110,7 +110,33 @@ func _physics_process(delta: float) -> void:
 	if control_target == null:
 		return
 
-	control_target.handle_command(delta, command)
+	control_target.handle_command(command)
+
+# TODO: used event-based _iput() instead to avoid polling on each physics ticks
+#func _physics_process(delta: float) -> void:
+	#if state != State.PLAYING:
+		#return
+	#
+	#if input_device == null:
+		#return
+#
+	#var command := input_source.get_command(input_device)
+#
+	#if game_input_contexts == null:
+		#return
+#
+	#if game_input_contexts.get_context() != InputContext.Type.GAMEPLAY:
+		#return
+#
+	#if not input_contexts.is_empty():
+		#return
+#
+	#var control_target := get_control_target()
+#
+	#if control_target == null:
+		#return
+#
+	#control_target.handle_command(command)
 
 
 func is_joined() -> bool:

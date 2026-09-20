@@ -1,49 +1,33 @@
 class_name ProgrammingState
-extends PlayerState
+extends State
 
-
+@export var move_component: MoveComponent
 var is_finished: bool = false
 
-
-func initialize() -> void:
-	super()
-
+func _ready() -> void:
 	EventManager.programming_finished.connect(_on_programming_finished)
-
 
 func enter() -> void:
 	super()
-	print("PROGRAM STATE")
 
+	EventManager.programming_started.emit(entity)
+	move_component.accute_stop()
 
-	is_finished = false
+func exit() -> void:
+	super()
 
-	var player := character_body as Player
-
-	if player == null:
-		return
-		
-	EventManager.programming_started.emit(player)
-	
-	player.move_component.accute_stop()
-
-
-func physics_update(
-	_delta: float,
-	command: PlayerCommand
-) -> PlayerTransition.Type:
+func handle_command(command: PlayerCommand) -> void:
+	# pressing interact during programming stops it
 	if command.interact_pressed:
-		EventManager.programming_cancelled.emit(character_body)
-		return PlayerTransition.Type.IDLE
+		EventManager.programming_cancelled.emit(entity)
+		state_machine.change_state("Idle")
 
+func update(delta: float) -> void:
 	if is_finished:
-		return PlayerTransition.Type.IDLE
+		state_machine.change_state("Idle")
 
-	return PlayerTransition.Type.NONE
-
+func physics_update(delta: float) -> void:
+	pass
 
 func _on_programming_finished(player: Player) -> void:
-	if player != character_body:
-		return
-
 	is_finished = true

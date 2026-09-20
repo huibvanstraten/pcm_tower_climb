@@ -1,28 +1,42 @@
 class_name IdleState
-extends PlayerState
+extends State
 
+@export var physics_component: PhysicsComponent
 
-func enter():
+func enter() -> void:
 	super()
-	print("IDLE STATE")
-	
 
-func physics_update(
-	delta: float,
-	command: PlayerCommand
-) -> PlayerTransition.Type:
-	player.move_component.stop(delta)
+func exit() -> void:
+	super()
 
+func handle_command(command: PlayerCommand) -> void:
 	if command.move_direction != 0.0:
-		return PlayerTransition.Type.MOVE
-	
+		state_machine.change_state("Move")
+
+	if command.jump_pressed:
+		state_machine.change_state("Jump")
+
 	if command.interact_pressed:
-		return PlayerTransition.Type.PROGRAM
+		state_machine.change_state("Program")
 
-	if player.jump_component.can_jump():
-		return PlayerTransition.Type.JUMP
+func update(delta: float) -> void:
+	var player: Player = entity as Player
+	if player == null:
+		return
+	if player.is_hit:
+		state_machine.change_state("Hit")
 
-	if not player.is_on_floor():
-		return PlayerTransition.Type.FALL
+func physics_update(delta: float) -> void:
+	physics_component.apply_gravity(delta)
 
-	return PlayerTransition.Type.NONE
+	# must be a forced move (imposed by an entity other than the player)
+	if entity.velocity.x > 0:
+		state_machine.change_state("Move")
+
+	# must be a forced move (imposed by an entity other than the player)
+	if entity.velocity.y < 0:
+		state_machine.change_state("Jump")
+
+	# must be a forced move (imposed by an entity other than the player)
+	if entity.velocity.y > 0:
+		state_machine.change_state("Fall")

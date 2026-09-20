@@ -1,15 +1,9 @@
 class_name HitState
-extends PlayerState
+extends State
 
+@export var physics_component: PhysicsComponent
 var hit_data: Hit
-var hit_animation_finished: bool = false
-
-
-func initialize() -> void:
-	super()
-
-func set_hit(hit: Hit) -> void:
-	hit_data = hit
+var hit_animation_finished: bool
 
 func enter() -> void:
 	super()
@@ -19,32 +13,34 @@ func enter() -> void:
 	if hit_data == null:
 		return
 
-	player.physics_component.apply_knockback(
+	physics_component.apply_knockback(
 		hit_data.direction,
 		hit_data.knockback
 	)
 
 	animation_player.play(&"hit")
+
+func exit() -> void:
+	super()
+
+func handle_command(command: PlayerCommand) -> void:
+	pass
+
+func update(delta: float) -> void:
+	if hit_animation_finished:
+		state_machine.change_state("Fall")
+
+func physics_update(delta: float) -> void:
+	physics_component.apply_gravity(delta)
+
+	if entity.is_on_floor():
+		state_machine.change_state("Idle")
+
+func set_hit(hit: Hit) -> void:
+	hit_data = hit
 	
-
-func physics_update(
-	delta: float,
-	_command: PlayerCommand
-) -> PlayerTransition.Type:
-	player.physics_component.apply_gravity(delta)
-
-	if not hit_animation_finished:
-		return PlayerTransition.Type.NONE
-
-	if player.is_on_floor():
-		return PlayerTransition.Type.IDLE
-
-	return PlayerTransition.Type.FALL
-
-
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
-	print("FINISHED")
 	if anim_name != &"hit":
 		return
-
 	hit_animation_finished = true
+	print("Hit animation finished...")
