@@ -4,10 +4,6 @@ extends Entity
 @onready var state_machine: StateMachine = $StateMachine
 
 var player_id: int
-var is_hit = false
-
-func _ready() -> void:
-	pass
 
 func handle_command(command: PlayerCommand) -> void:
 	if command:

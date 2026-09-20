@@ -78,7 +78,7 @@ func pop_control_target() -> Node:
 func clear_control_targets() -> void:
 	control_targets.clear()
 
-func _input(event: InputEvent) -> void:	
+func _physics_process(delta: float) -> void:
 	if state != State.PLAYING:
 		return
 	

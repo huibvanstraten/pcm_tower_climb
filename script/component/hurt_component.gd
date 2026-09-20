@@ -4,4 +4,4 @@ extends Area2D
 @export var player: Player
 
 func receive_hit(hit: Hit) -> void:
-	player.is_hit = true
+	pass

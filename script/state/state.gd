@@ -8,30 +8,12 @@ var state_machine: StateMachine
 @export var animation_player: AnimationPlayer
 @export var collision_shape: CollisionShape2D
 
-#@export var state_name: String
-#@export var animation_name: String
-#@export var sfx_name: String
-
-#var entity_hit: bool = false
-
-#func initialize():
-	#EventManager.connect("entity_hit", _on_entity_hit)
-
 func enter() -> void:
 	print("{0}: Enter\t{1}".format([entity.name, state_machine.current_state.name]))
-	#if not animation_name.is_empty():
-		#animation_player.play(animation_name)
+	pass
 
 func exit() -> void:
 	print("{0}: Exit\t{1}".format([entity.name, state_machine.current_state.name]))
-
-func handle_command(command: PlayerCommand) -> void:
-	pass
-
-func update(delta: float) -> void:
-	pass
-
-func physics_update(delta: float) -> void:
 	pass
 
 #func _on_entity_hit(entity: CharacterBody2D):
@@ -52,3 +34,9 @@ func physics_update(delta: float) -> void:
 		#return ""
 #
 	#return stateMachine.previousState.stateName
+
+func handle_command(command: PlayerCommand) -> void:
+	pass
+
+func physics_update(delta: float) -> void:
+	pass

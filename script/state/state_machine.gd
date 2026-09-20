@@ -24,18 +24,13 @@ func handle_command(command: PlayerCommand) -> void:
 
 # on each frame tick
 func _process(delta: float) -> void:
-	if current_state:
-		current_state.update(delta)
+	pass
 
 # one each physics frame tick
 func _physics_process(delta: float) -> void:
 	if current_state:
 		current_state.physics_update(delta)
 	entity.move_and_slide()
-
-# TODO: check if we still need this considering the commands
-func _unhandled_key_input(event: InputEvent) -> void:
-	print(event)
 
 func change_state(to_state: String) -> void:
 	var key := to_state.to_lower()
