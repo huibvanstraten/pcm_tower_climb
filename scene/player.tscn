@@ -170,9 +170,10 @@ script = ExtResource("8_u7b46")
 initial_state = NodePath("Idle")
 entity = NodePath("..")
 
-[node name="Idle" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "flip_component", "entity", "animation_sprite", "animation_player", "collision_shape")]
+[node name="Idle" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "entity", "animation_sprite", "animation_player", "collision_shape")]
 script = ExtResource("13_34jf3")
 physics_component = NodePath("../../Components/Physics")
+move_component = NodePath("../../Components/Move")
 flip_component = NodePath("../../Components/Flip")
 entity = NodePath("../..")
 animation_sprite = NodePath("../../AnimatedSprite2D")

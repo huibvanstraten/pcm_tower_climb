@@ -2,11 +2,13 @@ class_name IdleState
 extends State
 
 @export var physics_component: PhysicsComponent
+@export var move_component: MoveComponent
 @export var flip_component: FlipComponent
 var command = PlayerCommand.new()
 
 func enter() -> void:
 	super()
+	physics_component.halt_horizontal()
 
 func exit() -> void:
 	super()
