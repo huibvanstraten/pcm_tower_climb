@@ -16,15 +16,15 @@ func exit() -> void:
 func physics_update(delta: float) -> String:
 	physics_component.apply_gravity(delta)
 
-	if player.is_hit():
+	if entity.is_hit():
 		return HitState.NAME
-	elif player.velocity.y > 0.0:
+	elif entity.velocity.y > 0.0:
 		return FallState.NAME
-	elif player.command.move_direction != 0.0:
+	elif entity.command.move_direction != 0.0:
 		return MoveState.NAME
-	elif player.command.jump_pressed:
+	elif entity.command.jump_pressed:
 		return JumpState.NAME
-	elif player.command.interact_pressed:
+	elif entity.command.interact_pressed:
 		return ProgrammingState.NAME
 	else:
 		return "None"

@@ -12,9 +12,9 @@ func exit() -> void:
 	super()
 
 func physics_update(delta: float) -> String:
-	if player.is_hit():
+	if entity.is_hit():
 		return HitState.NAME
-	elif player.command.interact_pressed:
+	elif entity.command.interact_pressed:
 		return IdleState.NAME
 	else:
 		return "None"
