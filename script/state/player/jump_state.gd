@@ -14,12 +14,14 @@ func enter() -> void:
 func exit() -> void:
 	super()
 
-func physics_update(delta: float) -> void:
+func physics_update(delta: float) -> String:
 	physics_component.apply_gravity(delta)
 	move_component.move_in_air(delta, player.command.move_direction)
 	flip_component.update_facing(player.command.move_direction)
 
 	if player.is_hit():
-		state_machine.change_state(HitState.NAME)
+		return HitState.NAME
 	elif player.velocity.y > 0.0:
-		state_machine.change_state(FallState.NAME)
+		return FallState.NAME
+	else:
+		return "None"

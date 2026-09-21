@@ -17,18 +17,17 @@ func _ready() -> void:
 	if initial_state:
 		change_state(initial_state.name.to_lower())
 
-# on each frame tick
-func _process(delta: float) -> void:
-	pass
-
 # one each physics frame tick
 func _physics_process(delta: float) -> void:
 	if current_state:
-		current_state.physics_update(delta)
+		change_state(current_state.physics_update(delta))
 	entity.move_and_slide()
 
 func change_state(to_state: String) -> void:
 	var key := to_state.to_lower()
+
+	if to_state == "None":
+		return
 
 	if not states.has(key):
 		push_error("to_state '{0}' is not defined".format([to_state]))

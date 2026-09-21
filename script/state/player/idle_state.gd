@@ -13,16 +13,18 @@ func enter() -> void:
 func exit() -> void:
 	super()
 
-func physics_update(delta: float) -> void:
+func physics_update(delta: float) -> String:
 	physics_component.apply_gravity(delta)
 
 	if player.is_hit():
-		state_machine.change_state(HitState.NAME)
+		return HitState.NAME
 	elif player.velocity.y > 0.0:
-		state_machine.change_state(FallState.NAME)
+		return FallState.NAME
 	elif player.command.move_direction != 0.0:
-		state_machine.change_state(MoveState.NAME)
+		return MoveState.NAME
 	elif player.command.jump_pressed:
-		state_machine.change_state(JumpState.NAME)
+		return JumpState.NAME
 	elif player.command.interact_pressed:
-		state_machine.change_state(ProgrammingState.NAME)
+		return ProgrammingState.NAME
+	else:
+		return "None"

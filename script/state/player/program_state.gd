@@ -11,8 +11,10 @@ func enter() -> void:
 func exit() -> void:
 	super()
 
-func physics_update(delta: float) -> void:
+func physics_update(delta: float) -> String:
 	if player.is_hit():
-		state_machine.change_state(HitState.NAME)
+		return HitState.NAME
 	elif player.command.interact_pressed:
-		state_machine.change_state(IdleState.NAME)
+		return IdleState.NAME
+	else:
+		return "None"
