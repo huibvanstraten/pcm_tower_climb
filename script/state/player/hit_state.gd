@@ -11,10 +11,10 @@ var hit_animation_finished: bool = false
 func enter() -> void:
 	super()
 
-	var hit = player.hit
+	var hit = entity.hit
 	health_component.take_hit(hit)
 	physics_component.apply_knockback(hit.direction, hit.knockback)
-	player.hit = null
+	entity.hit = null
 
 	hit_animation_finished = false
 	animation_player.play(&"hit")
