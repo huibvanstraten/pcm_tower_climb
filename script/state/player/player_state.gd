@@ -1,21 +1,11 @@
 class_name PlayerState
 extends State
 
-@export var can_move: bool = true
+func enter() -> void:
+	super()
 
-@export var player: Player
+func exit() -> void:
+	super()
 
-
-func physics_update(
-	_delta: float,
-	_command: PlayerCommand
-) -> PlayerTransition.Type:
-	return PlayerTransition.Type.NONE
-
-
-func can_enter() -> bool:
-	return true
-
-
-func can_exit() -> bool:
-	return true
+func physics_update(delta: float) -> String:
+	return "None"

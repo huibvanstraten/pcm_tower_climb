@@ -1,49 +1,20 @@
-class_name ProgrammingState
+class_name ProgrammingState 
 extends PlayerState
 
-
-var is_finished: bool = false
-
-
-func initialize() -> void:
-	super()
-
-	EventManager.programming_finished.connect(_on_programming_finished)
-
+const NAME := "Program"
+@export var move_component: MoveComponent
 
 func enter() -> void:
 	super()
-	print("PROGRAM STATE")
+	move_component.accute_stop()
 
+func exit() -> void:
+	super()
 
-	is_finished = false
-
-	var player := character_body as Player
-
-	if player == null:
-		return
-		
-	EventManager.programming_started.emit(player)
-	
-	player.move_component.accute_stop()
-
-
-func physics_update(
-	_delta: float,
-	command: PlayerCommand
-) -> PlayerTransition.Type:
-	if command.interact_pressed:
-		EventManager.programming_cancelled.emit(character_body)
-		return PlayerTransition.Type.IDLE
-
-	if is_finished:
-		return PlayerTransition.Type.IDLE
-
-	return PlayerTransition.Type.NONE
-
-
-func _on_programming_finished(player: Player) -> void:
-	if player != character_body:
-		return
-
-	is_finished = true
+func physics_update(delta: float) -> String:
+	if entity.is_hit():
+		return HitState.NAME
+	elif entity.command.interact_pressed:
+		return IdleState.NAME
+	else:
+		return "None"
