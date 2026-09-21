@@ -129,6 +129,9 @@ func load_level(level_id: int) -> void:
 
 
 func activate_session_player(session: PlayerInputSession) -> void:
+	if not can_use_initial_spawn_points():
+		return
+
 	var level = LevelManager.get_current_level()
 
 	var spawn_position: Vector2 = level.get_player_start_position(
@@ -271,3 +274,17 @@ func respawn_players(spawn_positions: Array[Vector2]) -> void:
 		spawn_index += 1
 
 		EventManager.player_respawned.emit(player)
+
+
+func can_use_initial_spawn_points() -> bool:
+	var level = LevelManager.get_current_level()
+	var camera_rig := level.camera_rig as CameraRig
+
+	for player_slot in range(1, MAX_PLAYERS + 1):
+		var spawn_position: Vector2 = \
+			level.get_player_start_position(player_slot)
+
+		if camera_rig.is_world_position_visible(spawn_position):
+			return true
+
+	return false

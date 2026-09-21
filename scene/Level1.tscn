@@ -60,19 +60,19 @@ shape = SubResource("RectangleShape2D_ni43k")
 [node name="SpawnPoints" type="Node2D" parent="." unique_id=189155125]
 
 [node name="Start_1" type="Marker2D" parent="SpawnPoints" unique_id=1098790439]
-position = Vector2(575, 1445)
-
-[node name="RespawnPoint" parent="SpawnPoints/Start_1" unique_id=1443736956 instance=ExtResource("4_nk78g")]
-position = Vector2(405, 71)
+position = Vector2(11, 1508)
 
 [node name="Start_2" type="Marker2D" parent="SpawnPoints" unique_id=1998108156]
-position = Vector2(673, 1085)
+position = Vector2(-57, 1507)
 
 [node name="Start_3" type="Marker2D" parent="SpawnPoints" unique_id=82525384]
-position = Vector2(942, 1681)
+position = Vector2(53, 1511)
 
 [node name="Start_4" type="Marker2D" parent="SpawnPoints" unique_id=968646665]
-position = Vector2(1423, 1663)
+position = Vector2(-100, 1508)
+
+[node name="RespawnPoint1" parent="SpawnPoints" unique_id=84191522 instance=ExtResource("4_nk78g")]
+position = Vector2(1461, 1515)
 
 [node name="Ruined_City" type="ParallaxBackground" parent="." unique_id=434831725]
 

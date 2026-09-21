@@ -27,10 +27,6 @@ func physics_update(
 	if command.jump_released:
 		player.jump_component.stop_jump()
 
-	if player.is_on_ceiling():
-		player.jump_component.stop_jump()
-		return PlayerTransition.Type.FALL
-
 	if player.is_on_floor():
 		return PlayerTransition.Type.IDLE
 
