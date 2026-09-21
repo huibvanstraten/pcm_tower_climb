@@ -1,7 +1,6 @@
 class_name PlayerInputSession
 extends Node
 
-
 @export var player_slot: int
 
 var input_contexts := InputContextStack.new()
@@ -20,7 +19,6 @@ var state: PlayerInputSession.State = State.READY
 
 @onready var input_source: PlayerInputSource = $InputSource
 
-
 func debug_push_inventory() -> void:
 	input_contexts.push_context(InputContext.Type.INVENTORY)
 	print(
@@ -29,7 +27,6 @@ func debug_push_inventory() -> void:
 		" CONTEXT: ",
 		input_contexts.get_context()
 	)
-
 
 func debug_pop_context() -> void:
 	input_contexts.pop_context()
@@ -49,7 +46,6 @@ func assign_device(device: PlayerInputDevice) -> void:
 	input_device = device
 	input_source.assign_device(device)
 
-
 func set_control_target(target: Node) -> void:
 	assert(
 		Controllable.is_controllable(target),
@@ -59,13 +55,11 @@ func set_control_target(target: Node) -> void:
 	control_targets.clear()
 	control_targets.push_back(target)
 
-
 func get_control_target() -> Node:
 	if control_targets.is_empty():
 		return null
 
 	return control_targets.back()
-
 
 func push_control_target(target: Node) -> void:
 	assert(
@@ -75,17 +69,14 @@ func push_control_target(target: Node) -> void:
 
 	control_targets.push_back(target)
 
-
 func pop_control_target() -> Node:
 	if control_targets.is_empty():
 		return null
 
 	return control_targets.pop_back()
 
-
 func clear_control_targets() -> void:
 	control_targets.clear()
-
 
 func _physics_process(delta: float) -> void:
 	if state != State.PLAYING:
@@ -110,17 +101,14 @@ func _physics_process(delta: float) -> void:
 	if control_target == null:
 		return
 
-	control_target.handle_command(delta, command)
-
+	control_target.handle_command(command)
 
 func is_joined() -> bool:
 	return input_device != null
-	
 
 func activate(target: Node) -> void:
 	set_control_target(target)
 	state = PlayerInputSession.State.PLAYING
-
 
 func deactivate() -> void:
 	clear_control_targets()

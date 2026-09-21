@@ -1,38 +1,29 @@
 class_name MoveState
 extends PlayerState
 
+const NAME := "Move"
+@export var physics_component: PhysicsComponent
+@export var move_component: MoveComponent
+@export var flip_component: FlipComponent
 
-func enter():
+func enter() -> void:
 	super()
-	print("MOVE STATE")
 
-func physics_update(
-	delta: float,
-	command: PlayerCommand
-) -> PlayerTransition.Type:
+func exit() -> void:
+	super()
 
-	if command.move_direction != 0.0:
-		player.move_component.move(
-			delta,
-			command.move_direction
-		)
+func physics_update(delta: float) -> String:
+	physics_component.apply_gravity(delta)
+	move_component.move(delta, player.command.move_direction)
+	flip_component.update_facing(player.command.move_direction)
+
+	if player.is_hit():
+		return HitState.NAME
+	elif player.command.jump_pressed:
+		return JumpState.NAME
+	elif player.command.interact_pressed:
+		return ProgrammingState.NAME
+	elif player.velocity.x == 0.0:
+		return IdleState.NAME
 	else:
-		player.move_component.stop(delta)
-
-	player.flip_component.update_facing(
-		command.move_direction
-	)
-
-	if command.interact_pressed:
-		return PlayerTransition.Type.PROGRAM
-
-	if player.jump_component.can_jump():
-		return PlayerTransition.Type.JUMP
-
-	if not player.is_on_floor():
-		return PlayerTransition.Type.FALL
-
-	if command.move_direction == 0.0:
-		return PlayerTransition.Type.IDLE
-
-	return PlayerTransition.Type.NONE
+		return "None"

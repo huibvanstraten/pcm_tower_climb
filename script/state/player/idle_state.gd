@@ -1,28 +1,30 @@
 class_name IdleState
 extends PlayerState
 
+const NAME := "Idle"
+@export var physics_component: PhysicsComponent
+@export var move_component: MoveComponent
+@export var flip_component: FlipComponent
 
-func enter():
+func enter() -> void:
 	super()
-	print("IDLE STATE")
-	
+	physics_component.halt_horizontal()
 
-func physics_update(
-	delta: float,
-	command: PlayerCommand
-) -> PlayerTransition.Type:
-	player.move_component.stop(delta)
+func exit() -> void:
+	super()
 
-	if command.move_direction != 0.0:
-		return PlayerTransition.Type.MOVE
-	
-	if command.interact_pressed:
-		return PlayerTransition.Type.PROGRAM
+func physics_update(delta: float) -> String:
+	physics_component.apply_gravity(delta)
 
-	if player.jump_component.can_jump():
-		return PlayerTransition.Type.JUMP
-
-	if not player.is_on_floor():
-		return PlayerTransition.Type.FALL
-
-	return PlayerTransition.Type.NONE
+	if player.is_hit():
+		return HitState.NAME
+	elif player.velocity.y > 0.0:
+		return FallState.NAME
+	elif player.command.move_direction != 0.0:
+		return MoveState.NAME
+	elif player.command.jump_pressed:
+		return JumpState.NAME
+	elif player.command.interact_pressed:
+		return ProgrammingState.NAME
+	else:
+		return "None"
