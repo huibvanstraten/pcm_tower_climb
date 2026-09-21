@@ -8,7 +8,6 @@ const NAME := "Hit"
 @export var move_component: MoveComponent
 var hit_animation_finished: bool = false
 
-
 func enter() -> void:
 	super()
 
@@ -20,10 +19,8 @@ func enter() -> void:
 	hit_animation_finished = false
 	animation_player.play(&"hit")
 
-
 func exit() -> void:
 	super()
-
 
 func physics_update(delta: float) -> String:
 	physics_component.apply_gravity(delta)
@@ -35,7 +32,6 @@ func physics_update(delta: float) -> String:
 			return IdleState.NAME
 	else:
 		return "None"
-
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name != &"hit":
