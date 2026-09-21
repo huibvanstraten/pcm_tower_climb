@@ -1,6 +1,7 @@
 class_name State
 extends Node
 
+# Only used for debugging purposes (print state transitions)
 @export var state_machine: PlayerStateMachine
 # TODO: rename to enitity
 @export var player: CharacterBody2D

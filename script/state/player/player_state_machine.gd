@@ -1,7 +1,6 @@
 class_name PlayerStateMachine
 extends StateMachine
 
-
 func _ready() -> void:
 	super()
 
