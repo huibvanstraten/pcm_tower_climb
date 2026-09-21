@@ -14,6 +14,10 @@ func _ready() -> void:
 		_on_player_session_joined
 	)
 	
+	EventManager.player_session_waiting.connect(
+		_on_player_session_waiting
+	)
+	
 	EventManager.player_joined.connect(
 		_on_player_joined
 	)
@@ -30,6 +34,12 @@ func _ready() -> void:
 func _on_player_session_joined(player_slot: int) -> void:
 	player_slots[player_slot - 1].set_state(
 		PlayerHUDSlot.State.READY
+	)
+	
+
+func _on_player_session_waiting(player_slot: int) -> void:
+	player_slots[player_slot - 1].set_state(
+		PlayerHUDSlot.State.WAITING
 	)
 	
 func _on_player_joined(player: Player) -> void:

@@ -125,3 +125,8 @@ func activate(target: Node) -> void:
 func deactivate() -> void:
 	clear_control_targets()
 	state = State.WAITING
+
+
+func wait_for_spawn() -> void:
+	state = State.WAITING
+	EventManager.player_session_waiting.emit(player_slot)

@@ -43,10 +43,28 @@ func _input(event: InputEvent) -> void:
 		join_device(device)
 		return
 
-
 	if session.state == PlayerInputSession.State.READY:
 		activate_session_player(session)
 
+
+func join_device(
+	device: PlayerInputDevice
+) -> PlayerInputSession:
+	var player_slot := get_available_player_slot()
+
+	if player_slot == -1:
+		print("JOIN REQUEST REJECTED: no available player slot")
+		return null
+
+	var session := create_input_session(
+		player_slot,
+		device
+	)
+
+	EventManager.player_session_joined.emit(player_slot)
+
+	return session
+	
 
 func get_players() -> Array[Player]:
 	var players: Array[Player] = []
@@ -130,6 +148,7 @@ func load_level(level_id: int) -> void:
 
 func activate_session_player(session: PlayerInputSession) -> void:
 	if not can_use_initial_spawn_points():
+		session.wait_for_spawn()
 		return
 
 	var level = LevelManager.get_current_level()
@@ -154,21 +173,6 @@ func activate_session_player(session: PlayerInputSession) -> void:
 	session.activate(player)
 
 	EventManager.player_joined.emit(player)
-
-
-func join_device(device: PlayerInputDevice) -> void:
-	var player_slot := get_available_player_slot()
-
-	if player_slot == -1:
-		print("JOIN REQUEST REJECTED: no available player slot")
-		return
-
-	create_input_session(
-		player_slot,
-		device
-	)
-
-	EventManager.player_session_joined.emit(player_slot)
 
 
 func create_input_session(
@@ -258,7 +262,7 @@ func respawn_players(spawn_positions: Array[Vector2]) -> void:
 		if session == null:
 			continue
 
-		if session.state == PlayerInputSession.State.PLAYING:
+		if session.state != PlayerInputSession.State.WAITING:
 			continue
 
 		if spawn_index >= spawn_positions.size():

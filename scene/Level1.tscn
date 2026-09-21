@@ -20,7 +20,11 @@ size = Vector2(1913, 14.5)
 script = ExtResource("1_nk78g")
 levelId = 1
 
+[node name="ElectricBall" parent="." unique_id=827629883 instance=ExtResource("6_a215g")]
+position = Vector2(744, 1529)
+
 [node name="CameraRig" parent="." unique_id=1417698977 instance=ExtResource("2_a215g")]
+position = Vector2(-11, 1450)
 
 [node name="Areas" type="Node2D" parent="." unique_id=42172917]
 
@@ -74,6 +78,9 @@ position = Vector2(-100, 1508)
 [node name="RespawnPoint1" parent="SpawnPoints" unique_id=84191522 instance=ExtResource("4_nk78g")]
 position = Vector2(1461, 1515)
 
+[node name="RespawnPoint" parent="SpawnPoints" unique_id=814092990 instance=ExtResource("4_nk78g")]
+position = Vector2(1106, 1509)
+
 [node name="Ruined_City" type="ParallaxBackground" parent="." unique_id=434831725]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="Ruined_City" unique_id=440749067]
@@ -90,6 +97,3 @@ position = Vector2(-663, 479)
 position = Vector2(1342.5, 1071.75)
 shape = SubResource("RectangleShape2D_dr4yn")
 debug_color = Color(0.674176, 0.40751508, 0.7823852, 0.41960785)
-
-[node name="ElectricBall" parent="StaticBody2D/CollisionShape2D" unique_id=827629883 instance=ExtResource("6_a215g")]
-position = Vector2(64.5, -21.75)
