@@ -1,17 +1,41 @@
 class_name HitState
-extends State
+extends PlayerState
 
+const NAME := "Hit"
+@export var hurt_component: HurtComponent
+@export var health_component: HealthComponent
 @export var physics_component: PhysicsComponent
-var command = PlayerCommand.new()
+@export var move_component: MoveComponent
+var hit_animation_finished: bool = false
+
 
 func enter() -> void:
 	super()
 
+	var hit = player.hit
+	health_component.take_hit(hit)
+	physics_component.apply_knockback(hit.direction, hit.knockback)
+
+	hit_animation_finished = false
+	animation_player.play(&"hit")
+
+
 func exit() -> void:
 	super()
 
-func handle_command(command: PlayerCommand) -> void:
-	self.command = command
 
 func physics_update(delta: float) -> void:
-	pass
+	physics_component.apply_gravity(delta)
+
+	if hit_animation_finished:
+		if health_component.health == 0:
+			state_machine.change_state(DieState.NAME)
+		else: 
+			state_machine.change_state(IdleState.NAME)
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	print("Hit Animation FINISHED")
+	if anim_name != &"hit":
+		return
+	hit_animation_finished = true

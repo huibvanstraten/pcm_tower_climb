@@ -1,10 +1,16 @@
 class_name Player
 extends Entity
 
-@onready var state_machine: StateMachine = $StateMachine
-
 var player_id: int
+var command: PlayerCommand = PlayerCommand.new()
+var hit: Hit = null
 
 func handle_command(command: PlayerCommand) -> void:
 	if command:
-		state_machine.handle_command(command)
+		self.command = command
+
+func is_hit() -> bool:
+	if hit:
+		return true
+	else: 
+		return false

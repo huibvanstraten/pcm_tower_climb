@@ -1,26 +1,21 @@
-class_name StateMachine
+class_name PlayerStateMachine
 extends Node
 
-@export var initial_state: State
 @export var entity: CharacterBody2D
-var current_state: State
 var states: Dictionary = {}
+@export var initial_state: PlayerState
+var current_state: PlayerState
 
 func _ready() -> void:
 	# register all child states
 	for child in get_children():
-		if child is State:
+		if child is PlayerState:
 			states[child.name.to_lower()] = child
 			child.state_machine = self
-	print(get_children())
 
 	# start initial state
 	if initial_state:
 		change_state(initial_state.name.to_lower())
-
-# player input commands received from the PlayerInputSession
-func handle_command(command: PlayerCommand) -> void:
-	current_state.handle_command(command)
 
 # on each frame tick
 func _process(delta: float) -> void:
@@ -39,7 +34,7 @@ func change_state(to_state: String) -> void:
 		push_error("to_state '{0}' is not defined".format([to_state]))
 		return
 
-	var new_state: State = states[key]
+	var new_state: PlayerState = states[key]
 
 	if new_state == current_state:
 		return

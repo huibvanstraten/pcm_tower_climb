@@ -1,5 +1,4 @@
 class_name Hit
-extends RefCounted
 
 var direction: Vector2
 var knockback: Vector2

@@ -1,8 +1,8 @@
-class_name ProgrammingState
-extends State
+class_name ProgrammingState 
+extends PlayerState
 
+const NAME := "Program"
 @export var move_component: MoveComponent
-var command = PlayerCommand.new()
 
 func enter() -> void:
 	super()
@@ -11,9 +11,8 @@ func enter() -> void:
 func exit() -> void:
 	super()
 
-func handle_command(command: PlayerCommand) -> void:
-	self.command = command
-
 func physics_update(delta: float) -> void:
-	if command.interact_pressed:
-		state_machine.change_state("Idle")
+	if player.is_hit():
+		state_machine.change_state(HitState.NAME)
+	elif player.command.interact_pressed:
+		state_machine.change_state(IdleState.NAME)
