@@ -21,7 +21,7 @@ func physics_update(delta: float) -> void:
 
 	if command.jump_pressed:
 		state_machine.change_state("Jump")
-	elif entity.velocity.x == 0.0:
-		state_machine.change_state("Idle")
 	elif command.interact_pressed:
 		state_machine.change_state("Program")
+	elif entity.velocity.x == 0.0:
+		state_machine.change_state("Idle")
