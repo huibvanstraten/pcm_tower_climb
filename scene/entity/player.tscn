@@ -1,7 +1,8 @@
-[gd_scene load_steps=37 format=3 uid="uid://drd68b3s75ss2"]
+[gd_scene load_steps=39 format=3 uid="uid://drd68b3s75ss2"]
 
 [ext_resource type="Script" uid="uid://jiqfcha8y5u8" path="res://script/entity/player.gd" id="1_ct4mp"]
 [ext_resource type="Texture2D" uid="uid://cnbgbwvqaktsd" path="res://asset/slime.png" id="1_maa0i"]
+[ext_resource type="Script" uid="uid://cdlmt7cdiw02s" path="res://script/object/hit_component.gd" id="3_bedqt"]
 [ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ct4mp"]
 [ext_resource type="Script" uid="uid://i5unc1xq0tfr" path="res://script/component/jump_component.gd" id="5_g2vtq"]
 [ext_resource type="Script" uid="uid://c1mxmnssq41rd" path="res://script/component/flip_component.gd" id="6_2fvbb"]
@@ -17,35 +18,8 @@
 [ext_resource type="Script" uid="uid://dt45jb0dt3xgd" path="res://script/state/player/idle_state.gd" id="13_34jf3"]
 [ext_resource type="Script" uid="uid://c2utu5ootr02n" path="res://script/state/player/die_state.gd" id="16_bup7g"]
 
-[sub_resource type="Animation" id="Animation_3e5fb"]
-resource_name = "idle"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"idle"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [3, 0, 3, 7]
-}
-
 [sub_resource type="Animation" id="Animation_bedqt"]
-length = 0.001
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -73,6 +47,7 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id="Animation_fiawc"]
 resource_name = "new_animation"
+length = 0.4
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -96,6 +71,34 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_3e5fb"]
+resource_name = "idle"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"idle"]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedSprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [3, 0, 3, 7]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fiawc"]
@@ -209,10 +212,13 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_4toet"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fiawc"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ni43k"]
-radius = 12.0415945
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iot5p"]
+size = Vector2(16, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bi3cs"]
+size = Vector2(20, 15)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
 collision_layer = 2
@@ -228,12 +234,20 @@ libraries = {
 autoplay = "idle"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(3, -16)
+position = Vector2(3, -26)
 sprite_frames = SubResource("SpriteFrames_34jf3")
 animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_4toet")
+position = Vector2(0, -10)
+shape = SubResource("RectangleShape2D_fiawc")
+
+[node name="Hit" type="Area2D" parent="."]
+script = ExtResource("3_bedqt")
+
+[node name="Hit" type="CollisionShape2D" parent="Hit"]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_iot5p")
 
 [node name="Components" type="Node2D" parent="."]
 
@@ -261,8 +275,8 @@ player = NodePath("../..")
 health_component = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt"]
-shape = SubResource("CircleShape2D_ni43k")
-debug_color = Color(0.5204651, 0.5697249, 0.22021666, 0.41960785)
+position = Vector2(0, -12.5)
+shape = SubResource("RectangleShape2D_bi3cs")
 
 [node name="Health" type="Node2D" parent="Components" node_paths=PackedStringArray("entity")]
 script = ExtResource("8_j4wxg")
