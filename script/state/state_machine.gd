@@ -3,7 +3,7 @@ extends Node
 
 @export var entity: CharacterBody2D
 var states: Dictionary = {}
-@export var initial_state: PlayerState
+@export var initial_state: State
 var current_state: State
 
 func _ready() -> void:
