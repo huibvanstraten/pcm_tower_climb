@@ -42,7 +42,7 @@ func handle_start_screen_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("start"):
 		return
 
-	var device := PlayerInputDevice.from_event(event)
+	var device = PlayerInputDevice.from_event(event)
 
 	if device == null:
 		return
@@ -50,7 +50,7 @@ func handle_start_screen_input(event: InputEvent) -> void:
 	if PlayerSessionManager.get_session_for_device(device) != null:
 		return
 
-	var session := PlayerSessionManager.join_device(device)
+	var session = PlayerSessionManager.join_device(device)
 
 	if session == null:
 		return
@@ -69,7 +69,7 @@ func handle_gameplay_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("jump"):
 		return
 
-	var session := PlayerSessionManager.get_session_for_device(device)
+	var session = PlayerSessionManager.get_session_for_device(device)
 
 	if session == null:
 		PlayerSessionManager.join_device(device)
@@ -152,7 +152,7 @@ func position_joined_players() -> void:
 
 
 func kill_player(player: Player) -> void:
-	var session := PlayerSessionManager.get_session(player.player_id)
+	var session = PlayerSessionManager.get_session(player.player_id)
 
 	if session == null:
 		return
