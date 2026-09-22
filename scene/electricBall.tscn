@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dijkeb72v5dgn"]
+[gd_scene format=3 uid="uid://dijkeb72v5dgn"]
 
 [ext_resource type="Script" uid="uid://bq7yradi36544" path="res://script/object/electric_ball.gd" id="1_mb5q6"]
 [ext_resource type="Script" uid="uid://cdlmt7cdiw02s" path="res://script/object/hit_component.gd" id="2_67q4k"]

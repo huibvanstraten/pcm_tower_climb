@@ -11,7 +11,7 @@
 script = ExtResource("2_v0l8b")
 levelId = 1
 levelName = "Level1"
-levelPath = "res://scene/level1.tscn"
+levelPath = "res://scene/level/Level1.tscn"
 metadata/_custom_type_script = "uid://ys0ho1wihei4"
 
 [node name="Main" type="Node2D" unique_id=1854399177]

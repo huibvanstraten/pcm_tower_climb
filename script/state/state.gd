@@ -3,9 +3,9 @@ extends Node
 
 # Only used for debugging purposes (print state transitions)
 @export var state_machine: StateMachine
+
 @export var entity: CharacterBody2D
 @export var animation_player: AnimationPlayer
-@export var collision_shape: CollisionShape2D
 @export var start_animation_name: String
 
 func enter() -> void:

@@ -16,23 +16,25 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="TowerClimb"
 run/main_scene="uid://ceges3loiql3p"
-config/features=PackedStringArray("4.5", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-EventManager="*res://script/manager/event_manager.gd"
-GameFlowManager="*res://script/manager/game_flow_manager.gd"
-LevelManager="*res://script/manager/level_manager.gd"
-MusicManager="*res://script/manager/music_manager.gd"
-PlayerSessionManager="*res://script/manager/player_session_manager.gd"
-SfxManager="*res://script/manager/sfx_manager.gd"
-SpawnManager="*res://script/manager/spawn_manager.gd"
+EventManager="*uid://cbrhrdt0o5tid"
+LevelManager="*uid://dkonjo2tb0itj"
+SfxManager="*uid://dufcq48oqk1l8"
+MusicManager="*uid://dgdcppubhrp3b"
+SpawnManager="*uid://cfral3wr3jws6"
+GameFlowManager="*uid://cytavpvh40jul"
+PlayerSessionManager="*uid://cg3i6exm32vg1"
+PlayerLifecycleManager="*uid://bjb8iwnix35m7"
 
 [display]
 
 window/size/viewport_width=640
 window/size/viewport_height=360
+window/size/mode=3
 window/size/window_width_override=1280
 window/size/window_height_override=720
 window/stretch/mode="canvas_items"

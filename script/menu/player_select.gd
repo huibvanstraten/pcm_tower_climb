@@ -87,16 +87,13 @@ func _handle_confirmed_session_input(
 
 
 func _start_game() -> void:
-	print("PLAYER SELECT COMPLETE")
+	if not are_all_sessions_confirmed():
+		return
 
-	for session in PlayerSessionManager.get_sessions():
-		print(
-			"PLAYER ",
-			session.player_slot,
-			" CHARACTER ",
-			session.selection.character_index
-		)
-		
+	GameFlowManager.change_state(
+		GameState.Type.GAMEPLAY
+	)
+	
 
 func _refresh_slot(
 	session: PlayerInputSession
