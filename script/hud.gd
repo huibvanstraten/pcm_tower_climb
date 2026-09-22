@@ -10,6 +10,12 @@ extends CanvasLayer
 
 
 func _ready() -> void:
+	EventManager.state_changed.connect(
+		_on_game_state_changed
+	)
+
+	_on_game_state_changed(GameFlowManager.state)
+
 	EventManager.player_session_joined.connect(
 		_on_player_session_joined
 	)
@@ -30,6 +36,11 @@ func _ready() -> void:
 	EventManager.player_respawned.connect(
 		_on_player_respawned
 	)
+
+
+func _on_game_state_changed(state: GameState.Type) -> void:
+	visible = state == GameState.Type.GAMEPLAY
+	
 
 func _on_player_session_joined(player_slot: int) -> void:
 	player_slots[player_slot - 1].set_state(

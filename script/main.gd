@@ -8,13 +8,16 @@ extends Node
 @onready var player_container: Node = $PlayerContainer
 @onready var input_session_container: Node = $PlayerInputSessionContainer
 
-var game_input_contexts := InputContextStack.new()
-
 const MAX_PLAYERS := 4
 
 
 func _ready() -> void:
-	game_input_contexts.set_context(InputContext.Type.GAMEPLAY)
+	PlayerSessionManager.setup(
+	player_input_session_scene,
+	input_session_container
+)
+	
+	GameFlowManager.start()
 
 	EventManager.level.connect(load_level)
 	EventManager.player_died.connect(kill_player)
@@ -25,10 +28,42 @@ func _ready() -> void:
 
 	SpawnManager.player_container = player_container
 
-	EventManager.emit_signal("level", 1)
-
 
 func _input(event: InputEvent) -> void:
+	match GameFlowManager.state:
+		GameState.Type.START_SCREEN:
+			handle_start_screen_input(event)
+
+		GameState.Type.PLAYER_SELECT:
+			handle_player_select_input(event)
+
+		GameState.Type.GAMEPLAY:
+			handle_gameplay_input(event)
+			
+			
+
+func handle_start_screen_input(event: InputEvent) -> void:
+	if not event.is_action_pressed("start"):
+		return
+
+	var device := PlayerInputDevice.from_event(event)
+
+	if device == null:
+		return
+
+	if PlayerSessionManager.get_session_for_device(device) != null:
+		return
+
+	var session := PlayerSessionManager.join_device(device)
+
+	if session == null:
+		return
+
+	GameFlowManager.change_state(
+		GameState.Type.PLAYER_SELECT
+	)
+
+func handle_player_select_input(event: InputEvent) -> void:
 	var device := PlayerInputDevice.from_event(event)
 
 	if device == null:
@@ -37,33 +72,31 @@ func _input(event: InputEvent) -> void:
 	if not event.is_action_pressed("jump"):
 		return
 
-	var session := get_session_for_device(device)
+	var session := PlayerSessionManager.get_session_for_device(device)
+
+	if session != null:
+		return
+	
+	PlayerSessionManager.join_device(device)
+
+
+func handle_gameplay_input(event: InputEvent) -> void:
+	var device := PlayerInputDevice.from_event(event)
+
+	if device == null:
+		return
+
+	if not event.is_action_pressed("jump"):
+		return
+
+	var session := PlayerSessionManager.get_session_for_device(device)
 
 	if session == null:
-		join_device(device)
+		PlayerSessionManager.join_device(device)
 		return
 
 	if session.state == PlayerInputSession.State.READY:
 		activate_session_player(session)
-
-
-func join_device(
-	device: PlayerInputDevice
-) -> PlayerInputSession:
-	var player_slot := get_available_player_slot()
-
-	if player_slot == -1:
-		print("JOIN REQUEST REJECTED: no available player slot")
-		return null
-
-	var session := create_input_session(
-		player_slot,
-		device
-	)
-
-	EventManager.player_session_joined.emit(player_slot)
-
-	return session
 	
 
 func get_players() -> Array[Player]:
@@ -74,70 +107,6 @@ func get_players() -> Array[Player]:
 			players.append(child)
 
 	return players
-
-
-func get_session(player_slot: int) -> PlayerInputSession:
-	for child in input_session_container.get_children():
-		var session := child as PlayerInputSession
-
-		if session != null and session.player_slot == player_slot:
-			return session
-
-	return null
-
-
-func get_session_for_device(
-	device: PlayerInputDevice
-) -> PlayerInputSession:
-	for child in input_session_container.get_children():
-		var session := child as PlayerInputSession
-
-		if session == null:
-			continue
-
-		if session.input_device == null:
-			continue
-
-		if session.input_device.matches(device):
-			return session
-
-	return null
-
-
-func _unhandled_key_input(event: InputEvent) -> void:
-	if not event.pressed:
-		return
-
-	if event.keycode == KEY_P:
-		game_input_contexts.push_context(InputContext.Type.PAUSE_MENU)
-
-	if event.keycode == KEY_O:
-		if game_input_contexts.contexts.size() > 1:
-			game_input_contexts.pop_context()
-
-	if event.keycode == KEY_I:
-		var session := get_session(1)
-
-		if session != null:
-			session.debug_push_inventory()
-
-	if event.keycode == KEY_U:
-		var session := get_session(1)
-
-		if session != null:
-			session.debug_pop_context()
-
-	if event.keycode == KEY_Y:
-		var session := get_session(2)
-
-		if session != null:
-			session.debug_push_inventory()
-
-	if event.keycode == KEY_T:
-		var session := get_session(2)
-
-		if session != null:
-			session.debug_pop_context()
 
 
 func load_level(level_id: int) -> void:
@@ -175,36 +144,10 @@ func activate_session_player(session: PlayerInputSession) -> void:
 	EventManager.player_joined.emit(player)
 
 
-func create_input_session(
-	player_slot: int,
-	device: PlayerInputDevice
-) -> PlayerInputSession:
-	var session := player_input_session_scene.instantiate() as PlayerInputSession
-
-	session.game_input_contexts = game_input_contexts
-
-	session.player_slot = player_slot
-	session.name = "PlayerInputSession%s" % player_slot
-
-	input_session_container.add_child(session)
-
-	session.assign_device(device)
-
-	return session
-
-
-func get_available_player_slot() -> int:
-	for player_slot in range(1, MAX_PLAYERS + 1):
-		if not is_player_slot_used(player_slot):
-			return player_slot
-
-	return -1
-
-
 func position_joined_players() -> void:
 	var level = LevelManager.get_current_level()
 
-	for child in input_session_container.get_children():
+	for child in PlayerSessionManager.input_session_container.get_children():
 		var session := child as PlayerInputSession
 
 		if session == null:
@@ -228,21 +171,8 @@ func position_joined_players() -> void:
 		)
 
 
-func is_player_slot_used(player_slot: int) -> bool:
-	for child in input_session_container.get_children():
-		var session := child as PlayerInputSession
-
-		if session == null:
-			continue
-
-		if session.player_slot == player_slot:
-			return true
-
-	return false
-
-
 func kill_player(player: Player) -> void:
-	var session := get_session(player.player_id)
+	var session := PlayerSessionManager.get_session(player.player_id)
 
 	if session == null:
 		return
@@ -256,7 +186,7 @@ func kill_player(player: Player) -> void:
 func respawn_players(spawn_positions: Array[Vector2]) -> void:
 	var spawn_index := 0
 
-	for child in input_session_container.get_children():
+	for child in PlayerSessionManager.input_session_container.get_children():
 		var session := child as PlayerInputSession
 
 		if session == null:

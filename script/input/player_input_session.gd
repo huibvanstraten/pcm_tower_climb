@@ -19,28 +19,6 @@ var state: PlayerInputSession.State = State.READY
 
 @onready var input_source: PlayerInputSource = $InputSource
 
-func debug_push_inventory() -> void:
-	input_contexts.push_context(InputContext.Type.INVENTORY)
-	print(
-		"SESSION ",
-		player_slot,
-		" CONTEXT: ",
-		input_contexts.get_context()
-	)
-
-func debug_pop_context() -> void:
-	input_contexts.pop_context()
-
-	if input_contexts.contexts.is_empty():
-		print("SESSION ", player_slot, " CONTEXT: <empty>")
-		return
-
-	print(
-		"SESSION ",
-		player_slot,
-		" CONTEXT: ",
-		input_contexts.get_context()
-	)
 
 func assign_device(device: PlayerInputDevice) -> void:
 	input_device = device

@@ -24,3 +24,5 @@ signal programming_cancelled(player: Player)
 signal programming_finished(player: Player)
 
 signal respawn_requested(spawn_positions: Array[Vector2])
+
+signal state_changed(state: GameState.Type)
