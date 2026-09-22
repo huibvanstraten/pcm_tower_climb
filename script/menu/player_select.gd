@@ -34,7 +34,7 @@ func _input(event: InputEvent) -> void:
 	if device == null:
 		return
 
-	var session := PlayerSessionManager.get_session_for_device(device)
+	var session = PlayerSessionManager.get_session_for_device(device)
 
 	if session == null:
 		_handle_unassigned_device_input(event, device)
@@ -87,16 +87,13 @@ func _handle_confirmed_session_input(
 
 
 func _start_game() -> void:
-	print("PLAYER SELECT COMPLETE")
+	if not are_all_sessions_confirmed():
+		return
 
-	for session in PlayerSessionManager.get_sessions():
-		print(
-			"PLAYER ",
-			session.player_slot,
-			" CHARACTER ",
-			session.selection.character_index
-		)
-		
+	GameFlowManager.change_state(
+		GameState.Type.GAMEPLAY
+	)
+	
 
 func _refresh_slot(
 	session: PlayerInputSession
@@ -156,7 +153,7 @@ func _on_player_session_joined(
 	if GameFlowManager.state != GameState.Type.PLAYER_SELECT:
 		return
 
-	var session := PlayerSessionManager.get_session(player_slot)
+	var session = PlayerSessionManager.get_session(player_slot)
 
 	if session != null:
 		_ensure_available_character(session)
@@ -250,7 +247,7 @@ func _confirm_selection(
 
 
 func are_all_sessions_confirmed() -> bool:
-	var sessions := PlayerSessionManager.get_sessions()
+	var sessions = PlayerSessionManager.get_sessions()
 
 	if sessions.is_empty():
 		return false

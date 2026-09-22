@@ -26,8 +26,9 @@ LevelManager="*uid://dkonjo2tb0itj"
 SfxManager="*uid://dufcq48oqk1l8"
 MusicManager="*uid://dgdcppubhrp3b"
 SpawnManager="*uid://cfral3wr3jws6"
-GameFlowManager="*uid://b7rydro16j4nj"
-PlayerSessionManager="*uid://bxxq6m81apcjx"
+GameFlowManager="*uid://cytavpvh40jul"
+PlayerSessionManager="*uid://cg3i6exm32vg1"
+PlayerLifecycleManager="*uid://bjb8iwnix35m7"
 
 [display]
 

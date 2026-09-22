@@ -3,14 +3,16 @@ extends PlayerState
 
 const NAME := "Hit"
 
+@export var health_component: HealthComponent
+
 var hit_animation_finished: bool = false
 
 func enter() -> void:
 	super()
 
 	var hit = entity.hit
-	entity.health_component.take_hit(hit)
-	entity.physics_component.apply_knockback(hit.direction, hit.knockback)
+	health_component.take_hit(hit)
+	physics_component.apply_knockback(hit.direction, hit.knockback)
 	entity.hit = null
 
 	hit_animation_finished = false
@@ -20,10 +22,10 @@ func exit() -> void:
 	super()
 
 func physics_update(delta: float) -> String:
-	entity.physics_component.apply_gravity(delta)
+	physics_component.apply_gravity(delta)
 
 	if hit_animation_finished:
-		if entity.health_component.health == 0:
+		if health_component.health == 0:
 			return DieState.NAME
 		else: 
 			return IdleState.NAME

@@ -2,7 +2,6 @@ class_name ProgrammingState
 extends PlayerState
 
 const NAME := "Program"
-@export var move_component: MoveComponent
 
 func enter() -> void:
 	super()

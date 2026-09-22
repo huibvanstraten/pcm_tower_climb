@@ -2,9 +2,6 @@ class_name IdleState
 extends PlayerState
 
 const NAME := "Idle"
-@export var physics_component: PhysicsComponent
-@export var move_component: MoveComponent
-@export var flip_component: FlipComponent
 
 func enter() -> void:
 	super()
