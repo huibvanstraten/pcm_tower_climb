@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://ceges3loiql3p"]
+[gd_scene load_steps=8 format=3 uid="uid://ceges3loiql3p"]
 
 [ext_resource type="Script" uid="uid://bir72lhl7ctyk" path="res://script/main.gd" id="1_itxqv"]
 [ext_resource type="Script" uid="uid://ys0ho1wihei4" path="res://script/level/level_data.gd" id="2_v0l8b"]
@@ -14,22 +14,21 @@ levelName = "Level1"
 levelPath = "res://scene/level/Level1.tscn"
 metadata/_custom_type_script = "uid://ys0ho1wihei4"
 
-[node name="Main" type="Node2D" unique_id=1854399177]
+[node name="Main" type="Node2D"]
 script = ExtResource("1_itxqv")
 player_input_session_scene = ExtResource("2_wp4xf")
 availableLevels = Array[ExtResource("2_v0l8b")]([SubResource("Resource_pu4bb")])
 
-[node name="LevelContainer" type="Node2D" parent="." unique_id=1837073497]
+[node name="LevelContainer" type="Node2D" parent="."]
 
-[node name="PlayerContainer" type="Node2D" parent="." unique_id=872466284]
+[node name="PlayerContainer" type="Node2D" parent="."]
 
-[node name="PlayerInputSessionContainer" type="Node2D" parent="." unique_id=132778103]
+[node name="PlayerInputSessionContainer" type="Node2D" parent="."]
 
-[node name="Hud" parent="." unique_id=637391166 instance=ExtResource("4_brvut")]
-script = null
+[node name="Hud" parent="." instance=ExtResource("4_brvut")]
 
-[node name="MenuLayer" type="CanvasLayer" parent="." unique_id=1400526933]
+[node name="MenuLayer" type="CanvasLayer" parent="."]
 
-[node name="PlayerSelect" parent="MenuLayer" unique_id=185895301 instance=ExtResource("6_4j5ol")]
+[node name="PlayerSelect" parent="MenuLayer" instance=ExtResource("6_4j5ol")]
 
-[node name="StartScreen" parent="MenuLayer" unique_id=1536910945 instance=ExtResource("5_0ha60")]
+[node name="StartScreen" parent="MenuLayer" instance=ExtResource("5_0ha60")]
