@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://d4f5vamavmky5"]
+
+[ext_resource type="Script" uid="uid://klhpa7b27ej6" path="res://script/menu/player_select.gd" id="1_06nbu"]
+[ext_resource type="PackedScene" uid="uid://chpj71d0oo3xj" path="res://scene/menu/playerSelectSlot.tscn" id="2_c61e1"]
+
+[node name="PlayerSelect" type="Control" unique_id=185895301]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_06nbu")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1444529787]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=703492070]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=381183805]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "SELECT YOUR PLAYER"
+horizontal_alignment = 1
+
+[node name="SlotsContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=955183590]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="PlayerSelectSlot1" parent="MarginContainer/VBoxContainer/SlotsContainer" unique_id=937506788 instance=ExtResource("2_c61e1")]
+unique_name_in_owner = true
+layout_mode = 2
+player_slot = 1
+
+[node name="PlayerSelectSlot2" parent="MarginContainer/VBoxContainer/SlotsContainer" unique_id=352767446 instance=ExtResource("2_c61e1")]
+unique_name_in_owner = true
+layout_mode = 2
+player_slot = 2
+
+[node name="PlayerSelectSlot3" parent="MarginContainer/VBoxContainer/SlotsContainer" unique_id=1523527587 instance=ExtResource("2_c61e1")]
+unique_name_in_owner = true
+layout_mode = 2
+player_slot = 3
+
+[node name="PlayerSelectSlot4" parent="MarginContainer/VBoxContainer/SlotsContainer" unique_id=882758504 instance=ExtResource("2_c61e1")]
+unique_name_in_owner = true
+layout_mode = 2
+player_slot = 4
+
+[node name="StartGameLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1733715849]
+unique_name_in_owner = true
+layout_mode = 2
+text = "PRESS START TO PLAY"
+horizontal_alignment = 1

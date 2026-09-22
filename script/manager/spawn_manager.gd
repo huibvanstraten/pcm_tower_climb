@@ -39,7 +39,7 @@ func position_player(
 	player.global_position = position
 
 func create_player(player_id: int) -> Player:
-	var player := preload("res://scene/player.tscn").instantiate() as Player
+	var player := preload("res://scene/entity/player.tscn").instantiate() as Player
 
 	player.name = "Player_%s" % player_id
 	player.player_id = player_id

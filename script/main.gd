@@ -34,13 +34,9 @@ func _input(event: InputEvent) -> void:
 		GameState.Type.START_SCREEN:
 			handle_start_screen_input(event)
 
-		GameState.Type.PLAYER_SELECT:
-			handle_player_select_input(event)
-
 		GameState.Type.GAMEPLAY:
 			handle_gameplay_input(event)
-			
-			
+	
 
 func handle_start_screen_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("start"):
@@ -62,22 +58,6 @@ func handle_start_screen_input(event: InputEvent) -> void:
 	GameFlowManager.change_state(
 		GameState.Type.PLAYER_SELECT
 	)
-
-func handle_player_select_input(event: InputEvent) -> void:
-	var device := PlayerInputDevice.from_event(event)
-
-	if device == null:
-		return
-
-	if not event.is_action_pressed("jump"):
-		return
-
-	var session := PlayerSessionManager.get_session_for_device(device)
-
-	if session != null:
-		return
-	
-	PlayerSessionManager.join_device(device)
 
 
 func handle_gameplay_input(event: InputEvent) -> void:

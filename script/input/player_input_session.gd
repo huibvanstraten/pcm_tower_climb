@@ -6,6 +6,8 @@ extends Node
 var input_contexts := InputContextStack.new()
 var game_input_contexts: InputContextStack
 
+var selection := PlayerSelection.new()
+
 var control_targets: Array[Node] = []
 var input_device: PlayerInputDevice
 
