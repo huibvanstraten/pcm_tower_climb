@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://byxteu4bywatq"]
+[gd_scene format=3 uid="uid://byxteu4bywatq"]
 
 [ext_resource type="Script" uid="uid://de8ni5ly40irp" path="res://script/entity/respawn_point.gd" id="1_53nmy"]
 [ext_resource type="Texture2D" uid="uid://cdgsfq8el84vo" path="res://asset/object/spawning_station/spawning_station.png" id="2_s6ouu"]

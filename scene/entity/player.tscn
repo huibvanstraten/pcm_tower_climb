@@ -217,7 +217,7 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_ni43k"]
 radius = 12.0415945
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
+[node name="Player" type="CharacterBody2D" unique_id=922026920 node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_ct4mp")
@@ -265,7 +265,7 @@ health_component = NodePath("../Health")
 shape = SubResource("CircleShape2D_ni43k")
 debug_color = Color(0.5204651, 0.5697249, 0.22021666, 0.41960785)
 
-[node name="Health" type="Node2D" parent="Components" node_paths=PackedStringArray("entity")]
+[node name="Health" type="Node2D" parent="Components" unique_id=1638721489 node_paths=PackedStringArray("entity")]
 script = ExtResource("8_j4wxg")
 entity = NodePath("../..")
 intial_health = 3

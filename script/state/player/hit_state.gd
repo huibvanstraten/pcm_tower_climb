@@ -4,8 +4,7 @@ extends PlayerState
 const NAME := "Hit"
 @export var hurt_component: HurtComponent
 @export var health_component: HealthComponent
-@export var physics_component: PhysicsComponent
-@export var move_component: MoveComponent
+
 var hit_animation_finished: bool = false
 
 func enter() -> void:
