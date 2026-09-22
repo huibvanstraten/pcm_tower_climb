@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bqhdavfgdcwnd"]
 
-[ext_resource type="Script" uid="uid://c0msmv8edep7a" path="res://script/player_hud_slot.gd" id="1_w0q0o"]
-[ext_resource type="PackedScene" uid="uid://b0i0y551rj7un" path="res://scene/ui/playerHudInfo.tscn" id="2_lh830"]
+[ext_resource type="Script" uid="uid://jm5maldfxl30" path="res://script/hud/player_hud_slot.gd" id="1_w0q0o"]
+[ext_resource type="PackedScene" uid="uid://b0i0y551rj7un" path="res://scene/hud/playerHudInfo.tscn" id="2_lh830"]
 
 [node name="PlayerHUDSlot" type="PanelContainer" unique_id=876393324]
 self_modulate = Color(1, 1, 1, 0.02745098)

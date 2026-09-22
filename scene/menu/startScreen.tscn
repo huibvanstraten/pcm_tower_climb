@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://b6fqghrmn0mhl"]
+
+[ext_resource type="Script" uid="uid://bckrq0fr27vfu" path="res://script/menu/start_screen.gd" id="1_qidx5"]
+
+[node name="StartScreen" type="Control" unique_id=1536910945]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qidx5")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=370454674]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CenterContainer" unique_id=440982567]
+layout_mode = 2
+text = "PRESS START"

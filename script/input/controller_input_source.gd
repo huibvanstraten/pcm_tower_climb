@@ -11,6 +11,7 @@ var move_right_strength := 0.0
 
 var jump_pressed := false
 var jump_held := false
+var jump_released := false
 
 var interact_pressed := false
 
@@ -40,10 +41,12 @@ func get_command(
 
 	command.jump_pressed = jump_pressed
 	command.jump_held = jump_held
+	command.jump_released = jump_released
 
 	command.interact_pressed = interact_pressed
 
 	jump_pressed = false
+	jump_released = false
 	interact_pressed = false
 
 	return command
@@ -68,9 +71,11 @@ func _update_jump_input(event: InputEvent) -> void:
 	if event.is_action_pressed(jump_action):
 		jump_pressed = true
 		jump_held = true
+		jump_released = false
 
 	if event.is_action_released(jump_action):
 		jump_held = false
+		jump_released = true
 
 
 func _update_interact_input(event: InputEvent) -> void:

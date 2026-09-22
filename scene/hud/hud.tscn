@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dqwvg3ik2nw2a"]
 
-[ext_resource type="PackedScene" uid="uid://bqhdavfgdcwnd" path="res://scene/ui/playerHUDSlot.tscn" id="1_7n5te"]
-[ext_resource type="Script" uid="uid://og7oix2dunk4" path="res://script/hud.gd" id="1_iafo3"]
+[ext_resource type="PackedScene" uid="uid://bqhdavfgdcwnd" path="res://scene/hud/playerHUDSlot.tscn" id="1_7n5te"]
+[ext_resource type="Script" uid="uid://bptfa4q6x3ml1" path="res://script/hud/hud.gd" id="1_hta5f"]
 
 [node name="Hud" type="CanvasLayer" unique_id=637391166]
-script = ExtResource("1_iafo3")
+script = ExtResource("1_hta5f")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1229955603]
 custom_minimum_size = Vector2(0, 80)
