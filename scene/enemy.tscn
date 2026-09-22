@@ -1,0 +1,239 @@
+[gd_scene load_steps=30 format=3 uid="uid://wgls8s878624"]
+
+[ext_resource type="Script" uid="uid://dnctevg8flony" path="res://script/entity/enemy.gd" id="1_8u16h"]
+[ext_resource type="Script" uid="uid://bhjoo6bce0vc0" path="res://script/state/enemy/enemy_state_machine.gd" id="1_f87vc"]
+[ext_resource type="Script" uid="uid://c67u3v5wcrj3a" path="res://script/state/enemy/patrol_state.gd" id="2_f87vc"]
+[ext_resource type="Script" uid="uid://cdlmt7cdiw02s" path="res://script/object/hit_component.gd" id="2_kqmod"]
+[ext_resource type="Texture2D" uid="uid://4jqoa02dt3vk" path="res://asset/sci-fi platformer - free/player.png" id="2_vgurf"]
+[ext_resource type="Script" uid="uid://co207pvwufuqm" path="res://script/component/move_component.gd" id="2_yvcfn"]
+[ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ulb22"]
+[ext_resource type="Script" uid="uid://c1mxmnssq41rd" path="res://script/component/flip_component.gd" id="5_1e552"]
+[ext_resource type="Script" uid="uid://c8ex33cds1l23" path="res://script/component/health_component.gd" id="7_rs6j2"]
+[ext_resource type="Script" uid="uid://b2o86htpra2go" path="res://script/state/enemy/enemy_hit_state.gd" id="8_vgurf"]
+[ext_resource type="Script" uid="uid://3wt1rt1lamc" path="res://script/state/enemy/enemy_fall_state.gd" id="10_qhqle"]
+[ext_resource type="Script" uid="uid://dvok0kakc82vy" path="res://script/component/hurt_component.gd" id="11_pw261"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqle"]
+size = Vector2(12, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pw261"]
+size = Vector2(16, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ysr33"]
+atlas = ExtResource("2_vgurf")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jl0n1"]
+atlas = ExtResource("2_vgurf")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_65i8h"]
+atlas = ExtResource("2_vgurf")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6bka5"]
+atlas = ExtResource("2_vgurf")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gg45h"]
+atlas = ExtResource("2_vgurf")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqmod"]
+atlas = ExtResource("2_vgurf")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qhqle"]
+atlas = ExtResource("2_vgurf")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pw261"]
+atlas = ExtResource("2_vgurf")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rs6j2"]
+atlas = ExtResource("2_vgurf")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0n578"]
+atlas = ExtResource("2_vgurf")
+region = Rect2(128, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sj55t"]
+atlas = ExtResource("2_vgurf")
+region = Rect2(160, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_un1pk"]
+atlas = ExtResource("2_vgurf")
+region = Rect2(192, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jntje"]
+atlas = ExtResource("2_vgurf")
+region = Rect2(224, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f87vc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ysr33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jl0n1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_65i8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6bka5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gg45h")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqmod")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qhqle")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pw261")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rs6j2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0n578")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sj55t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_un1pk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jntje")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sj55t"]
+size = Vector2(16, 2)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_8u16h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7.5)
+shape = SubResource("RectangleShape2D_qhqle")
+
+[node name="Hit" type="Area2D" parent="."]
+script = ExtResource("2_kqmod")
+
+[node name="Hit" type="CollisionShape2D" parent="Hit"]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_pw261")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, -7)
+sprite_frames = SubResource("SpriteFrames_f87vc")
+animation = &"run"
+autoplay = "run"
+frame_progress = 0.98083484
+
+[node name="Components" type="Node2D" parent="."]
+
+[node name="Move" type="Node2D" parent="Components" node_paths=PackedStringArray("physics_component")]
+script = ExtResource("2_yvcfn")
+physics_component = NodePath("../Physics")
+speed = 70.0
+
+[node name="Physics" type="Node2D" parent="Components" node_paths=PackedStringArray("character_body")]
+script = ExtResource("3_ulb22")
+character_body = NodePath("../..")
+
+[node name="Flip" type="Node2D" parent="Components" node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("5_1e552")
+animated_sprite = NodePath("../../AnimatedSprite2D")
+
+[node name="Health" type="Node2D" parent="Components" node_paths=PackedStringArray("entity")]
+script = ExtResource("7_rs6j2")
+entity = NodePath("../..")
+intial_health = 1
+
+[node name="Hurt" type="Area2D" parent="Components" node_paths=PackedStringArray("player", "health_component")]
+script = ExtResource("11_pw261")
+player = NodePath("../..")
+health_component = NodePath("../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt"]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_sj55t")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("entity", "initial_state")]
+script = ExtResource("1_f87vc")
+entity = NodePath("..")
+initial_state = NodePath("Fall")
+metadata/_custom_type_script = "uid://cwjon3ym72k2d"
+
+[node name="Patrol" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "wall_detection_left", "wall_detection_right", "ledge_detection_left", "ledge_detection_right", "state_machine", "entity", "animation_player", "collision_shape")]
+script = ExtResource("2_f87vc")
+physics_component = NodePath("../../Components/Physics")
+move_component = NodePath("../../Components/Move")
+flip_component = NodePath("../../Components/Flip")
+wall_detection_left = NodePath("../../EnvironmentDetection/WallDetectionLeft")
+wall_detection_right = NodePath("../../EnvironmentDetection/WallDetectionRight")
+ledge_detection_left = NodePath("../../EnvironmentDetection/LedgeDetectionLeft")
+ledge_detection_right = NodePath("../../EnvironmentDetection/LedgeDetectionRight")
+state_machine = NodePath("..")
+entity = NodePath("../..")
+animation_player = NodePath("../../AnimationPlayer")
+collision_shape = NodePath("../../CollisionShape2D")
+
+[node name="Hit" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "move_component", "state_machine", "entity", "animation_player", "collision_shape")]
+script = ExtResource("8_vgurf")
+physics_component = NodePath("../../Components/Physics")
+move_component = NodePath("../../Components/Move")
+state_machine = NodePath("..")
+entity = NodePath("../..")
+animation_player = NodePath("../../AnimationPlayer")
+collision_shape = NodePath("../../CollisionShape2D")
+
+[node name="Fall" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "state_machine", "entity", "animation_player", "collision_shape")]
+script = ExtResource("10_qhqle")
+physics_component = NodePath("../../Components/Physics")
+state_machine = NodePath("..")
+entity = NodePath("../..")
+animation_player = NodePath("../../AnimationPlayer")
+collision_shape = NodePath("../../CollisionShape2D")
+
+[node name="EnvironmentDetection" type="Node2D" parent="."]
+position = Vector2(0, -2)
+
+[node name="WallDetectionLeft" type="RayCast2D" parent="EnvironmentDetection"]
+scale = Vector2(1, 1.0020622)
+target_position = Vector2(-16, 0)
+collision_mask = 3
+
+[node name="WallDetectionRight" type="RayCast2D" parent="EnvironmentDetection"]
+target_position = Vector2(16, 0)
+collision_mask = 3
+
+[node name="LedgeDetectionLeft" type="RayCast2D" parent="EnvironmentDetection"]
+position = Vector2(-16, 0)
+target_position = Vector2(0, 100)
+
+[node name="LedgeDetectionRight" type="RayCast2D" parent="EnvironmentDetection"]
+position = Vector2(16, 0)
+scale = Vector2(0.9979003, 1)
+target_position = Vector2(0, 100)

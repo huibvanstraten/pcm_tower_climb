@@ -215,8 +215,11 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_4toet"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ni43k"]
+radius = 12.0415945
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
+collision_layer = 2
+collision_mask = 3
 script = ExtResource("1_ct4mp")
 bodyCollisionShape = NodePath("CollisionShape2D")
 animationComponent = NodePath("AnimatedSprite2D")
@@ -253,6 +256,7 @@ flip_marker = NodePath("../../FlipMarker")
 [node name="Move" type="Node2D" parent="Components" node_paths=PackedStringArray("physics_component")]
 script = ExtResource("6_g2vtq")
 physics_component = NodePath("../Physics")
+speed = 200.0
 
 [node name="Hurt" type="Area2D" parent="Components" node_paths=PackedStringArray("player", "health_component")]
 script = ExtResource("7_u7b46")
@@ -263,8 +267,10 @@ health_component = NodePath("../Health")
 shape = SubResource("CircleShape2D_ni43k")
 debug_color = Color(0.5204651, 0.5697249, 0.22021666, 0.41960785)
 
-[node name="Health" type="Node2D" parent="Components"]
+[node name="Health" type="Node2D" parent="Components" node_paths=PackedStringArray("entity")]
 script = ExtResource("8_j4wxg")
+entity = NodePath("../..")
+intial_health = 3
 
 [node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("entity", "initial_state")]
 script = ExtResource("8_u7b46")
