@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://chpj71d0oo3xj"]
+
+[ext_resource type="Script" uid="uid://bmkjd0ofsodcu" path="res://script/menu/player_select_slot.gd" id="1_jcrtu"]
+
+[node name="PlayerSelectSlot" type="PanelContainer" unique_id=937506788]
+offset_right = 192.0
+offset_bottom = 320.0
+size_flags_horizontal = 3
+script = ExtResource("1_jcrtu")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1465963359]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2055823234]
+layout_mode = 2
+
+[node name="PlayerLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1488949747]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="PortraitContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer" unique_id=91468080]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Portrait" type="ColorRect" parent="MarginContainer/VBoxContainer/PortraitContainer" unique_id=692301882]
+custom_minimum_size = Vector2(90, 120)
+layout_mode = 2
+color = Color(0.4552945, 0.9907276, 0.8925096, 1)
+
+[node name="PreviousLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1529455736]
+unique_name_in_owner = true
+layout_mode = 2
+text = "<                            >"
+
+[node name="NextLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=702310920]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CharacterLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1470713885]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=376682525]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="tower-climb">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Archive 2.zip!/" />
+      <root url="jar://$PROJECT_DIR$/Archive 3.zip!/" />
+      <root url="jar://$PROJECT_DIR$/Archive.zip!/" />
+      <root url="jar://$PROJECT_DIR$/scene.zip!/" />
+      <root url="jar://$PROJECT_DIR$/scene 2.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

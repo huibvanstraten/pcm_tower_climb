@@ -375,6 +375,19 @@ func get_viewport_world_size() -> Vector2:
 	return viewport_size / camera.zoom
 
 
+func is_world_position_visible(
+	world_position: Vector2
+) -> bool:
+	var viewport_size := get_viewport_world_size()
+
+	var visible_rect := Rect2(
+		global_position - viewport_size * 0.5,
+		viewport_size
+	)
+
+	return visible_rect.has_point(world_position)
+
+
 func get_tracking_rect() -> Rect2:
 	var viewport_size := get_viewport_world_size()
 

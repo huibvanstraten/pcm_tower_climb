@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b0i0y551rj7un"]
 
-[ext_resource type="Script" uid="uid://boid57sm4atgm" path="res://script/player_hud_info.gd" id="1_1er7l"]
+[ext_resource type="Script" uid="uid://c3m1heyg4w1p1" path="res://script/hud/player_hud_info.gd" id="1_1er7l"]
 [ext_resource type="Texture2D" uid="uid://cg0lr5joctidy" path="res://icon.svg" id="2_eh55v"]
 
 [node name="PlayerHudInfo" type="MarginContainer" unique_id=1553156446]

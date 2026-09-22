@@ -6,6 +6,8 @@ signal transition_to_area(areaId: int)
 signal freeze_player(freeze: bool)
 
 signal player_session_joined(player_slot: int)
+signal player_session_waiting(player_slot: int)
+
 signal player_joined(player: Player)
 signal player_died(player: Player)
 signal player_respawned(player: Player)
@@ -22,3 +24,5 @@ signal programming_cancelled(player: Player)
 signal programming_finished(player: Player)
 
 signal respawn_requested(spawn_positions: Array[Vector2])
+
+signal state_changed(state: GameState.Type)

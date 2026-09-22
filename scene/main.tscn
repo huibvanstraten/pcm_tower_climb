@@ -2,8 +2,10 @@
 
 [ext_resource type="Script" uid="uid://bir72lhl7ctyk" path="res://script/main.gd" id="1_itxqv"]
 [ext_resource type="Script" uid="uid://ys0ho1wihei4" path="res://script/level/level_data.gd" id="2_v0l8b"]
-[ext_resource type="PackedScene" uid="uid://boalx4k4mb5dx" path="res://scene/playerInputSession.tscn" id="2_wp4xf"]
-[ext_resource type="PackedScene" uid="uid://dqwvg3ik2nw2a" path="res://scene/ui/hud.tscn" id="4_brvut"]
+[ext_resource type="PackedScene" uid="uid://boalx4k4mb5dx" path="res://scene/input/PlayerInputSession.tscn" id="2_wp4xf"]
+[ext_resource type="PackedScene" uid="uid://dqwvg3ik2nw2a" path="res://scene/hud/hud.tscn" id="4_brvut"]
+[ext_resource type="PackedScene" uid="uid://b6fqghrmn0mhl" path="res://scene/menu/startScreen.tscn" id="5_0ha60"]
+[ext_resource type="PackedScene" uid="uid://d4f5vamavmky5" path="res://scene/menu/playerSelect.tscn" id="6_4j5ol"]
 
 [sub_resource type="Resource" id="Resource_pu4bb"]
 script = ExtResource("2_v0l8b")
@@ -24,3 +26,10 @@ availableLevels = Array[ExtResource("2_v0l8b")]([SubResource("Resource_pu4bb")])
 [node name="PlayerInputSessionContainer" type="Node2D" parent="." unique_id=132778103]
 
 [node name="Hud" parent="." unique_id=637391166 instance=ExtResource("4_brvut")]
+script = null
+
+[node name="MenuLayer" type="CanvasLayer" parent="." unique_id=1400526933]
+
+[node name="PlayerSelect" parent="MenuLayer" unique_id=185895301 instance=ExtResource("6_4j5ol")]
+
+[node name="StartScreen" parent="MenuLayer" unique_id=1536910945 instance=ExtResource("5_0ha60")]
