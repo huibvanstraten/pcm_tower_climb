@@ -66,7 +66,7 @@ func handle_start_screen_input(event: InputEvent) -> void:
 	if not event.is_action_pressed("start"):
 		return
 
-	var device := PlayerInputDevice.from_event(event)
+	var device = PlayerInputDevice.from_event(event)
 
 	if device == null:
 		return

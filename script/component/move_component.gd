@@ -4,7 +4,7 @@ extends Node
 @export var physics_component: PhysicsComponent
 
 @export_group("Ground Movement")
-@export var speed: float = 200.0
+@export var speed: float = 100.0
 @export var acceleration: float = 2000.0
 @export var friction: float = 2000.0
 

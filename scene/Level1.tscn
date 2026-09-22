@@ -1,11 +1,11 @@
-[gd_scene load_steps=14 format=4 uid="uid://dbewmbrugcnjk"]
+[gd_scene load_steps=14 format=4 uid="uid://bpnrqwraqbxg1"]
 
 [ext_resource type="Script" uid="uid://bdu8cynu5p5ca" path="res://script/level/level_1.gd" id="1_nk78g"]
 [ext_resource type="PackedScene" uid="uid://2b8l7oadkcai" path="res://scene/cameraRig.tscn" id="2_a215g"]
 [ext_resource type="Script" uid="uid://r0xgpm08oh15" path="res://script/level/area.gd" id="3_ebr37"]
-[ext_resource type="PackedScene" uid="uid://cen5vsst8ve0u" path="res://scene/respawnPoint.tscn" id="4_nk78g"]
+[ext_resource type="PackedScene" path="res://scene/respawnPoint.tscn" id="4_nk78g"]
 [ext_resource type="Texture2D" uid="uid://d38p2net68ij7" path="res://asset/background/Ruined city.png" id="5_ldwqa"]
-[ext_resource type="PackedScene" uid="uid://b2kgo5yggd2m2" path="res://scene/electricBall.tscn" id="6_a215g"]
+[ext_resource type="PackedScene" path="res://scene/electricBall.tscn" id="6_a215g"]
 [ext_resource type="PackedScene" uid="uid://wgls8s878624" path="res://scene/enemy.tscn" id="7_qt7cu"]
 [ext_resource type="Texture2D" uid="uid://b4w81peciphg7" path="res://asset/sci-fi platformer - free/tileset.png" id="8_vr3a4"]
 
