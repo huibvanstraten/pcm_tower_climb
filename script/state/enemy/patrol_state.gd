@@ -2,13 +2,14 @@ class_name PatrolState
 extends EnemyState
 
 const NAME := "Patrol"
-@export var physics_component: PhysicsComponent
 @export var move_component: MoveComponent
 @export var flip_component: FlipComponent
 @export var wall_detection_left: RayCast2D
 @export var wall_detection_right: RayCast2D
 @export var ledge_detection_left: RayCast2D
 @export var ledge_detection_right: RayCast2D
+@export var enemy_detection_left: RayCast2D
+@export var enemy_detection_right: RayCast2D
 
 func enter() -> void:
 	super()
@@ -25,13 +26,12 @@ func physics_update(delta: float) -> String:
 	if entity.is_hit():
 		return EnemyHitState.NAME
 
-	if entity.direction > 0:
-		if wall_detection_right.is_colliding() or not ledge_detection_right.is_colliding():
-			entity.direction *= -1
-			move_component.accute_stop()
-	else:
-		if wall_detection_left.is_colliding() or not ledge_detection_left.is_colliding():
-			entity.direction *= -1
-			move_component.accute_stop()
+	var enemy_detector = enemy_detection_right if entity.direction > 0 else enemy_detection_left
+	var wall_detector = wall_detection_right if entity.direction > 0 else wall_detection_left
+	var ledge_detector = ledge_detection_right if entity.direction > 0 else ledge_detection_left
+
+	if enemy_detector.is_colliding() or wall_detector.is_colliding() or not ledge_detector.is_colliding():
+		entity.direction *= -1
+		move_component.accute_stop()
 
 	return "None"

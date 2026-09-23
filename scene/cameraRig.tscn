@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://2b8l7oadkcai"]
+[gd_scene load_steps=7 format=3 uid="uid://2b8l7oadkcai"]
 
 [ext_resource type="Script" uid="uid://d0j7rq0nymta0" path="res://script/camera_rig.gd" id="1_aej5r"]
 
@@ -13,36 +13,40 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_aej5r"]
 size = Vector2(2562, 5)
 
-[node name="CameraRig" type="Node2D" unique_id=1417698977]
+[node name="CameraRig" type="Node2D"]
 script = ExtResource("1_aej5r")
 
-[node name="PlayerBounds" type="Node2D" parent="." unique_id=1006308042]
+[node name="PlayerBounds" type="Node2D" parent="."]
 
-[node name="LeftBoundary" type="StaticBody2D" parent="PlayerBounds" unique_id=284232780]
+[node name="LeftBoundary" type="StaticBody2D" parent="PlayerBounds"]
+collision_layer = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBounds/LeftBoundary" unique_id=639982202]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBounds/LeftBoundary"]
 shape = SubResource("RectangleShape2D_4toet")
 
-[node name="RightBoundary" type="StaticBody2D" parent="PlayerBounds" unique_id=2026901659]
+[node name="RightBoundary" type="StaticBody2D" parent="PlayerBounds"]
+collision_layer = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBounds/RightBoundary" unique_id=1121084951]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBounds/RightBoundary"]
 shape = SubResource("RectangleShape2D_ni43k")
 
-[node name="TopBoundary" type="StaticBody2D" parent="PlayerBounds" unique_id=2134815033]
+[node name="TopBoundary" type="StaticBody2D" parent="PlayerBounds"]
+collision_layer = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBounds/TopBoundary" unique_id=635524772]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBounds/TopBoundary"]
 shape = SubResource("RectangleShape2D_dr4yn")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=1806843475]
+[node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="DeathZone" type="Area2D" parent="." unique_id=750207309]
+[node name="DeathZone" type="Area2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone" unique_id=2004658785]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
 shape = SubResource("RectangleShape2D_f645t")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=150121041]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1402582]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(1194.25, 1869)
 shape = SubResource("RectangleShape2D_aej5r")
 debug_color = Color(0.674176, 0.40751508, 0.7823852, 0.41960785)

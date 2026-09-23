@@ -2,7 +2,6 @@ class_name EnemyFallState
 extends EnemyState
 
 const NAME := "Fall"
-@export var physics_component: PhysicsComponent
 
 func enter() -> void:
 	super()
