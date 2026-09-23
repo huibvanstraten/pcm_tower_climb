@@ -8,6 +8,7 @@ var hit_animation_finished: bool = false
 
 func enter() -> void:
 	super()
+	physics_component.halt_horizontal()
 
 	var hit = entity.hit
 	health_component.take_hit(hit)
