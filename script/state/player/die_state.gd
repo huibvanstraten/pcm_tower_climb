@@ -6,6 +6,7 @@ const NAME := "Die"
 
 func enter() -> void:
 	super()
+	animated_sprite.rotate(-0.5*PI)
 	physics_component.halt_horizontal()
 
 func exit() -> void:
