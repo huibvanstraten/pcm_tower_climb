@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://b6fqghrmn0mhl"]
 
 [ext_resource type="Script" uid="uid://bddm3u056n71w" path="res://script/menu/start_screen.gd" id="1_qidx5"]
-[ext_resource type="Texture2D" uid="uid://duyn77ivx2bkl" path="res://asset/background/6D0B9190-AC7B-4E7C-8453-8376B37AFD9D 2.png" id="2_dh6d7"]
+[ext_resource type="Texture2D" uid="uid://duyn77ivx2bkl" path="res://asset/menu/6D0B9190-AC7B-4E7C-8453-8376B37AFD9D 2.png" id="2_dh6d7"]
+[ext_resource type="AudioStream" uid="uid://dhqg06aytsbi5" path="res://asset/audio/sfx/ui/confirm.mp3" id="2_p5a0m"]
+[ext_resource type="AudioStream" uid="uid://d1p8t7l5x755x" path="res://asset/audio/music/Adventure time.wav" id="3_p5a0m"]
 
 [sub_resource type="SystemFont" id="SystemFont_dr4yn"]
 subpixel_positioning = 0
@@ -14,6 +16,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qidx5")
+select_sound = ExtResource("2_p5a0m")
+music = ExtResource("3_p5a0m")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=2121254245]
 layout_mode = 0

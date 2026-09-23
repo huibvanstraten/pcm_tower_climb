@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://wgls8s878624"]
+[gd_scene load_steps=41 format=3 uid="uid://wgls8s878624"]
 
 [ext_resource type="Script" uid="uid://dnctevg8flony" path="res://script/entity/enemy.gd" id="1_8u16h"]
 [ext_resource type="Script" uid="uid://bhjoo6bce0vc0" path="res://script/state/enemy/enemy_state_machine.gd" id="1_f87vc"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://co207pvwufuqm" path="res://script/component/move_component.gd" id="2_yvcfn"]
 [ext_resource type="Texture2D" uid="uid://bp0y76mxdodr4" path="res://asset/sci-fi platformer - premium/enemies/enemy-01.png" id="3_3cfia"]
 [ext_resource type="Texture2D" uid="uid://dqnyp8nwe3k4o" path="res://asset/sci-fi platformer - premium/enemies/enemy-02.png" id="3_5lugx"]
+[ext_resource type="Texture2D" uid="uid://f5kx5j5a0rdu" path="res://asset/sci-fi platformer - premium/enemies/enemy-03.png" id="3_thtid"]
 [ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ulb22"]
 [ext_resource type="Script" uid="uid://c1mxmnssq41rd" path="res://script/component/flip_component.gd" id="5_1e552"]
 [ext_resource type="Script" uid="uid://c8ex33cds1l23" path="res://script/component/health_component.gd" id="7_rs6j2"]
@@ -47,6 +48,22 @@ _data = {
 &"RESET": SubResource("Animation_5lugx"),
 &"enemy_hit": SubResource("Animation_siwfd")
 }
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ahf7f"]
+atlas = ExtResource("3_thtid")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_moe1r"]
+atlas = ExtResource("3_thtid")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_38eb3"]
+atlas = ExtResource("3_thtid")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f2a6n"]
+atlas = ExtResource("3_thtid")
+region = Rect2(144, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5r5an"]
 atlas = ExtResource("3_3cfia")
@@ -108,6 +125,23 @@ region = Rect2(240, 48, 48, 48)
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_ahf7f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_moe1r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_38eb3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f2a6n")
+}],
+"loop": true,
+"name": &"fall",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_5r5an")
 }, {
 "duration": 1.0,
@@ -118,7 +152,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"hit",
-"speed": 5.0
+"speed": 3.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -194,9 +228,11 @@ libraries = {
 }
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1, -10)
+position = Vector2(0, -10)
 sprite_frames = SubResource("SpriteFrames_f87vc")
 animation = &"patrol"
+frame_progress = 0.4499387
+flip_h = true
 
 [node name="Components" type="Node2D" parent="."]
 
@@ -208,6 +244,7 @@ speed = 50.0
 [node name="Physics" type="Node2D" parent="Components" node_paths=PackedStringArray("character_body")]
 script = ExtResource("3_ulb22")
 character_body = NodePath("../..")
+gravity_multiplier = 0.2
 
 [node name="Flip" type="Node2D" parent="Components" node_paths=PackedStringArray("animated_sprite")]
 script = ExtResource("5_1e552")
