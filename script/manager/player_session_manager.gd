@@ -7,6 +7,28 @@ var player_input_session_scene: PackedScene
 var input_session_container: Node
 
 
+func _input(event: InputEvent) -> void:
+	if GameFlowManager.state != GameState.Type.GAMEPLAY:
+		return
+
+	if not event.is_action_pressed("jump"):
+		return
+
+	var device := PlayerInputDevice.from_event(event)
+
+	if device == null:
+		return
+
+	var session := get_session_for_device(device)
+
+	if session == null:
+		join_device(device)
+		return
+
+	if session.state == PlayerInputSession.State.READY:
+		PlayerLifecycleManager.activate_session_player(session)
+
+
 func setup(
 	session_scene: PackedScene,
 	session_container: Node
