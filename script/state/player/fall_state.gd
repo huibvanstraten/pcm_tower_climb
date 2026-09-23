@@ -17,11 +17,7 @@ func physics_update(delta: float) -> String:
 	if entity.is_hit():
 		return HitState.NAME
 		
-	print(entity.velocity)
 	if entity.is_on_floor():
-		if entity.velocity.x > 0:
-			return IdleState.NAME
-		else:
-			return MoveState.NAME
+		return IdleState.NAME
 	
 	return "None"
