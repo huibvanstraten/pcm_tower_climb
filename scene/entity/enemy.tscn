@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://wgls8s878624"]
+[gd_scene load_steps=42 format=3 uid="uid://wgls8s878624"]
 
 [ext_resource type="Script" uid="uid://dnctevg8flony" path="res://script/entity/enemy.gd" id="1_8u16h"]
 [ext_resource type="Script" uid="uid://bhjoo6bce0vc0" path="res://script/state/enemy/enemy_state_machine.gd" id="1_f87vc"]
@@ -17,7 +17,10 @@
 [ext_resource type="Script" uid="uid://bkk6knmjwie2n" path="res://script/state/enemy/enemy_die_state.gd" id="13_5lugx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5lugx"]
-size = Vector2(20, 21)
+size = Vector2(20, 19)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_thtid"]
+size = Vector2(24, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pw261"]
 size = Vector2(24, 19)
@@ -199,7 +202,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sj55t"]
-size = Vector2(24, 3)
+size = Vector2(24, 1)
 
 [node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
 collision_layer = 2
@@ -209,8 +212,12 @@ bodyCollisionShape = NodePath("CollisionShape2D")
 animationComponent = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -10.5)
+position = Vector2(0, -9.5)
 shape = SubResource("RectangleShape2D_5lugx")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, -20.5)
+shape = SubResource("RectangleShape2D_thtid")
 
 [node name="Hit" type="Area2D" parent="."]
 collision_layer = 2
@@ -263,7 +270,7 @@ player = NodePath("../..")
 health_component = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt"]
-position = Vector2(0, -22.5)
+position = Vector2(0, -21.5)
 shape = SubResource("RectangleShape2D_sj55t")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("entity", "initial_state")]

@@ -20,29 +20,19 @@
 
 [sub_resource type="Animation" id="Animation_fiawc"]
 length = 0.001
-tracks/0/type = "value"
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
+tracks/0/path = NodePath("AnimatedSprite2D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"hit"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
+"values": [{
+"args": [&"hit", 1.0, false],
+"method": &"play"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_bedqt"]
@@ -321,13 +311,13 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fiawc"]
-size = Vector2(12, 14)
+size = Vector2(12, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iot5p"]
 size = Vector2(14, 2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bedqt"]
-size = Vector2(14, 14)
+size = Vector2(14, 17)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
 collision_layer = 2
@@ -348,7 +338,7 @@ sprite_frames = SubResource("SpriteFrames_34jf3")
 animation = &"hit"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -7)
+position = Vector2(0, -8.5)
 shape = SubResource("RectangleShape2D_fiawc")
 
 [node name="Hit" type="Area2D" parent="."]
@@ -389,7 +379,7 @@ player = NodePath("../..")
 health_component = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt"]
-position = Vector2(0, -8)
+position = Vector2(0, -9.5)
 shape = SubResource("RectangleShape2D_bedqt")
 
 [node name="Health" type="Node2D" parent="Components" node_paths=PackedStringArray("entity")]
