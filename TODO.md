@@ -5,6 +5,7 @@
 - [ ] Enemy sprite zoeken/aanpassen -> huib
 - [ ] Level 1 maken -> michiel
 - [ ] Bounce-back bij doden enemy
+- [ ] Use animation player instead animated sprite
 
 ### Later
 - [ ] Player kleur sprites maken
