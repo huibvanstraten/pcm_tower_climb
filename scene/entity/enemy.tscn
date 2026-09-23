@@ -17,10 +17,10 @@
 [ext_resource type="Script" uid="uid://bkk6knmjwie2n" path="res://script/state/enemy/enemy_die_state.gd" id="13_5lugx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5lugx"]
-size = Vector2(14, 16)
+size = Vector2(20, 21)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pw261"]
-size = Vector2(16, 14)
+size = Vector2(24, 19)
 
 [sub_resource type="Animation" id="Animation_5lugx"]
 length = 0.001
@@ -199,7 +199,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sj55t"]
-size = Vector2(16, 2)
+size = Vector2(24, 3)
 
 [node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
 collision_layer = 2
@@ -209,7 +209,7 @@ bodyCollisionShape = NodePath("CollisionShape2D")
 animationComponent = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -8)
+position = Vector2(0, -10.5)
 shape = SubResource("RectangleShape2D_5lugx")
 
 [node name="Hit" type="Area2D" parent="."]
@@ -219,7 +219,7 @@ script = ExtResource("2_kqmod")
 knockbackStrength = Vector2(300, 300)
 
 [node name="Hit" type="CollisionShape2D" parent="Hit"]
-position = Vector2(0, -8)
+position = Vector2(0, -10.5)
 shape = SubResource("RectangleShape2D_pw261")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -232,7 +232,7 @@ position = Vector2(0, -10)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_f87vc")
 animation = &"patrol"
-frame_progress = 0.9555633
+flip_h = true
 
 [node name="Components" type="Node2D" parent="."]
 
@@ -263,7 +263,7 @@ player = NodePath("../..")
 health_component = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt"]
-position = Vector2(0, -17)
+position = Vector2(0, -22.5)
 shape = SubResource("RectangleShape2D_sj55t")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("entity", "initial_state")]
@@ -322,27 +322,23 @@ start_animation_name = "die"
 position = Vector2(0, -2)
 
 [node name="WallDetectionLeft" type="RayCast2D" parent="EnvironmentDetection"]
-scale = Vector2(1, 1.0020622)
-target_position = Vector2(-16, 0)
+target_position = Vector2(-24, 0)
 
 [node name="WallDetectionRight" type="RayCast2D" parent="EnvironmentDetection"]
-target_position = Vector2(16, 0)
+target_position = Vector2(24, 0)
 
 [node name="LedgeDetectionLeft" type="RayCast2D" parent="EnvironmentDetection"]
-position = Vector2(-16, 0)
+position = Vector2(-24, 0)
 
 [node name="LedgeDetectionRight" type="RayCast2D" parent="EnvironmentDetection"]
-position = Vector2(16, 0)
-scale = Vector2(0.9979003, 1)
+position = Vector2(24, 0)
 
 [node name="EnemyDetectionLeft" type="RayCast2D" parent="EnvironmentDetection"]
-scale = Vector2(1, 1.0020622)
-target_position = Vector2(-8, 0)
+target_position = Vector2(-12, 0)
 collision_mask = 2
 
 [node name="EnemyDetectionRight" type="RayCast2D" parent="EnvironmentDetection"]
-scale = Vector2(1, 1.0020622)
-target_position = Vector2(8, 0)
+target_position = Vector2(12, 0)
 collision_mask = 2
 
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Hit" method="_on_animation_player_animation_finished"]
