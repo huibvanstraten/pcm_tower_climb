@@ -27,8 +27,9 @@ func physics_update(delta: float) -> String:
 	if hit_animation_finished:
 		if health_component.health == 0:
 			return EnemyDieState.NAME
-		else:
-			return PatrolState.NAME
+		if entity.is_attacking:
+			return EnemyFollowState.NAME
+		return PatrolState.NAME
 
 	return "None"
 

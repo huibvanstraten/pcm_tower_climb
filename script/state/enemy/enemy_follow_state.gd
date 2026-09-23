@@ -1,7 +1,7 @@
-class_name PatrolState
+class_name EnemyFollowState
 extends EnemyState
 
-const NAME := "Patrol"
+const NAME := "Follow"
 @export var move_component: MoveComponent
 @export var flip_component: FlipComponent
 @export var wall_detection_left: RayCast2D
@@ -24,8 +24,8 @@ func physics_update(delta: float) -> String:
 
 	if entity.is_hit():
 		return EnemyHitState.NAME
-	if entity.is_attacking:
-		return EnemyFollowState.NAME
+	if not entity.is_attacking:
+		return PatrolState.NAME
 
 	var enemy_detector = enemy_detection_right if entity.direction > 0 else enemy_detection_left
 	var wall_detector = wall_detection_right if entity.direction > 0 else wall_detection_left
