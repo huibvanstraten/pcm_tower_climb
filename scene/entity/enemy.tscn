@@ -1,10 +1,11 @@
-[gd_scene load_steps=32 format=3 uid="uid://wgls8s878624"]
+[gd_scene load_steps=36 format=3 uid="uid://wgls8s878624"]
 
 [ext_resource type="Script" uid="uid://dnctevg8flony" path="res://script/entity/enemy.gd" id="1_8u16h"]
 [ext_resource type="Script" uid="uid://bhjoo6bce0vc0" path="res://script/state/enemy/enemy_state_machine.gd" id="1_f87vc"]
 [ext_resource type="Script" uid="uid://c67u3v5wcrj3a" path="res://script/state/enemy/patrol_state.gd" id="2_f87vc"]
 [ext_resource type="Script" uid="uid://cdlmt7cdiw02s" path="res://script/object/hit_component.gd" id="2_kqmod"]
 [ext_resource type="Script" uid="uid://co207pvwufuqm" path="res://script/component/move_component.gd" id="2_yvcfn"]
+[ext_resource type="Texture2D" uid="uid://bp0y76mxdodr4" path="res://asset/sci-fi platformer - premium/enemies/enemy-01.png" id="3_3cfia"]
 [ext_resource type="Texture2D" uid="uid://dqnyp8nwe3k4o" path="res://asset/sci-fi platformer - premium/enemies/enemy-02.png" id="3_5lugx"]
 [ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ulb22"]
 [ext_resource type="Script" uid="uid://c1mxmnssq41rd" path="res://script/component/flip_component.gd" id="5_1e552"]
@@ -22,45 +23,23 @@ size = Vector2(16, 14)
 
 [sub_resource type="Animation" id="Animation_5lugx"]
 length = 0.001
-tracks/0/type = "value"
+
+[sub_resource type="Animation" id="Animation_siwfd"]
+resource_name = "enemy_hit"
+length = 0.4
+tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:frame")
+tracks/0/path = NodePath("AnimatedSprite2D")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_siwfd"]
-resource_name = "enemy_hit"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(),
-"transitions": PackedFloat32Array(),
-"update": 1,
-"values": []
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4]
+"values": [{
+"args": [&"hit", 1.0, false],
+"method": &"play"
+}]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3cfia"]
@@ -68,6 +47,18 @@ _data = {
 &"RESET": SubResource("Animation_5lugx"),
 &"enemy_hit": SubResource("Animation_siwfd")
 }
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5r5an"]
+atlas = ExtResource("3_3cfia")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ekqb7"]
+atlas = ExtResource("3_3cfia")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfr36"]
+atlas = ExtResource("3_3cfia")
+region = Rect2(0, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3cfia"]
 atlas = ExtResource("3_5lugx")
@@ -115,6 +106,20 @@ region = Rect2(240, 48, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_f87vc"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5r5an")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ekqb7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jfr36")
+}],
+"loop": false,
+"name": &"hit",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_3cfia")
@@ -189,9 +194,9 @@ libraries = {
 }
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(1, -7)
+position = Vector2(1, -10)
 sprite_frames = SubResource("SpriteFrames_f87vc")
-animation = &"patrol"
+animation = &"hit"
 
 [node name="Components" type="Node2D" parent="."]
 

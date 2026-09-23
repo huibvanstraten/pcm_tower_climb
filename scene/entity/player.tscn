@@ -230,7 +230,7 @@ shape = SubResource("RectangleShape2D_fiawc")
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("3_bedqt")
-knockbackStrength = Vector2(300, 300)
+knockbackStrength = Vector2(0, 0)
 
 [node name="Hit" type="CollisionShape2D" parent="Hit"]
 position = Vector2(0, 1)
