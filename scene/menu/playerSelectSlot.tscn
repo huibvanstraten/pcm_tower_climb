@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://chpj71d0oo3xj"]
 
 [ext_resource type="Script" uid="uid://by4shrjkjfyt4" path="res://script/menu/player_select_slot.gd" id="1_jcrtu"]
+[ext_resource type="Texture2D" uid="uid://cgcvx0tfdwprt" path="res://asset/menu/Untitled 9.png" id="2_r6me7"]
 
 [node name="PlayerSelectSlot" type="PanelContainer" unique_id=937506788]
 offset_right = 192.0
@@ -28,10 +29,10 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Portrait" type="ColorRect" parent="MarginContainer/VBoxContainer/PortraitContainer" unique_id=692301882]
+[node name="Portrait" type="TextureRect" parent="MarginContainer/VBoxContainer/PortraitContainer" unique_id=438680968]
 custom_minimum_size = Vector2(90, 120)
 layout_mode = 2
-color = Color(0.4552945, 0.9907276, 0.8925096, 1)
+texture = ExtResource("2_r6me7")
 
 [node name="PreviousLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1529455736]
 unique_name_in_owner = true
