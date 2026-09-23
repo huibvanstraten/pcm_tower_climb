@@ -1,10 +1,14 @@
-class_name EnemyState
-extends State
+class_name EnemyDieState
+extends EnemyState
 
-@export var physics_component: PhysicsComponent
+const NAME := "Die"
+
 
 func enter() -> void:
 	super()
+	physics_component.halt_horizontal()
+	entity.queue_free()
+
 
 func exit() -> void:
 	super()
