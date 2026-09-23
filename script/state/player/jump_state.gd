@@ -19,7 +19,7 @@ func physics_update(delta: float) -> String:
 		return HitState.NAME
 
 	if entity.command.jump_released:
-		entity.jump_component.stop_jump()
+		jump_component.stop_jump()
 
 	if entity.is_on_floor():
 		return IdleState.NAME

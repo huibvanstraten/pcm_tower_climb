@@ -26,7 +26,6 @@ availableLevels = Array[ExtResource("2_v0l8b")]([SubResource("Resource_pu4bb")])
 [node name="PlayerInputSessionContainer" type="Node2D" parent="." unique_id=132778103]
 
 [node name="Hud" parent="." unique_id=637391166 instance=ExtResource("4_brvut")]
-script = null
 
 [node name="MenuLayer" type="CanvasLayer" parent="." unique_id=1400526933]
 
