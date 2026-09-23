@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4w81peciphg7"
-path="res://.godot/imported/tileset.png-9fb454e4e39cc5c8c3f547f1453b7117.ctex"
+uid="uid://c4lb2qu6ab2ln"
+path="res://.godot/imported/layer-0.png-b9c7c2c034ef8616793120cc6e289d0c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/sci-fi platformer - free/tileset.png"
-dest_files=["res://.godot/imported/tileset.png-9fb454e4e39cc5c8c3f547f1453b7117.ctex"]
+source_file="res://asset/sci-fi platformer - premium/background/layer-0.png"
+dest_files=["res://.godot/imported/layer-0.png-b9c7c2c034ef8616793120cc6e289d0c.ctex"]
 
 [params]
 

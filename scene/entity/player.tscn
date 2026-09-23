@@ -1,7 +1,7 @@
 [gd_scene load_steps=39 format=3 uid="uid://drd68b3s75ss2"]
 
 [ext_resource type="Script" uid="uid://jiqfcha8y5u8" path="res://script/entity/player.gd" id="1_ct4mp"]
-[ext_resource type="Texture2D" uid="uid://4jqoa02dt3vk" path="res://asset/sci-fi platformer - free/player.png" id="2_bedqt"]
+[ext_resource type="Texture2D" uid="uid://bwinqeypl23md" path="res://asset/sci-fi platformer - premium/player/player.png" id="2_bedqt"]
 [ext_resource type="Script" uid="uid://cdlmt7cdiw02s" path="res://script/object/hit_component.gd" id="3_bedqt"]
 [ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ct4mp"]
 [ext_resource type="Script" uid="uid://i5unc1xq0tfr" path="res://script/component/jump_component.gd" id="5_g2vtq"]
@@ -18,9 +18,8 @@
 [ext_resource type="Script" uid="uid://dt45jb0dt3xgd" path="res://script/state/player/idle_state.gd" id="13_34jf3"]
 [ext_resource type="Script" uid="uid://c2utu5ootr02n" path="res://script/state/player/die_state.gd" id="16_bup7g"]
 
-[sub_resource type="Animation" id="Animation_bedqt"]
-resource_name = "hit"
-length = 0.5
+[sub_resource type="Animation" id="Animation_fiawc"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -46,8 +45,9 @@ tracks/1/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_fiawc"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_bedqt"]
+resource_name = "hit"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -79,31 +79,31 @@ _data = {
 &"hit": SubResource("Animation_bedqt")
 }
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fiawc"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bedqt"]
 atlas = ExtResource("2_bedqt")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_iot5p"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fiawc"]
 atlas = ExtResource("2_bedqt")
 region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bi3cs"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_iot5p"]
 atlas = ExtResource("2_bedqt")
 region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0l74y"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_bi3cs"]
 atlas = ExtResource("2_bedqt")
 region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f6tgk"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_0l74y"]
 atlas = ExtResource("2_bedqt")
 region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_73c0v"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6tgk"]
 atlas = ExtResource("2_bedqt")
 region = Rect2(128, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bedqt"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_73c0v"]
 atlas = ExtResource("2_bedqt")
 region = Rect2(0, 32, 32, 32)
 
@@ -139,13 +139,16 @@ region = Rect2(224, 32, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fiawc")
+"texture": SubResource("AtlasTexture_bedqt")
 }],
 "loop": true,
 "name": &"hit",
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fiawc")
+}, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iot5p")
 }, {
@@ -157,9 +160,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f6tgk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_73c0v")
 }],
 "loop": true,
 "name": &"idle",
@@ -167,7 +167,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bedqt")
+"texture": SubResource("AtlasTexture_73c0v")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6mui1")

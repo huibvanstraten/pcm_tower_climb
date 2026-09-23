@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnbgbwvqaktsd"
-path="res://.godot/imported/slime.png-7f9defd4512ffa093f7acd1017e21404.ctex"
+uid="uid://dip317byy8ibg"
+path="res://.godot/imported/wall-lights.png-96faae72ffbcfd2a6ff1048f2ae11d57.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/slime.png"
-dest_files=["res://.godot/imported/slime.png-7f9defd4512ffa093f7acd1017e21404.ctex"]
+source_file="res://asset/sci-fi platformer - premium/background-wall/wall-lights.png"
+dest_files=["res://.godot/imported/wall-lights.png-96faae72ffbcfd2a6ff1048f2ae11d57.ctex"]
 
 [params]
 
