@@ -28,16 +28,6 @@ func _ready() -> void:
 	SpawnManager.player_container = player_container
 
 
-func _input(event: InputEvent) -> void:
-	match GameFlowManager.state:
-		GameState.Type.START_SCREEN:
-			handle_start_screen_input(event)
-
-		GameState.Type.GAMEPLAY:
-			handle_gameplay_input(event)
-
-
-
 func _on_game_state_changed(
 	state: GameState.Type
 ) -> void:
@@ -62,46 +52,6 @@ func _start_gameplay() -> void:
 			session
 		)
 
-func handle_start_screen_input(event: InputEvent) -> void:
-	if not event.is_action_pressed("start"):
-		return
-
-	var device = PlayerInputDevice.from_event(event)
-
-	if device == null:
-		return
-
-	if PlayerSessionManager.get_session_for_device(device) != null:
-		return
-
-	var session = PlayerSessionManager.join_device(device)
-
-	if session == null:
-		return
-
-	GameFlowManager.change_state(
-		GameState.Type.PLAYER_SELECT
-	)
-
-
-func handle_gameplay_input(event: InputEvent) -> void:
-	var device := PlayerInputDevice.from_event(event)
-
-	if device == null:
-		return
-
-	if not event.is_action_pressed("jump"):
-		return
-
-	var session = PlayerSessionManager.get_session_for_device(device)
-
-	if session == null:
-		PlayerSessionManager.join_device(device)
-		return
-
-	if session.state == PlayerInputSession.State.READY:
-		PlayerLifecycleManager.activate_session_player(session)
-	
 
 func get_players() -> Array[Player]:
 	var players: Array[Player] = []
