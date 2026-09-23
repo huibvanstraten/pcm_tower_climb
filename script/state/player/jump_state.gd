@@ -21,8 +21,12 @@ func physics_update(delta: float) -> String:
 	if entity.command.jump_released:
 		jump_component.stop_jump()
 
+	print(entity.velocity)
 	if entity.is_on_floor():
-		return IdleState.NAME
+		if entity.velocity.x > 0:
+			return IdleState.NAME
+		else:
+			return MoveState.NAME
 
 	if entity.velocity.y > 0.0:
 		return FallState.NAME
