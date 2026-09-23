@@ -1,13 +1,13 @@
 [gd_scene load_steps=14 format=4 uid="uid://dbewmbrugcnjk"]
 
-[ext_resource type="Script" uid="uid://bdu8cynu5p5ca" path="res://script/level/level_1.gd" id="1_nk78g"]
-[ext_resource type="PackedScene" uid="uid://2b8l7oadkcai" path="res://scene/cameraRig.tscn" id="2_a215g"]
-[ext_resource type="Script" uid="uid://r0xgpm08oh15" path="res://script/level/area.gd" id="3_ebr37"]
-[ext_resource type="PackedScene" uid="uid://cen5vsst8ve0u" path="res://scene/object/respawnPoint.tscn" id="4_nk78g"]
-[ext_resource type="Texture2D" uid="uid://8lf70r54h6sv" path="res://asset/sci-fi platformer - premium/tiles/tiles.png" id="5_bxy1s"]
-[ext_resource type="Texture2D" uid="uid://c20yr0ix17bd3" path="res://asset/sci-fi platformer - premium/platforms/platforms.png" id="6_qxlp2"]
-[ext_resource type="PackedScene" uid="uid://wgls8s878624" path="res://scene/entity/enemy.tscn" id="7_qt7cu"]
-[ext_resource type="PackedScene" uid="uid://ksesuf2h1tha" path="res://scene/level/static_platform.tscn" id="7_qxlp2"]
+[ext_resource type="Script" uid="uid://bdu8cynu5p5ca" path="res://script/level/level_2.gd" id="1_abfed"]
+[ext_resource type="PackedScene" uid="uid://2b8l7oadkcai" path="res://scene/cameraRig.tscn" id="2_xluvd"]
+[ext_resource type="Script" uid="uid://r0xgpm08oh15" path="res://script/level/area.gd" id="3_csero"]
+[ext_resource type="PackedScene" uid="uid://cen5vsst8ve0u" path="res://scene/object/respawnPoint.tscn" id="4_vn84n"]
+[ext_resource type="Texture2D" uid="uid://8lf70r54h6sv" path="res://asset/sci-fi platformer - premium/tiles/tiles.png" id="5_0872m"]
+[ext_resource type="Texture2D" uid="uid://c20yr0ix17bd3" path="res://asset/sci-fi platformer - premium/platforms/platforms.png" id="6_cesw3"]
+[ext_resource type="PackedScene" uid="uid://ksesuf2h1tha" path="res://scene/level/static_platform.tscn" id="7_ad0ag"]
+[ext_resource type="PackedScene" uid="uid://wgls8s878624" path="res://scene/entity/enemy.tscn" id="8_4a54g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
 size = Vector2(278.5, 9353)
@@ -16,7 +16,7 @@ size = Vector2(278.5, 9353)
 size = Vector2(2848.5, 20)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_agnkm"]
-texture = ExtResource("5_bxy1s")
+texture = ExtResource("5_0872m")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:0/0 = 0
@@ -117,7 +117,7 @@ texture = ExtResource("5_bxy1s")
 3:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jyjf7"]
-texture = ExtResource("6_qxlp2")
+texture = ExtResource("6_cesw3")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:0/0 = 0
@@ -153,17 +153,17 @@ sources/1 = SubResource("TileSetAtlasSource_agnkm")
 sources/2 = SubResource("TileSetAtlasSource_jyjf7")
 
 [node name="Level1" type="Node2D"]
-script = ExtResource("1_nk78g")
+script = ExtResource("1_abfed")
 levelId = 1
 
-[node name="CameraRig" parent="." instance=ExtResource("2_a215g")]
+[node name="CameraRig" parent="." instance=ExtResource("2_xluvd")]
 visible = false
 position = Vector2(396, -198)
 
 [node name="Areas" type="Node2D" parent="."]
 
 [node name="Area" type="Node2D" parent="Areas"]
-script = ExtResource("3_ebr37")
+script = ExtResource("3_csero")
 
 [node name="AreaBoundaries" type="Node2D" parent="Areas/Area"]
 
@@ -209,7 +209,7 @@ position = Vector2(160, -50)
 [node name="Start_4" type="Marker2D" parent="SpawnPoints"]
 position = Vector2(190, -50)
 
-[node name="RespawnPoint" parent="SpawnPoints" instance=ExtResource("4_nk78g")]
+[node name="RespawnPoint" parent="SpawnPoints" instance=ExtResource("4_vn84n")]
 position = Vector2(1410, -42)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
@@ -218,101 +218,101 @@ tile_set = SubResource("TileSet_fmkwh")
 
 [node name="Platforms" type="Node2D" parent="."]
 
-[node name="Platform1" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform1" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -80)
 
-[node name="Platform2" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform2" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -128)
 
-[node name="Platform3" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform3" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -176)
 
-[node name="Platform4" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform4" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -224)
 
-[node name="Platform5" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform5" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -272)
 
-[node name="Platform6" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform6" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -320)
 
-[node name="Platform7" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform7" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -80)
 
-[node name="Platform8" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform8" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -128)
 
-[node name="Platform9" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform9" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -176)
 
-[node name="Platform10" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform10" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -224)
 
-[node name="Platform11" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform11" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -272)
 
-[node name="Platform12" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform12" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -320)
 
-[node name="Platform13" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform13" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -368)
 
-[node name="Platform14" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform14" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -416)
 
-[node name="Platform15" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform15" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -464)
 
-[node name="Platform16" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform16" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -512)
 
-[node name="Platform17" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform17" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -560)
 
-[node name="Platform18" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform18" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -608)
 
-[node name="Platform19" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform19" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -368)
 
-[node name="Platform20" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform20" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -416)
 
-[node name="Platform21" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform21" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -464)
 
-[node name="Platform22" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform22" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -512)
 
-[node name="Platform23" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform23" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -560)
 
-[node name="Platform24" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform24" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -608)
 
-[node name="Platform25" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform25" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -656)
 
-[node name="Platform26" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform26" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -704)
 
-[node name="Platform27" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform27" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -752)
 
-[node name="Platform28" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform28" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(496, -800)
 
-[node name="Platform29" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform29" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -656)
 
-[node name="Platform30" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform30" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -704)
 
-[node name="Platform31" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform31" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -752)
 
-[node name="Platform32" parent="Platforms" instance=ExtResource("7_qxlp2")]
+[node name="Platform32" parent="Platforms" instance=ExtResource("7_ad0ag")]
 position = Vector2(560, -800)
 
-[node name="Enemy1" parent="." instance=ExtResource("7_qt7cu")]
+[node name="Enemy1" parent="." instance=ExtResource("8_4a54g")]
 position = Vector2(370, -83)

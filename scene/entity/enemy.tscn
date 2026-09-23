@@ -16,7 +16,7 @@
 [ext_resource type="Script" uid="uid://bkk6knmjwie2n" path="res://script/state/enemy/enemy_die_state.gd" id="13_5lugx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5lugx"]
-size = Vector2(14, 18)
+size = Vector2(14, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pw261"]
 size = Vector2(16, 14)
@@ -175,7 +175,7 @@ bodyCollisionShape = NodePath("CollisionShape2D")
 animationComponent = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -9)
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_5lugx")
 
 [node name="Hit" type="Area2D" parent="."]
@@ -196,7 +196,7 @@ libraries = {
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -10)
 sprite_frames = SubResource("SpriteFrames_f87vc")
-animation = &"hit"
+animation = &"patrol"
 
 [node name="Components" type="Node2D" parent="."]
 
