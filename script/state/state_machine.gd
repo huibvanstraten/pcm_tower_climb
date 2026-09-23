@@ -21,6 +21,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if current_state:
 		change_state(current_state.physics_update(delta))
+	# TODO: apply friction
 	entity.move_and_slide()
 
 func change_state(to_state: String) -> void:
