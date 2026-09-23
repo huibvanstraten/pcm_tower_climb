@@ -20,6 +20,8 @@ script = ExtResource("1_53nmy")
 
 [node name="ProgrammingArea" type="Area2D" parent="."]
 position = Vector2(168, -32)
+collision_layer = 2
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ProgrammingArea"]
 position = Vector2(0, -16)

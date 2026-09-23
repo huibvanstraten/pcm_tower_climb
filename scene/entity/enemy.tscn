@@ -229,10 +229,10 @@ libraries = {
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -10)
+scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_f87vc")
 animation = &"patrol"
-frame_progress = 0.4499387
-flip_h = true
+frame_progress = 0.9555633
 
 [node name="Components" type="Node2D" parent="."]
 
