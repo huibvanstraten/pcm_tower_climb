@@ -14,8 +14,8 @@
 [ext_resource type="Script" uid="uid://dvok0kakc82vy" path="res://script/component/hurt_component.gd" id="11_pw261"]
 [ext_resource type="Script" uid="uid://bkk6knmjwie2n" path="res://script/state/enemy/enemy_die_state.gd" id="13_5lugx"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqle"]
-size = Vector2(14, 15)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5lugx"]
+size = Vector2(14, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pw261"]
 size = Vector2(16, 14)
@@ -169,7 +169,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_jntje")
 }],
 "loop": true,
-"name": &"run",
+"name": &"patrol",
 "speed": 5.0
 }]
 
@@ -184,14 +184,17 @@ bodyCollisionShape = NodePath("CollisionShape2D")
 animationComponent = NodePath("AnimatedSprite2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -7.5)
-shape = SubResource("RectangleShape2D_qhqle")
+position = Vector2(0, -9)
+shape = SubResource("RectangleShape2D_5lugx")
 
 [node name="Hit" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("2_kqmod")
+knockbackStrength = Vector2(300, 300)
 
 [node name="Hit" type="CollisionShape2D" parent="Hit"]
-position = Vector2(0, -7)
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_pw261")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -202,8 +205,7 @@ libraries = {
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -7)
 sprite_frames = SubResource("SpriteFrames_f87vc")
-animation = &"idle"
-autoplay = "run"
+animation = &"patrol"
 
 [node name="Components" type="Node2D" parent="."]
 
@@ -226,12 +228,14 @@ entity = NodePath("../..")
 intial_health = 1
 
 [node name="Hurt" type="Area2D" parent="Components" node_paths=PackedStringArray("player", "health_component")]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("11_pw261")
 player = NodePath("../..")
 health_component = NodePath("../Health")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt"]
-position = Vector2(0, -16)
+position = Vector2(0, -17)
 shape = SubResource("RectangleShape2D_sj55t")
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("entity", "initial_state")]
@@ -240,7 +244,7 @@ entity = NodePath("..")
 initial_state = NodePath("Fall")
 metadata/_custom_type_script = "uid://cwjon3ym72k2d"
 
-[node name="Patrol" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("move_component", "flip_component", "wall_detection_left", "wall_detection_right", "ledge_detection_left", "ledge_detection_right", "enemy_detection_left", "enemy_detection_right", "physics_component", "state_machine", "entity", "animation_player")]
+[node name="Patrol" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("move_component", "flip_component", "wall_detection_left", "wall_detection_right", "ledge_detection_left", "ledge_detection_right", "enemy_detection_left", "enemy_detection_right", "physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("2_f87vc")
 move_component = NodePath("../../Components/Move")
 flip_component = NodePath("../../Components/Flip")
@@ -254,8 +258,10 @@ physics_component = NodePath("../../Components/Physics")
 state_machine = NodePath("..")
 entity = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
+animated_sprite = NodePath("../../AnimatedSprite2D")
+start_animation_name = "patrol"
 
-[node name="Hit" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("health_component", "hurt", "physics_component", "state_machine", "entity", "animation_player")]
+[node name="Hit" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("health_component", "hurt", "physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("8_vgurf")
 health_component = NodePath("../../Components/Health")
 hurt = NodePath("../../Components/Hurt")
@@ -263,20 +269,26 @@ physics_component = NodePath("../../Components/Physics")
 state_machine = NodePath("..")
 entity = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
+animated_sprite = NodePath("../../AnimatedSprite2D")
+start_animation_name = "hit"
 
-[node name="Fall" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "state_machine", "entity", "animation_player")]
+[node name="Fall" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("10_qhqle")
 physics_component = NodePath("../../Components/Physics")
 state_machine = NodePath("..")
 entity = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
+animated_sprite = NodePath("../../AnimatedSprite2D")
+start_animation_name = "fall"
 
-[node name="Die" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "state_machine", "entity", "animation_player")]
+[node name="Die" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("13_5lugx")
 physics_component = NodePath("../../Components/Physics")
 state_machine = NodePath("..")
 entity = NodePath("../..")
 animation_player = NodePath("../../AnimationPlayer")
+animated_sprite = NodePath("../../AnimatedSprite2D")
+start_animation_name = "die"
 
 [node name="EnvironmentDetection" type="Node2D" parent="."]
 position = Vector2(0, -2)

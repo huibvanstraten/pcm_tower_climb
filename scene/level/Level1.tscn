@@ -203,9 +203,9 @@ debug_color = Color(0.674176, 0.40751508, 0.7823852, 0.41960785)
 [node name="ElectricBall" parent="StaticBody2D/CollisionShape2D" instance=ExtResource("6_a215g")]
 position = Vector2(64.5, -21.75)
 
-[node name="Enemy" parent="." instance=ExtResource("7_qt7cu")]
-position = Vector2(394, 1530)
-
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAAYAFoAAAAFAAEAAAAZAFoAAAABAAcAAAAaAFoAAAABAAcAAAAbAFoAAAABAAcAAAAcAFoAAAABAAcAAAAdAFoAAAABAAcAAAAeAFoAAAABAAcAAAAfAFoAAAABAAcAAAAgAFoAAAABAAcAAAAhAFoAAAAFAAcAAAAXAFsAAAAFAAEAAAAWAFwAAAAFAAEAAAAVAF0AAAAFAAEAAAAUAF4AAAAFAAEAAAAYAFsAAAAGAAIAAAAXAFwAAAAGAAIAAAAWAF0AAAAGAAIAAAAVAF4AAAAGAAIAAAA=")
 tile_set = SubResource("TileSet_fmkwh")
+
+[node name="Enemy" parent="." instance=ExtResource("7_qt7cu")]
+position = Vector2(652, 1520)

@@ -12,4 +12,5 @@ func exit() -> void:
 	super()
 
 func physics_update(delta: float) -> String:
+	physics_component.apply_gravity(delta)
 	return "None"
