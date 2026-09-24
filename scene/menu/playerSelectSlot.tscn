@@ -1,54 +1,56 @@
-[gd_scene format=3 uid="uid://chpj71d0oo3xj"]
+[gd_scene load_steps=3 format=3 uid="uid://chpj71d0oo3xj"]
 
 [ext_resource type="Script" uid="uid://by4shrjkjfyt4" path="res://script/menu/player_select_slot.gd" id="1_jcrtu"]
 [ext_resource type="Texture2D" uid="uid://cgcvx0tfdwprt" path="res://asset/menu/Untitled 9.png" id="2_r6me7"]
 
-[node name="PlayerSelectSlot" type="PanelContainer" unique_id=937506788]
+[node name="PlayerSelectSlot" type="PanelContainer"]
 offset_right = 192.0
-offset_bottom = 320.0
+offset_bottom = 257.0
 size_flags_horizontal = 3
 script = ExtResource("1_jcrtu")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1465963359]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=2055823234]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="PlayerLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1488949747]
+[node name="PlayerLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 horizontal_alignment = 1
 
-[node name="PortraitContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer" unique_id=91468080]
+[node name="PortraitContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_vertical = 3
 
-[node name="Portrait" type="TextureRect" parent="MarginContainer/VBoxContainer/PortraitContainer" unique_id=438680968]
+[node name="Portrait" type="TextureRect" parent="MarginContainer/VBoxContainer/PortraitContainer"]
 custom_minimum_size = Vector2(90, 120)
 layout_mode = 2
 texture = ExtResource("2_r6me7")
+expand_mode = 4
 
-[node name="PreviousLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1529455736]
+[node name="PreviousLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "<                            >"
+horizontal_alignment = 1
 
-[node name="NextLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=702310920]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="CharacterLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1470713885]
+[node name="NextLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 horizontal_alignment = 1
 
-[node name="StatusLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=376682525]
+[node name="CharacterLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="StatusLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 12

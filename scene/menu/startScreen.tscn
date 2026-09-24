@@ -1,14 +1,14 @@
-[gd_scene format=3 uid="uid://b6fqghrmn0mhl"]
+[gd_scene load_steps=6 format=3 uid="uid://b6fqghrmn0mhl"]
 
 [ext_resource type="Script" uid="uid://bddm3u056n71w" path="res://script/menu/start_screen.gd" id="1_qidx5"]
 [ext_resource type="Texture2D" uid="uid://duyn77ivx2bkl" path="res://asset/menu/6D0B9190-AC7B-4E7C-8453-8376B37AFD9D 2.png" id="2_dh6d7"]
-[ext_resource type="AudioStream" uid="uid://dhqg06aytsbi5" path="res://asset/audio/sfx/ui/confirm.mp3" id="2_p5a0m"]
+[ext_resource type="AudioStream" uid="uid://j3ikdxdqpcmr" path="res://asset/audio/sfx/ui/confirm.mp3" id="2_p5a0m"]
 [ext_resource type="AudioStream" uid="uid://d1p8t7l5x755x" path="res://asset/audio/music/Adventure time.wav" id="3_p5a0m"]
 
 [sub_resource type="SystemFont" id="SystemFont_dr4yn"]
 subpixel_positioning = 0
 
-[node name="StartScreen" type="Control" unique_id=1536910945]
+[node name="StartScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -19,14 +19,14 @@ script = ExtResource("1_qidx5")
 select_sound = ExtResource("2_p5a0m")
 music = ExtResource("3_p5a0m")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=2121254245]
-layout_mode = 0
-offset_top = -41.0
-offset_right = 1153.0
-offset_bottom = 644.0
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 texture = ExtResource("2_dh6d7")
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=370454674]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,13 +34,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer" unique_id=2056383031]
+[node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer"]
 custom_minimum_size = Vector2(400, 200)
 layout_mode = 2
 theme_override_colors/default_color = Color(0.006123218, 0.19054157, 0.41439748, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0.39607844, 0)
 theme_override_fonts/normal_font = SubResource("SystemFont_dr4yn")
-theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 text = "[pulse]PRESS START[/pulse]"
 horizontal_alignment = 1
