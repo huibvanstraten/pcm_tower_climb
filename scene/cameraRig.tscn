@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://2b8l7oadkcai"]
+[gd_scene load_steps=6 format=3 uid="uid://2b8l7oadkcai"]
 
 [ext_resource type="Script" uid="uid://d0j7rq0nymta0" path="res://script/camera_rig.gd" id="1_aej5r"]
 
@@ -9,9 +9,6 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dr4yn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f645t"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_aej5r"]
-size = Vector2(2562, 5)
 
 [node name="CameraRig" type="Node2D"]
 script = ExtResource("1_aej5r")
@@ -47,12 +44,3 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
 shape = SubResource("RectangleShape2D_f645t")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_layer = 32768
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(1194.25, 1869)
-shape = SubResource("RectangleShape2D_aej5r")
-debug_color = Color(0.674176, 0.40751508, 0.7823852, 0.41960785)

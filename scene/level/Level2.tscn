@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://dbewmbrugcnjk"]
+[gd_scene load_steps=21 format=4 uid="uid://dbewmbrugcnjk"]
 
 [ext_resource type="Script" uid="uid://bdu8cynu5p5ca" path="res://script/level/level_2.gd" id="1_abfed"]
 [ext_resource type="PackedScene" uid="uid://2b8l7oadkcai" path="res://scene/cameraRig.tscn" id="2_xluvd"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://c20yr0ix17bd3" path="res://asset/sci-fi platformer - premium/platforms/platforms.png" id="6_cesw3"]
 [ext_resource type="PackedScene" uid="uid://ksesuf2h1tha" path="res://scene/level/static_platform.tscn" id="7_ad0ag"]
 [ext_resource type="PackedScene" uid="uid://wgls8s878624" path="res://scene/entity/enemy.tscn" id="8_4a54g"]
+[ext_resource type="AudioStream" uid="uid://b280n1d36j71u" path="res://asset/audio/music/Data stream.wav" id="8_vn84n"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_agnkm"]
 texture = ExtResource("5_0872m")
@@ -247,6 +248,8 @@ position = Vector2(288, -144)
 
 [node name="Area" type="Node2D" parent="Areas"]
 script = ExtResource("3_csero")
+areaId = 1
+area_music = ExtResource("8_vn84n")
 
 [node name="AreaBoundaries" type="Node2D" parent="Areas/Area"]
 

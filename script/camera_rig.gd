@@ -63,7 +63,7 @@ const BOUNDARY_THICKNESS := 20.0
 @export var top_boundary_overflow := 100.0
 
 @export_group("Death Zone")
-@export var death_zone_distance := 150.0
+@export var death_zone_distance := 50.0
 @export var death_zone_height := 100.0
 
 var players: Array[Player] = []
