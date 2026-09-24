@@ -1,34 +1,44 @@
-[gd_scene format=3 uid="uid://bqhdavfgdcwnd"]
+[gd_scene load_steps=3 format=3 uid="uid://bqhdavfgdcwnd"]
 
-[ext_resource type="Script" uid="uid://jm5maldfxl30" path="res://script/hud/player_hud_slot.gd" id="1_w0q0o"]
+[ext_resource type="Script" uid="uid://xnp7xn82qn7t" path="res://script/hud/player_hud_slot.gd" id="1_w0q0o"]
 [ext_resource type="PackedScene" uid="uid://b0i0y551rj7un" path="res://scene/hud/playerHudInfo.tscn" id="2_lh830"]
 
-[node name="PlayerHUDSlot" type="PanelContainer" unique_id=876393324]
+[node name="PlayerHUDSlot" type="PanelContainer"]
 self_modulate = Color(1, 1, 1, 0.02745098)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_w0q0o")
 player_hud_info_scene = ExtResource("2_lh830")
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=987240833]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 
-[node name="StateContainer" type="MarginContainer" parent="MarginContainer" unique_id=2029357295]
+[node name="StateContainer" type="MarginContainer" parent="MarginContainer"]
 layout_mode = 2
 
-[node name="PlayingContainer" type="Control" parent="MarginContainer/StateContainer" unique_id=1205973647]
+[node name="PlayingContainer" type="Control" parent="MarginContainer/StateContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="WaitingLabel" type="RichTextLabel" parent="MarginContainer/StateContainer" unique_id=1481460897]
+[node name="WaitingLabel" type="RichTextLabel" parent="MarginContainer/StateContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+theme_override_font_sizes/bold_font_size = 12
+theme_override_font_sizes/bold_italics_font_size = 12
+theme_override_font_sizes/italics_font_size = 12
+theme_override_font_sizes/mono_font_size = 12
 bbcode_enabled = true
 text = "[pulse] WAITING...[/pulse]"
 scroll_active = false
 
-[node name="ReadyLabel" type="RichTextLabel" parent="MarginContainer/StateContainer" unique_id=899411616]
+[node name="ReadyLabel" type="RichTextLabel" parent="MarginContainer/StateContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+theme_override_font_sizes/bold_font_size = 12
+theme_override_font_sizes/bold_italics_font_size = 12
+theme_override_font_sizes/italics_font_size = 12
+theme_override_font_sizes/mono_font_size = 12
 bbcode_enabled = true
 text = "[pulse] PRESS BUTTON TO PLAY[/pulse]"
