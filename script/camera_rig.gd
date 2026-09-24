@@ -75,6 +75,8 @@ var vertical_tracking_state := TrackingState.NORMAL
 func _ready() -> void:
 	EventManager.connect("player_joined", _on_player_joined)
 	death_zone.body_entered.connect(_on_death_zone_body_entered)
+	EventManager.player_died.connect(_on_player_died)
+
 	
 	configure_camera_constraints()
 
@@ -90,6 +92,8 @@ func _physics_process(delta: float) -> void:
 func _on_player_joined(player: Player) -> void:
 	register_player(player)
 
+func _on_player_died(player: Player) -> void:
+	unregister_player(player)
 
 func _on_death_zone_body_entered(body: Node2D) -> void:
 	var player := body as Player
@@ -97,7 +101,6 @@ func _on_death_zone_body_entered(body: Node2D) -> void:
 	if player == null:
 		return
 
-	unregister_player(player)
 	EventManager.player_died.emit(player)
 
 

@@ -319,11 +319,10 @@ size = Vector2(14, 2)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bedqt"]
 size = Vector2(14, 17)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("coyote_timer", "bodyCollisionShape", "animationComponent")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
 collision_layer = 2
 collision_mask = 32783
 script = ExtResource("1_ct4mp")
-coyote_timer = NodePath("")
 bodyCollisionShape = NodePath("CollisionShape2D")
 animationComponent = NodePath("AnimatedSprite2D")
 
