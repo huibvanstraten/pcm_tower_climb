@@ -298,8 +298,8 @@ size = Vector2(24, 1)
 size = Vector2(200, 22)
 
 [node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
-collision_layer = 2
-collision_mask = 3
+collision_layer = 4
+collision_mask = 11
 script = ExtResource("1_8u16h")
 bodyCollisionShape = NodePath("PhysicalBodyShape1")
 animationComponent = NodePath("AnimatedSprite2D")

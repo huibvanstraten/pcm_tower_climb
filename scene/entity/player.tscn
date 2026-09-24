@@ -321,7 +321,7 @@ size = Vector2(14, 17)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
 collision_layer = 2
-collision_mask = 3
+collision_mask = 32783
 script = ExtResource("1_ct4mp")
 bodyCollisionShape = NodePath("CollisionShape2D")
 animationComponent = NodePath("AnimatedSprite2D")
