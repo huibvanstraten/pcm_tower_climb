@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://wgls8s878624"]
+[gd_scene load_steps=57 format=3 uid="uid://wgls8s878624"]
 
 [ext_resource type="Script" uid="uid://dnctevg8flony" path="res://script/entity/enemy.gd" id="1_8u16h"]
 [ext_resource type="Script" uid="uid://bhjoo6bce0vc0" path="res://script/state/enemy/enemy_state_machine.gd" id="1_f87vc"]
@@ -16,9 +16,9 @@
 [ext_resource type="Script" uid="uid://dvok0kakc82vy" path="res://script/component/hurt_component.gd" id="11_pw261"]
 [ext_resource type="Script" uid="uid://bkk6knmjwie2n" path="res://script/state/enemy/enemy_die_state.gd" id="13_5lugx"]
 [ext_resource type="Script" uid="uid://dp5ejo5bn4rm5" path="res://script/state/enemy/enemy_follow_state.gd" id="16_bbjev"]
+[ext_resource type="Script" uid="uid://brrwa5er6jyou" path="res://script/component/attack_component.gd" id="17_mkxcx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5lugx"]
-size = Vector2(20, 19)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_thtid"]
 size = Vector2(24, 1)
@@ -301,14 +301,14 @@ size = Vector2(200, 22)
 collision_layer = 2
 collision_mask = 3
 script = ExtResource("1_8u16h")
-bodyCollisionShape = NodePath("CollisionShape2D")
+bodyCollisionShape = NodePath("PhysicalBodyShape1")
 animationComponent = NodePath("AnimatedSprite2D")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -9.5)
+[node name="PhysicalBodyShape1" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_5lugx")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+[node name="PhysicalBodyShape2" type="CollisionShape2D" parent="."]
 position = Vector2(0, -20.5)
 shape = SubResource("RectangleShape2D_thtid")
 
@@ -459,14 +459,16 @@ collision_mask = 2
 target_position = Vector2(12, 0)
 collision_mask = 2
 
-[node name="Attack" type="Area2D" parent="."]
+[node name="Attack" type="Area2D" parent="." node_paths=PackedStringArray("entity")]
 collision_layer = 2
 collision_mask = 2
+script = ExtResource("17_mkxcx")
+entity = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Attack"]
 position = Vector2(0, -11)
 shape = SubResource("RectangleShape2D_bbjev")
 
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Hit" method="_on_animation_player_animation_finished"]
-[connection signal="body_entered" from="Attack" to="." method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Attack" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_entered" from="Attack" to="Attack" method="_on_body_entered"]
+[connection signal="body_exited" from="Attack" to="Attack" method="_on_body_exited"]

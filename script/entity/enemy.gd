@@ -14,15 +14,3 @@ func is_hit() -> bool:
 		return true
 	else: 
 		return false
-
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	print("start attacking...", body.name)
-	if body is Player:
-		var follow_direction = sign(body.position.x - self.position.x)
-		direction = follow_direction * abs(self.direction)
-		is_attacking = true
-
-func _on_area_2d_body_exited(body: Node2D) -> void:
-	print("stop attacking...", body.name)
-	is_attacking = false
