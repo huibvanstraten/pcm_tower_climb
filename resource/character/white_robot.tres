@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://r2xdeoiik8fc"]
+
+[ext_resource type="Script" uid="uid://tjq6traqvsj4" path="res://script/character/character_data.gd" id="1_h8b8a"]
+[ext_resource type="Texture2D" uid="uid://v3tod2fv68mg" path="res://asset/Untitled 9.png" id="1_o3cek"]
+[ext_resource type="SpriteFrames" uid="uid://duaf85ugelvae" path="res://resource/character/animations/white_robot_frames.tres" id="3_dh8uu"]
+
+[resource]
+script = ExtResource("1_h8b8a")
+id = &"white_robot"
+display_name = "WHITE"
+description = "Trying to destroy the world"
+portrait = ExtResource("1_o3cek")
+sprite_frames = ExtResource("3_dh8uu")
+metadata/_custom_type_script = "uid://tjq6traqvsj4"

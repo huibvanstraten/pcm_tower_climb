@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://d3wrw81dmowum"]
+
+[ext_resource type="Texture2D" uid="uid://dsg22p7556st5" path="res://asset/Untitled 9 2.png" id="1_6dns4"]
+[ext_resource type="Script" uid="uid://tjq6traqvsj4" path="res://script/character/character_data.gd" id="1_dm46k"]
+[ext_resource type="SpriteFrames" uid="uid://cix3oi4yucijs" path="res://resource/character/animations/blue_robot_frames.tres" id="3_5qxts"]
+
+[resource]
+script = ExtResource("1_dm46k")
+id = &"blue_robot"
+display_name = "BLUE"
+description = "Badass MOFO"
+portrait = ExtResource("1_6dns4")
+sprite_frames = ExtResource("3_5qxts")
+speed = 200.0
+jump_velocity = -500.0
+metadata/_custom_type_script = "uid://tjq6traqvsj4"

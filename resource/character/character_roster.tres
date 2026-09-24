@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CharacterRoster" format=3 uid="uid://d2ov8b7msolgf"]
+
+[ext_resource type="Script" uid="uid://tjq6traqvsj4" path="res://script/character/character_data.gd" id="1_a658o"]
+[ext_resource type="Resource" uid="uid://d3wrw81dmowum" path="res://resource/character/blue_robot.tres" id="2_c3ehb"]
+[ext_resource type="Script" uid="uid://68bmhtjd0iwa" path="res://script/character/character_roster.gd" id="2_k1lmf"]
+[ext_resource type="Resource" uid="uid://clh1jr8x62to1" path="res://resource/character/green_robot.tres" id="3_j0l7k"]
+[ext_resource type="Resource" uid="uid://devtaqad13k8w" path="res://resource/character/red_robot.tres" id="4_ox5pa"]
+[ext_resource type="Resource" uid="uid://r2xdeoiik8fc" path="res://resource/character/white_robot.tres" id="5_673u8"]
+
+[resource]
+script = ExtResource("2_k1lmf")
+characters = Array[ExtResource("1_a658o")]([ExtResource("2_c3ehb"), ExtResource("3_j0l7k"), ExtResource("4_ox5pa"), ExtResource("5_673u8")])
+metadata/_custom_type_script = "uid://68bmhtjd0iwa"

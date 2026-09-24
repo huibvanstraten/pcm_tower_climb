@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://clh1jr8x62to1"]
+
+[ext_resource type="Script" uid="uid://tjq6traqvsj4" path="res://script/character/character_data.gd" id="1_q6205"]
+
+[resource]
+script = ExtResource("1_q6205")
+id = &"green_robot"
+display_name = "GREEN"
+description = "Sweet but treachorous"
+metadata/_custom_type_script = "uid://tjq6traqvsj4"

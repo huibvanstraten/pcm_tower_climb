@@ -1,0 +1,46 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://duaf85ugelvae"]
+
+[ext_resource type="Texture2D" uid="uid://4jqoa02dt3vk" path="res://asset/sci-fi platformer - free/player.png" id="1_erf08"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xdq0g"]
+atlas = ExtResource("1_erf08")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wd51f"]
+atlas = ExtResource("1_erf08")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_asq05"]
+atlas = ExtResource("1_erf08")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_julcx"]
+atlas = ExtResource("1_erf08")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n6kjf"]
+atlas = ExtResource("1_erf08")
+region = Rect2(128, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xdq0g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wd51f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_asq05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_julcx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n6kjf")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
