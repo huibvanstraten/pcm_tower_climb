@@ -7,7 +7,7 @@ extends Node
 @onready var camera_rig: CameraRig = $CameraRig
 
 var levelData: LevelData
-var currentAreaId: int
+var currentAreaId: int = 1
 
 
 func _ready() -> void:

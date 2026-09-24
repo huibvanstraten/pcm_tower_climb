@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ceges3loiql3p"]
+[gd_scene load_steps=9 format=3 uid="uid://ceges3loiql3p"]
 
 [ext_resource type="Script" uid="uid://bir72lhl7ctyk" path="res://script/main.gd" id="1_itxqv"]
 [ext_resource type="Script" uid="uid://ys0ho1wihei4" path="res://script/level/level_data.gd" id="2_v0l8b"]
@@ -9,15 +9,22 @@
 
 [sub_resource type="Resource" id="Resource_4j5ol"]
 script = ExtResource("2_v0l8b")
-levelId = 1
+levelId = 2
 levelName = "Level2"
 levelPath = "res://scene/level/Level2.tscn"
+metadata/_custom_type_script = "uid://ys0ho1wihei4"
+
+[sub_resource type="Resource" id="Resource_p1hux"]
+script = ExtResource("2_v0l8b")
+levelId = 3
+levelName = "Level3"
+levelPath = "res://scene/level/Level3.tscn"
 metadata/_custom_type_script = "uid://ys0ho1wihei4"
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_itxqv")
 player_input_session_scene = ExtResource("2_wp4xf")
-availableLevels = Array[ExtResource("2_v0l8b")]([SubResource("Resource_4j5ol")])
+availableLevels = Array[ExtResource("2_v0l8b")]([SubResource("Resource_4j5ol"), SubResource("Resource_p1hux")])
 
 [node name="LevelContainer" type="Node2D" parent="."]
 

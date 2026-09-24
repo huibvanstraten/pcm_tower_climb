@@ -8,19 +8,19 @@ extends Node2D
 @export var areaId: int
 @export var area_music: AudioStream
 
-var left_boundary: Node2D:
+var left_boundary: Area2D:
 	get:
 		return $AreaBoundaries/Left
 
-var right_boundary: Node2D:
+var right_boundary: Area2D:
 	get:
 		return $AreaBoundaries/Right
 
-var top_boundary: Node2D:
+var top_boundary: Area2D:
 	get:
 		return $AreaBoundaries/Top
 
-var bottom_boundary: Node2D:
+var bottom_boundary: Area2D:
 	get:
 		return $AreaBoundaries/Bottom
 

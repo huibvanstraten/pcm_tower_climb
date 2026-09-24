@@ -36,7 +36,7 @@ func _on_game_state_changed(
 
 
 func _start_gameplay() -> void:
-	LevelManager.load_level(1)
+	LevelManager.load_level(3)
 
 	var level = LevelManager.loadedLevel
 
