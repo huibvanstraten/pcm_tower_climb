@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cen5vsst8ve0u"]
+[gd_scene load_steps=10 format=3 uid="uid://cen5vsst8ve0u"]
 
 [ext_resource type="Script" uid="uid://de8ni5ly40irp" path="res://script/entity/respawn_point.gd" id="1_53nmy"]
 [ext_resource type="Texture2D" uid="uid://ja7e84qx1fio" path="res://asset/sci-fi platformer - premium/props/lamp.png" id="2_qkq3j"]
@@ -12,8 +12,11 @@ size = Vector2(18, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ni43k"]
 size = Vector2(26, 13)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qkq3j"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2nsfl"]
 size = Vector2(192, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qkq3j"]
+size = Vector2(128, 32)
 
 [node name="RespawnStation" type="StaticBody2D"]
 collision_layer = 8
@@ -61,6 +64,10 @@ shape = SubResource("RectangleShape2D_ni43k")
 
 [node name="PlateauCollision" type="CollisionShape2D" parent="."]
 position = Vector2(96, -16)
+shape = SubResource("RectangleShape2D_2nsfl")
+
+[node name="SpawnerCollision" type="CollisionShape2D" parent="."]
+position = Vector2(64, -80)
 shape = SubResource("RectangleShape2D_qkq3j")
 
 [node name="Beams" type="Node2D" parent="."]
