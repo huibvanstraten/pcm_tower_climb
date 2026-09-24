@@ -18,12 +18,18 @@ func exit() -> void:
 func physics_update(delta: float) -> String:
 	if entity.is_hit():
 		return HitState.NAME
+
+	if entity.velocity.y > 0.0:
+		return FallState.NAME
+
 	if programming_finished:
 		programming_finished = false
 		return IdleState.NAME
+
 	if entity.command.interact_pressed:
 		EventManager.programming_cancelled.emit(entity)
 		return IdleState.NAME
+
 	return "None"
 
 func _finish_programming(player: Player) -> void:

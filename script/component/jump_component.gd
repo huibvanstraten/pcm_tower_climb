@@ -19,9 +19,9 @@ var jump_buffer_remaining: float = 0.0
 var coyote_remaining: float = 0.0
 
 
-func physics_update(delta: float, command: PlayerCommand) -> void:
-	_update_jump_buffer(delta, command)
-	_update_coyote_time(delta)
+#func physics_update(delta: float, command: PlayerCommand) -> void:
+	#_update_jump_buffer(delta, command)
+	#_update_coyote_time(delta)
 
 
 func jump() -> void:
@@ -39,10 +39,9 @@ func stop_jump() -> void:
 
 
 func can_jump() -> bool:
-	return (
-		jump_buffer_remaining > 0.0
-		and coyote_remaining > 0.0
-	)
+	print(jump_buffer_remaining, " - ", coyote_remaining)
+
+	return (jump_buffer_remaining > 0.0 and coyote_remaining > 0.0)
 
 
 func _update_jump_buffer(delta: float, command: PlayerCommand) -> void:

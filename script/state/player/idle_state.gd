@@ -15,13 +15,17 @@ func physics_update(delta: float) -> String:
 
 	if entity.is_hit():
 		return HitState.NAME
-	elif entity.velocity.y > 0.0:
+
+	if entity.velocity.y > 0.0:
 		return FallState.NAME
-	elif entity.command.move_direction != 0.0:
+
+	if entity.command.move_direction != 0.0:
 		return MoveState.NAME
-	elif entity.command.jump_pressed:
+
+	if entity.command.jump_pressed:
 		return JumpState.NAME
-	elif entity.command.interact_pressed:
+
+	if entity.command.interact_pressed:
 		return ProgrammingState.NAME
-	else:
-		return "None"
+
+	return "None"

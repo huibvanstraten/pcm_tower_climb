@@ -319,10 +319,11 @@ size = Vector2(14, 2)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bedqt"]
 size = Vector2(14, 17)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("coyote_timer", "bodyCollisionShape", "animationComponent")]
 collision_layer = 2
 collision_mask = 32783
 script = ExtResource("1_ct4mp")
+coyote_timer = NodePath("")
 bodyCollisionShape = NodePath("CollisionShape2D")
 animationComponent = NodePath("AnimatedSprite2D")
 
@@ -388,8 +389,9 @@ script = ExtResource("8_j4wxg")
 entity = NodePath("../..")
 intial_health = 3
 
-[node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("entity", "initial_state")]
+[node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("jump_component", "entity", "initial_state")]
 script = ExtResource("8_u7b46")
+jump_component = NodePath("../Components/Jump")
 entity = NodePath("..")
 initial_state = NodePath("Idle")
 

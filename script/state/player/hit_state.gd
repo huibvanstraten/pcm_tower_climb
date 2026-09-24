@@ -28,10 +28,11 @@ func physics_update(delta: float) -> String:
 	if hit_animation_finished:
 		if health_component.health == 0:
 			return DieState.NAME
+
 		else: 
 			return IdleState.NAME
-	else:
-		return "None"
+
+	return "None"
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name != &"hit":

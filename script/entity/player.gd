@@ -5,6 +5,8 @@ var player_id: int
 var command: PlayerCommand = PlayerCommand.new()
 var hit: Hit = null
 
+@export var coyote_timer: Timer
+
 func handle_command(command: PlayerCommand) -> void:
 	if command:
 		self.command = command

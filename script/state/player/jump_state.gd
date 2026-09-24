@@ -12,7 +12,10 @@ func exit() -> void:
 
 func physics_update(delta: float) -> String:
 	physics_component.apply_gravity(delta)
-	move_component.move_in_air(delta, entity.command.move_direction)
+	if entity.command.move_direction != 0.0:
+		move_component.move_in_air(delta, entity.command.move_direction)
+	else:
+		move_component.apply_air_resistance(delta)
 	flip_component.update_facing(entity.command.move_direction)
 
 	if entity.is_hit():
