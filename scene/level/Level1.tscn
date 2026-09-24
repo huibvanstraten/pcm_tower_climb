@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://hibv81kuvmg8"]
+[gd_scene format=4 uid="uid://dbewmbrugcnjk"]
 
 [ext_resource type="Script" uid="uid://bdu8cynu5p5ca" path="res://script/level/level_1.gd" id="1_nk78g"]
 [ext_resource type="PackedScene" uid="uid://2b8l7oadkcai" path="res://scene/cameraRig.tscn" id="2_a215g"]
@@ -188,8 +188,8 @@ position = Vector2(377, 1423)
 [node name="ParallaxLayer" type="ParallaxLayer" parent="Ruined_City" unique_id=1308283598]
 
 [node name="TextureRect" type="Sprite2D" parent="Ruined_City/ParallaxLayer" unique_id=1669976122]
-position = Vector2(1310, 1047.9999)
-scale = Vector2(6.89375, 7.577778)
+position = Vector2(427.25, 495.49988)
+scale = Vector2(3.215625, 3.4851856)
 texture = ExtResource("5_ldwqa")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1653228128]
