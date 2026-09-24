@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://d4f5vamavmky5"]
 
-[ext_resource type="Script" uid="uid://klhpa7b27ej6" path="res://script/menu/player_select.gd" id="1_06nbu"]
+[ext_resource type="Script" uid="uid://cxrg77u8kwhp6" path="res://script/menu/player_select.gd" id="1_06nbu"]
 [ext_resource type="PackedScene" uid="uid://chpj71d0oo3xj" path="res://scene/menu/playerSelectSlot.tscn" id="2_c61e1"]
+[ext_resource type="Resource" uid="uid://d2ov8b7msolgf" path="res://resource/character/character_roster.tres" id="2_lvupq"]
 
 [node name="PlayerSelect" type="Control" unique_id=185895301]
 layout_mode = 3
@@ -11,6 +12,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_06nbu")
+character_roster = ExtResource("2_lvupq")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=1444529787]
 layout_mode = 1

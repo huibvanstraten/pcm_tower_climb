@@ -9,13 +9,25 @@ extends Control
 ]
 @onready var start_game_label: Label = %StartGameLabel
 
+@export var character_roster: CharacterRoster
+
 const AXIS_THRESHOLD := 0.6
 const AXIS_RELEASE_THRESHOLD := 0.3
 
 var horizontal_axis_active: Dictionary = {}
 
 
+
 func _ready() -> void:
+	assert(
+		character_roster != null
+		and not character_roster.characters.is_empty(),
+		"PlayerSelect requires a populated CharacterRoster"
+	)
+	
+	for slot in slots:
+		slot.character_roster = character_roster
+
 	EventManager.state_changed.connect(_on_game_state_changed)
 	EventManager.player_session_joined.connect(_on_player_session_joined)
 
@@ -23,7 +35,6 @@ func _ready() -> void:
 
 	if GameFlowManager.state == GameState.Type.PLAYER_SELECT:
 		refresh_sessions()
-
 
 func _input(event: InputEvent) -> void:
 	if GameFlowManager.state != GameState.Type.PLAYER_SELECT:
@@ -87,12 +98,20 @@ func _handle_confirmed_session_input(
 
 
 func _start_game() -> void:
+	for session in PlayerSessionManager.get_sessions():
+		print(
+			"START GAME: slot=", session.player_slot,
+			" character=", session.selection.character_index,
+			" confirmed=", session.selection.confirmed
+		)
+	
 	if not are_all_sessions_confirmed():
 		return
 
 	GameFlowManager.change_state(
 		GameState.Type.GAMEPLAY
 	)
+	
 	
 
 func _refresh_slot(
@@ -201,34 +220,36 @@ func _select_next_character(
 ) -> void:
 	var unavailable := _get_unavailable_character_indices(session)
 	var current := session.selection.character_index
+	var count := character_roster.get_character_count()
 
-	for offset in range(1, PlayerSelection.CHARACTER_COUNT + 1):
+	for offset in range(1, count + 1):
 		var candidate := wrapi(
 			current + offset,
 			0,
-			PlayerSelection.CHARACTER_COUNT
+			count
 		)
 
 		if candidate not in unavailable:
-			session.selection.select_character(candidate)
+			session.selection.select_character(candidate, count)
 			return
-			
+
 
 func _select_previous_character(
 	session: PlayerInputSession
 ) -> void:
 	var unavailable := _get_unavailable_character_indices(session)
 	var current := session.selection.character_index
+	var count := character_roster.get_character_count()
 
-	for offset in range(1, PlayerSelection.CHARACTER_COUNT + 1):
+	for offset in range(1, count + 1):
 		var candidate := wrapi(
 			current - offset,
 			0,
-			PlayerSelection.CHARACTER_COUNT
+			count
 		)
 
 		if candidate not in unavailable:
-			session.selection.select_character(candidate)
+			session.selection.select_character(candidate, count)
 			return
 
 
@@ -241,6 +262,12 @@ func _confirm_selection(
 		return
 
 	session.selection.confirm()
+	
+	print(
+	"PLAYER SELECT: slot=", session.player_slot,
+	" character=", session.selection.character_index,
+	" confirmed=", session.selection.confirmed
+)
 
 	_resolve_selection_conflicts(session)
 	_update_start_game_state()

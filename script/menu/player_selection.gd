@@ -1,15 +1,18 @@
 class_name PlayerSelection
 extends RefCounted
 
-
-const CHARACTER_COUNT := 4
-
 var character_index: int = 0
 var confirmed: bool = false
 
 
-func select_character(index: int) -> void:
+func select_character(
+	index: int,
+	character_count: int
+) -> void:
 	if confirmed:
+		return
+
+	if index < 0 or index >= character_count:
 		return
 
 	character_index = index

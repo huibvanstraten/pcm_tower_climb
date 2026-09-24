@@ -10,6 +10,8 @@ size = Vector2(37, 41)
 size = Vector2(137, 12)
 
 [node name="RespawnPoint" type="StaticBody2D" unique_id=84191522]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_53nmy")
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=1165521975]

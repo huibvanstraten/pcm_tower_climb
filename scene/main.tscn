@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://ys0ho1wihei4" path="res://script/level/level_data.gd" id="2_v0l8b"]
 [ext_resource type="PackedScene" uid="uid://boalx4k4mb5dx" path="res://scene/input/PlayerInputSession.tscn" id="2_wp4xf"]
 [ext_resource type="PackedScene" uid="uid://dqwvg3ik2nw2a" path="res://scene/hud/hud.tscn" id="4_brvut"]
+[ext_resource type="Resource" uid="uid://d2ov8b7msolgf" path="res://resource/character/character_roster.tres" id="4_p1hux"]
 [ext_resource type="PackedScene" uid="uid://b6fqghrmn0mhl" path="res://scene/menu/startScreen.tscn" id="5_0ha60"]
 [ext_resource type="PackedScene" uid="uid://d4f5vamavmky5" path="res://scene/menu/playerSelect.tscn" id="6_4j5ol"]
 
@@ -18,6 +19,7 @@ metadata/_custom_type_script = "uid://ys0ho1wihei4"
 script = ExtResource("1_itxqv")
 player_input_session_scene = ExtResource("2_wp4xf")
 availableLevels = Array[ExtResource("2_v0l8b")]([SubResource("Resource_pu4bb")])
+character_roster = ExtResource("4_p1hux")
 
 [node name="LevelContainer" type="Node2D" parent="." unique_id=1522655232]
 

@@ -5,10 +5,13 @@ var player_container: Node = null
 var players: Dictionary[int, Player] = {}
 
 
+
 func spawn_player(
 	player_id: int,
-	spawn_position: Vector2
+	spawn_position: Vector2,
+	character: CharacterData
 ) -> Player:
+	assert(character != null)
 
 	var existing_player := get_player(player_id)
 
@@ -21,6 +24,7 @@ func spawn_player(
 	players[player_id] = player
 	player_container.add_child(player)
 
+	player.configure(character)
 	player.global_position = spawn_position
 
 	return player

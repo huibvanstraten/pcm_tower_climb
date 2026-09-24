@@ -17,9 +17,10 @@ script = ExtResource("1_qidx5")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=2121254245]
 layout_mode = 0
-offset_top = -41.0
-offset_right = 1153.0
-offset_bottom = 644.0
+offset_left = 15.0
+offset_top = -3.0
+offset_right = 630.0
+offset_bottom = 359.0
 texture = ExtResource("2_dh6d7")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=370454674]
@@ -27,6 +28,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = -1.0
 grow_horizontal = 2
 grow_vertical = 2
 
