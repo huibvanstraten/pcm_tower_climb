@@ -39,8 +39,6 @@ func stop_jump() -> void:
 
 
 func can_jump() -> bool:
-	print(jump_buffer_remaining, " - ", coyote_remaining)
-
 	return (jump_buffer_remaining > 0.0 and coyote_remaining > 0.0)
 
 
