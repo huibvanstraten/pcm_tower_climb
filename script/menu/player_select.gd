@@ -1,6 +1,11 @@
 class_name PlayerSelect
 extends Control
 
+@export var select_sound: AudioStream
+@export var start_sound: AudioStream
+
+@export var music: AudioStream
+
 @onready var slots: Array[PlayerSelectSlot] = [
 	%PlayerSelectSlot1,
 	%PlayerSelectSlot2,
@@ -63,8 +68,10 @@ func _handle_session_input(
 		return
 
 	if event.is_action_pressed("move_left"):
+		SfxManager.play(select_sound)
 		_select_previous_character(session)
 	elif event.is_action_pressed("move_right"):
+		SfxManager.play(select_sound)
 		_select_next_character(session)
 	elif event.is_action_pressed("start"):
 		_confirm_selection(session)
@@ -89,6 +96,8 @@ func _handle_confirmed_session_input(
 func _start_game() -> void:
 	if not are_all_sessions_confirmed():
 		return
+
+	SfxManager.play(start_sound)
 
 	GameFlowManager.change_state(
 		GameState.Type.GAMEPLAY
@@ -124,6 +133,7 @@ func refresh_sessions() -> void:
 
 		if slot != null:
 			slot.assign_session(session)
+			SfxManager.play(start_sound)
 
 	_update_start_game_state()
 
@@ -142,9 +152,10 @@ func _on_game_state_changed(
 	state: GameState.Type
 ) -> void:
 	_update_visibility(state)
-
 	if state == GameState.Type.PLAYER_SELECT:
 		refresh_sessions()
+		MusicManager.play(music)
+
 
 
 func _on_player_session_joined(

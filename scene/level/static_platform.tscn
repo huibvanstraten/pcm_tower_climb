@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ksesuf2h1tha"]
+
+[ext_resource type="Texture2D" uid="uid://c20yr0ix17bd3" path="res://asset/sci-fi platformer - premium/platforms/platforms.png" id="1_xyew4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bxy1s"]
+size = Vector2(48, 10)
+
+[node name="StaticPlatform" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bxy1s")
+one_way_collision = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xyew4")
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 10)

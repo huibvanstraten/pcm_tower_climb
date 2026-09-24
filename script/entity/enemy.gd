@@ -6,6 +6,9 @@ var direction: float
 var hit: Hit = null
 var is_attacking = false
 
+func _ready() -> void:
+	direction = initial_direction
+
 func is_hit() -> bool:
 	if hit:
 		return true

@@ -13,7 +13,6 @@ const NAME := "Patrol"
 
 func enter() -> void:
 	super()
-	entity.direction = entity.initial_direction
 
 func exit() -> void:
 	super()
@@ -25,6 +24,8 @@ func physics_update(delta: float) -> String:
 
 	if entity.is_hit():
 		return EnemyHitState.NAME
+	if entity.is_attacking:
+		return EnemyFollowState.NAME
 
 	var enemy_detector = enemy_detection_right if entity.direction > 0 else enemy_detection_left
 	var wall_detector = wall_detection_right if entity.direction > 0 else wall_detection_left

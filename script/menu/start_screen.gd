@@ -1,9 +1,14 @@
 extends Control
 
+@export var select_sound: AudioStream
+@export var music: AudioStream
+
 
 func _ready() -> void:
 	EventManager.state_changed.connect(_on_game_state_changed)
 	_on_game_state_changed(GameFlowManager.state)
+	
+	MusicManager.play(music)
 
 
 func _on_game_state_changed(state: GameState.Type) -> void:
@@ -30,6 +35,7 @@ func _input(event: InputEvent) -> void:
 	if session == null:
 		return
 	
+	SfxManager.play(select_sound)
 	get_viewport().set_input_as_handled()
 
 	GameFlowManager.change_state.call_deferred(
