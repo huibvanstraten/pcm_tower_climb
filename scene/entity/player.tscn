@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://jiqfcha8y5u8" path="res://script/entity/player.gd" id="1_ct4mp"]
 [ext_resource type="Texture2D" uid="uid://bwinqeypl23md" path="res://asset/sci-fi platformer - premium/player/player.png" id="2_bedqt"]
-[ext_resource type="Animation" uid="uid://ccmir00v0lk37" path="res://resource/white_friendly_fire.res" id="2_iot5p"]
+[ext_resource type="AnimationLibrary" uid="uid://cr84r0248055w" path="res://resource/animations/white_robot.res" id="2_iot5p"]
 [ext_resource type="Script" uid="uid://cdlmt7cdiw02s" path="res://script/object/hit_component.gd" id="3_bedqt"]
 [ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ct4mp"]
-[ext_resource type="Texture2D" uid="uid://dvxalug2thoae" path="res://asset/player/friendly_fire.png" id="3_fiawc"]
+[ext_resource type="Texture2D" uid="uid://b6bnpqftae5t7" path="res://asset/player/Player white.png" id="5_bi3cs"]
 [ext_resource type="Script" uid="uid://i5unc1xq0tfr" path="res://script/component/jump_component.gd" id="5_g2vtq"]
 [ext_resource type="Script" uid="uid://c1mxmnssq41rd" path="res://script/component/flip_component.gd" id="6_2fvbb"]
 [ext_resource type="Script" uid="uid://co207pvwufuqm" path="res://script/component/move_component.gd" id="6_g2vtq"]
@@ -20,82 +20,6 @@
 [ext_resource type="Script" uid="uid://dt45jb0dt3xgd" path="res://script/state/player/idle_state.gd" id="13_34jf3"]
 [ext_resource type="Script" uid="uid://c2utu5ootr02n" path="res://script/state/player/die_state.gd" id="16_bup7g"]
 
-[sub_resource type="Animation" id="Animation_fiawc"]
-length = 0.001
-tracks/0/type = "method"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [&"hit", 1.0, false],
-"method": &"play"
-}]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("AnimatedSprite2D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [6.2831855]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("AnimatedSprite2D:animation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"friendly_fire"]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("AnimatedSprite2D:frame")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_bedqt"]
-resource_name = "hit"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 6.2831855]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_iot5p"]
-_data = {
-&"RESET": SubResource("Animation_fiawc"),
-&"friendly_fire": ExtResource("2_iot5p"),
-&"hit": SubResource("Animation_bedqt")
-}
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_bedqt"]
 atlas = ExtResource("2_bedqt")
 region = Rect2(96, 0, 32, 32)
@@ -109,40 +33,40 @@ atlas = ExtResource("2_bedqt")
 region = Rect2(32, 192, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y3tcv"]
-atlas = ExtResource("3_fiawc")
-region = Rect2(0, 0, 16, 16)
+atlas = ExtResource("5_bi3cs")
+region = Rect2(0, 256, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5qlmu"]
-atlas = ExtResource("3_fiawc")
-region = Rect2(16, 0, 16, 16)
+atlas = ExtResource("5_bi3cs")
+region = Rect2(32, 256, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kwisn"]
-atlas = ExtResource("3_fiawc")
-region = Rect2(32, 0, 16, 16)
+atlas = ExtResource("5_bi3cs")
+region = Rect2(64, 256, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3tbc7"]
-atlas = ExtResource("3_fiawc")
-region = Rect2(48, 0, 16, 16)
+atlas = ExtResource("5_bi3cs")
+region = Rect2(96, 256, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m11ni"]
-atlas = ExtResource("3_fiawc")
-region = Rect2(0, 16, 16, 16)
+atlas = ExtResource("5_bi3cs")
+region = Rect2(128, 256, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_frgir"]
-atlas = ExtResource("3_fiawc")
-region = Rect2(16, 16, 16, 16)
+atlas = ExtResource("5_bi3cs")
+region = Rect2(160, 256, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f75ja"]
-atlas = ExtResource("3_fiawc")
-region = Rect2(32, 16, 16, 16)
+atlas = ExtResource("5_bi3cs")
+region = Rect2(192, 256, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t30rk"]
-atlas = ExtResource("3_fiawc")
-region = Rect2(48, 16, 16, 16)
+atlas = ExtResource("5_bi3cs")
+region = Rect2(224, 256, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fwyc6"]
-atlas = ExtResource("3_fiawc")
-region = Rect2(0, 32, 16, 16)
+atlas = ExtResource("5_bi3cs")
+region = Rect2(0, 288, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_37gol"]
 atlas = ExtResource("2_bedqt")
@@ -216,37 +140,40 @@ region = Rect2(192, 32, 32, 32)
 atlas = ExtResource("2_bedqt")
 region = Rect2(224, 32, 32, 32)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0exmv"]
+load_path = "res://.godot/imported/Player white.png-8de8e3d214b009d88da4fcd3ff9a8917.ctex"
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_jasmu"]
-atlas = ExtResource("2_bedqt")
-region = Rect2(0, 64, 32, 32)
+atlas = SubResource("CompressedTexture2D_0exmv")
+region = Rect2(0, 224, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_icw5k"]
-atlas = ExtResource("2_bedqt")
-region = Rect2(32, 64, 32, 32)
+atlas = SubResource("CompressedTexture2D_0exmv")
+region = Rect2(32, 224, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0cyiu"]
-atlas = ExtResource("2_bedqt")
-region = Rect2(64, 64, 32, 32)
+atlas = SubResource("CompressedTexture2D_0exmv")
+region = Rect2(64, 224, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_71agn"]
-atlas = ExtResource("2_bedqt")
-region = Rect2(96, 64, 32, 32)
+atlas = SubResource("CompressedTexture2D_0exmv")
+region = Rect2(96, 224, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lkcml"]
-atlas = ExtResource("2_bedqt")
-region = Rect2(128, 64, 32, 32)
+atlas = SubResource("CompressedTexture2D_0exmv")
+region = Rect2(128, 224, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_guqsi"]
-atlas = ExtResource("2_bedqt")
-region = Rect2(160, 64, 32, 32)
+atlas = SubResource("CompressedTexture2D_0exmv")
+region = Rect2(160, 224, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dlmg6"]
-atlas = ExtResource("2_bedqt")
-region = Rect2(192, 64, 32, 32)
+atlas = SubResource("CompressedTexture2D_0exmv")
+region = Rect2(192, 224, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_2uilu"]
-atlas = ExtResource("2_bedqt")
-region = Rect2(224, 64, 32, 32)
+atlas = SubResource("CompressedTexture2D_0exmv")
+region = Rect2(224, 224, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_34jf3"]
 animations = [{
@@ -414,18 +341,20 @@ size = Vector2(14, 2)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bedqt"]
 size = Vector2(14, 17)
 
-[node name="Player" type="CharacterBody2D" unique_id=1342249911 node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
+[node name="Player" type="CharacterBody2D" unique_id=1342249911 node_paths=PackedStringArray("animation_player", "bodyCollisionShape", "animationComponent")]
 collision_layer = 2
 collision_mask = 32783
 script = ExtResource("1_ct4mp")
+animation_player = NodePath("AnimationPlayer")
 bodyCollisionShape = NodePath("CollisionShape2D")
 animationComponent = NodePath("AnimatedSprite2D")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=447469652]
-libraries/ = SubResource("AnimationLibrary_iot5p")
+libraries/ = ExtResource("2_iot5p")
+autoplay = &"idle"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1858912840]
-position = Vector2(1, -7)
+position = Vector2(5, -7)
 rotation = 6.2831855
 sprite_frames = SubResource("SpriteFrames_34jf3")
 animation = &"friendly_fire"

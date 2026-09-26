@@ -1,5 +1,6 @@
 extends Node
 
+var character_roster: CharacterRoster
 
 const MAX_PLAYERS := 4
 
@@ -8,9 +9,34 @@ func _ready() -> void:
 	EventManager.respawn_requested.connect(respawn_players)
 
 
+func get_session_character(
+	session: PlayerInputSession
+) -> CharacterData:
+	if character_roster == null:
+		push_error("CharacterRoster is not configured")
+		return null
+
+	var character := character_roster.get_character(
+		session.selection.character_index
+	)
+
+	if character == null:
+		push_error(
+			"No character for session %s"
+			% session.player_slot
+		)
+
+	return character
+
+
 func activate_session_player(
 	session: PlayerInputSession
 ) -> void:
+	var character := get_session_character(session)
+
+	if character == null:
+		return
+
 	if not can_use_initial_spawn_points():
 		session.wait_for_spawn()
 		return
@@ -26,7 +52,8 @@ func activate_session_player(
 	if player == null:
 		player = SpawnManager.spawn_player(
 			session.player_slot,
-			spawn_position
+			spawn_position,
+			character,
 		)
 	else:
 		SpawnManager.position_player(
@@ -66,9 +93,22 @@ func respawn_players(
 			push_error("Not enough respawn positions for dead players")
 			return
 
-		var player = SpawnManager.spawn_player(
+
+		var character := get_session_character(session)
+
+		if character == null:
+			continue
+
+		print(
+			"SPAWNING: slot=", session.player_slot,
+			" character=", character.display_name,
+			" index=", session.selection.character_index
+		)
+
+		var player := SpawnManager.spawn_player(
 			session.player_slot,
-			spawn_positions[spawn_index]
+			spawn_positions[spawn_index],
+			character
 		)
 
 		session.activate(player)

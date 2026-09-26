@@ -7,6 +7,7 @@ extends State
 @export var jump_component: JumpComponent
 
 func enter() -> void:
+	animation_player.play(start_animation_name)
 	super()
 
 func exit() -> void:

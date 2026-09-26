@@ -11,7 +11,6 @@ extends Node
 
 func enter() -> void:
 	print("{0}: Enter\t{1}".format([entity.name, state_machine.current_state.name]))
-	animated_sprite.play(start_animation_name)
 	
 func exit() -> void:
 	print("{0}: Exit\t{1}".format([entity.name, state_machine.current_state.name]))
