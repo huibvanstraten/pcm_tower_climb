@@ -1,9 +1,11 @@
-[gd_scene load_steps=54 format=3 uid="uid://drd68b3s75ss2"]
+[gd_scene format=3 uid="uid://drd68b3s75ss2"]
 
 [ext_resource type="Script" uid="uid://jiqfcha8y5u8" path="res://script/entity/player.gd" id="1_ct4mp"]
 [ext_resource type="Texture2D" uid="uid://bwinqeypl23md" path="res://asset/sci-fi platformer - premium/player/player.png" id="2_bedqt"]
+[ext_resource type="Animation" uid="uid://ccmir00v0lk37" path="res://resource/white_friendly_fire.res" id="2_iot5p"]
 [ext_resource type="Script" uid="uid://cdlmt7cdiw02s" path="res://script/object/hit_component.gd" id="3_bedqt"]
 [ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ct4mp"]
+[ext_resource type="Texture2D" uid="uid://dvxalug2thoae" path="res://asset/player/friendly_fire.png" id="3_fiawc"]
 [ext_resource type="Script" uid="uid://i5unc1xq0tfr" path="res://script/component/jump_component.gd" id="5_g2vtq"]
 [ext_resource type="Script" uid="uid://c1mxmnssq41rd" path="res://script/component/flip_component.gd" id="6_2fvbb"]
 [ext_resource type="Script" uid="uid://co207pvwufuqm" path="res://script/component/move_component.gd" id="6_g2vtq"]
@@ -46,6 +48,30 @@ tracks/1/keys = {
 "update": 0,
 "values": [6.2831855]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AnimatedSprite2D:animation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"friendly_fire"]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_bedqt"]
 resource_name = "hit"
@@ -66,6 +92,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_iot5p"]
 _data = {
 &"RESET": SubResource("Animation_fiawc"),
+&"friendly_fire": ExtResource("2_iot5p"),
 &"hit": SubResource("Animation_bedqt")
 }
 
@@ -80,6 +107,42 @@ region = Rect2(0, 192, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_akj6k"]
 atlas = ExtResource("2_bedqt")
 region = Rect2(32, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3tcv"]
+atlas = ExtResource("3_fiawc")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5qlmu"]
+atlas = ExtResource("3_fiawc")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwisn"]
+atlas = ExtResource("3_fiawc")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3tbc7"]
+atlas = ExtResource("3_fiawc")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m11ni"]
+atlas = ExtResource("3_fiawc")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_frgir"]
+atlas = ExtResource("3_fiawc")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f75ja"]
+atlas = ExtResource("3_fiawc")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t30rk"]
+atlas = ExtResource("3_fiawc")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fwyc6"]
+atlas = ExtResource("3_fiawc")
+region = Rect2(0, 32, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_37gol"]
 atlas = ExtResource("2_bedqt")
@@ -191,7 +254,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bedqt")
 }],
-"loop": false,
+"loop": 0,
 "name": &"die",
 "speed": 6.0
 }, {
@@ -202,9 +265,41 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_akj6k")
 }],
-"loop": false,
+"loop": 0,
 "name": &"fall",
 "speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3tcv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5qlmu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwisn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3tbc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m11ni")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_frgir")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f75ja")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t30rk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fwyc6")
+}],
+"loop": 1,
+"name": &"friendly_fire",
+"speed": 5.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -216,7 +311,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0tljh")
 }],
-"loop": false,
+"loop": 0,
 "name": &"hit",
 "speed": 6.0
 }, {
@@ -236,7 +331,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f6tgk")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 6.0
 }, {
@@ -247,7 +342,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qlwbe")
 }],
-"loop": false,
+"loop": 0,
 "name": &"jump",
 "speed": 6.0
 }, {
@@ -276,7 +371,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_e8qs4")
 }],
-"loop": true,
+"loop": 1,
 "name": &"move",
 "speed": 9.0
 }, {
@@ -305,7 +400,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2uilu")
 }],
-"loop": true,
+"loop": 1,
 "name": &"program",
 "speed": 6.0
 }]
@@ -319,82 +414,79 @@ size = Vector2(14, 2)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bedqt"]
 size = Vector2(14, 17)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
+[node name="Player" type="CharacterBody2D" unique_id=1342249911 node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
 collision_layer = 2
 collision_mask = 32783
 script = ExtResource("1_ct4mp")
 bodyCollisionShape = NodePath("CollisionShape2D")
 animationComponent = NodePath("AnimatedSprite2D")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_iot5p")
-}
-autoplay = "idle"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=447469652]
+libraries/ = SubResource("AnimationLibrary_iot5p")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1858912840]
 position = Vector2(1, -7)
 rotation = 6.2831855
 sprite_frames = SubResource("SpriteFrames_34jf3")
-animation = &"die"
+animation = &"friendly_fire"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=33533074]
 position = Vector2(0, -8.5)
 shape = SubResource("RectangleShape2D_fiawc")
 
-[node name="Hit" type="Area2D" parent="."]
+[node name="Hit" type="Area2D" parent="." unique_id=1828294056]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("3_bedqt")
 knockbackStrength = Vector2(0, 0)
 
-[node name="Hit" type="CollisionShape2D" parent="Hit"]
+[node name="Hit" type="CollisionShape2D" parent="Hit" unique_id=2114211659]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_iot5p")
 
-[node name="Components" type="Node2D" parent="."]
+[node name="Components" type="Node2D" parent="." unique_id=609408952]
 
-[node name="Physics" type="Node2D" parent="Components" node_paths=PackedStringArray("character_body")]
+[node name="Physics" type="Node2D" parent="Components" unique_id=2078599144 node_paths=PackedStringArray("character_body")]
 script = ExtResource("3_ct4mp")
 character_body = NodePath("../..")
 
-[node name="Jump" type="Node2D" parent="Components" node_paths=PackedStringArray("character_body")]
+[node name="Jump" type="Node2D" parent="Components" unique_id=1003235370 node_paths=PackedStringArray("character_body")]
 script = ExtResource("5_g2vtq")
 character_body = NodePath("../..")
 
-[node name="Flip" type="Node2D" parent="Components" node_paths=PackedStringArray("animated_sprite", "flip_marker")]
+[node name="Flip" type="Node2D" parent="Components" unique_id=851585025 node_paths=PackedStringArray("animated_sprite", "flip_marker")]
 script = ExtResource("6_2fvbb")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 flip_marker = NodePath("../../FlipMarker")
 
-[node name="Move" type="Node2D" parent="Components" node_paths=PackedStringArray("physics_component")]
+[node name="Move" type="Node2D" parent="Components" unique_id=1611397427 node_paths=PackedStringArray("physics_component")]
 script = ExtResource("6_g2vtq")
 physics_component = NodePath("../Physics")
 speed = 200.0
 
-[node name="Hurt" type="Area2D" parent="Components" node_paths=PackedStringArray("player", "health_component")]
+[node name="Hurt" type="Area2D" parent="Components" unique_id=1231249687 node_paths=PackedStringArray("player", "health_component")]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("7_u7b46")
 player = NodePath("../..")
 health_component = NodePath("../Health")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt" unique_id=1183469965]
 position = Vector2(0, -9.5)
 shape = SubResource("RectangleShape2D_bedqt")
 
-[node name="Health" type="Node2D" parent="Components" node_paths=PackedStringArray("entity")]
+[node name="Health" type="Node2D" parent="Components" unique_id=2132588864 node_paths=PackedStringArray("entity")]
 script = ExtResource("8_j4wxg")
 entity = NodePath("../..")
 intial_health = 3
 
-[node name="StateMachine" type="Node2D" parent="." node_paths=PackedStringArray("jump_component", "entity", "initial_state")]
+[node name="StateMachine" type="Node2D" parent="." unique_id=2108489335 node_paths=PackedStringArray("jump_component", "entity", "initial_state")]
 script = ExtResource("8_u7b46")
 jump_component = NodePath("../Components/Jump")
 entity = NodePath("..")
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
+[node name="Idle" type="Node2D" parent="StateMachine" unique_id=819200938 node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("13_34jf3")
 physics_component = NodePath("../../Components/Physics")
 move_component = NodePath("../../Components/Move")
@@ -406,7 +498,7 @@ animation_player = NodePath("../../AnimationPlayer")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 start_animation_name = "idle"
 
-[node name="Fall" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
+[node name="Fall" type="Node2D" parent="StateMachine" unique_id=1146923685 node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("9_ml7e8")
 physics_component = NodePath("../../Components/Physics")
 move_component = NodePath("../../Components/Move")
@@ -418,7 +510,7 @@ animation_player = NodePath("../../AnimationPlayer")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 start_animation_name = "fall"
 
-[node name="Move" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
+[node name="Move" type="Node2D" parent="StateMachine" unique_id=816319809 node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("10_ihjo1")
 physics_component = NodePath("../../Components/Physics")
 move_component = NodePath("../../Components/Move")
@@ -430,7 +522,7 @@ animation_player = NodePath("../../AnimationPlayer")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 start_animation_name = "move"
 
-[node name="Jump" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
+[node name="Jump" type="Node2D" parent="StateMachine" unique_id=1803105532 node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("8_ml7e8")
 physics_component = NodePath("../../Components/Physics")
 move_component = NodePath("../../Components/Move")
@@ -442,7 +534,7 @@ animation_player = NodePath("../../AnimationPlayer")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 start_animation_name = "jump"
 
-[node name="Program" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
+[node name="Program" type="Node2D" parent="StateMachine" unique_id=838040244 node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("11_ihjo1")
 physics_component = NodePath("../../Components/Physics")
 move_component = NodePath("../../Components/Move")
@@ -454,7 +546,7 @@ animation_player = NodePath("../../AnimationPlayer")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 start_animation_name = "program"
 
-[node name="Hit" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("hurt_component", "health_component", "physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
+[node name="Hit" type="Node2D" parent="StateMachine" unique_id=1314906699 node_paths=PackedStringArray("hurt_component", "health_component", "physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("12_dk1vr")
 hurt_component = NodePath("../../Components/Hurt")
 health_component = NodePath("../../Components/Health")
@@ -468,7 +560,7 @@ animation_player = NodePath("../../AnimationPlayer")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 start_animation_name = "hit"
 
-[node name="Die" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
+[node name="Die" type="Node2D" parent="StateMachine" unique_id=1224889188 node_paths=PackedStringArray("physics_component", "move_component", "flip_component", "jump_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("16_bup7g")
 physics_component = NodePath("../../Components/Physics")
 move_component = NodePath("../../Components/Move")
@@ -480,6 +572,6 @@ animation_player = NodePath("../../AnimationPlayer")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 start_animation_name = "die"
 
-[node name="FlipMarker" type="Node2D" parent="."]
+[node name="FlipMarker" type="Node2D" parent="." unique_id=1053710373]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Hit" method="_on_animation_player_animation_finished"]
