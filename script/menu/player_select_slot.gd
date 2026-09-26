@@ -14,11 +14,13 @@ enum State {
 @onready var character_label: Label = %CharacterLabel
 @onready var status_label: Label = %StatusLabel
 @onready var portrait_container: CenterContainer = %PortraitContainer
+@onready var portrait: TextureRect = %Portrait
+@onready var stats_label: Label = %StatsLabel
 @onready var previous_label: Label = %PreviousLabel
-@onready var next_label: Label = %NextLabel
 
 var state: PlayerSelectSlot.State = State.EMPTY
 var session: PlayerInputSession = null
+var character_roster: CharacterRoster
 
 var empty_style := StyleBoxFlat.new()
 var selecting_style := StyleBoxFlat.new()
@@ -30,6 +32,35 @@ func _ready() -> void:
 	_update_ui()
 
 
+func _update_character() -> void:
+	if session == null or character_roster == null:
+		portrait.texture = null
+		character_label.text = ""
+		stats_label.text = ""
+		return
+
+	var character := character_roster.get_character(
+		session.selection.character_index
+	)
+
+	if character == null:
+		portrait.texture = null
+		character_label.text = ""
+		stats_label.text = ""
+		return
+
+	portrait.texture = character.portrait
+	character_label.text = character.display_name
+
+	stats_label.text = (
+		"SPEED: %.0f\nJUMP: %.0f"
+		% [
+			character.speed,
+			absf(character.jump_velocity)
+		]
+	)
+	
+	
 func assign_session(
 	player_input_session: PlayerInputSession
 ) -> void:
@@ -64,22 +95,21 @@ func _update_ui() -> void:
 
 			portrait_container.hide()
 			previous_label.self_modulate.a = 0.0
-			next_label.self_modulate.a = 0.0
 			character_label.hide()
+			stats_label.hide()
 
 			status_label.text = "PRESS START\nTO JOIN"
+			_update_character()
 
 		State.SELECTING:
 			add_theme_stylebox_override("panel", selecting_style)
 
 			portrait_container.show()
 			previous_label.self_modulate.a = 1.0
-			next_label.self_modulate.a = 1.0
 			character_label.show()
-
-			character_label.text = "CHARACTER %d" % (
-				session.selection.character_index + 1
-			)
+			stats_label.show()
+			
+			_update_character()
 			status_label.text = "SELECTING"
 
 		State.CONFIRMED:
@@ -87,12 +117,10 @@ func _update_ui() -> void:
 
 			portrait_container.show()
 			previous_label.self_modulate.a = 0.0
-			next_label.self_modulate.a = 0.0
 			character_label.show()
+			stats_label.show()
 
-			character_label.text = "CHARACTER %d" % (
-				session.selection.character_index + 1
-			)
+			_update_character()
 			status_label.text = "READY"
 
 

@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://ceges3loiql3p"]
+[gd_scene format=3 uid="uid://ceges3loiql3p"]
 
 [ext_resource type="Script" uid="uid://bir72lhl7ctyk" path="res://script/main.gd" id="1_itxqv"]
 [ext_resource type="Script" uid="uid://ys0ho1wihei4" path="res://script/level/level_data.gd" id="2_v0l8b"]
 [ext_resource type="PackedScene" uid="uid://boalx4k4mb5dx" path="res://scene/input/PlayerInputSession.tscn" id="2_wp4xf"]
 [ext_resource type="PackedScene" uid="uid://dqwvg3ik2nw2a" path="res://scene/hud/hud.tscn" id="4_brvut"]
+[ext_resource type="Resource" uid="uid://d2ov8b7msolgf" path="res://resource/character/character_roster.tres" id="4_p1hux"]
 [ext_resource type="PackedScene" uid="uid://b6fqghrmn0mhl" path="res://scene/menu/startScreen.tscn" id="5_0ha60"]
 [ext_resource type="PackedScene" uid="uid://d4f5vamavmky5" path="res://scene/menu/playerSelect.tscn" id="6_4j5ol"]
 
@@ -21,21 +22,22 @@ levelName = "Level3"
 levelPath = "res://scene/level/Level3.tscn"
 metadata/_custom_type_script = "uid://ys0ho1wihei4"
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=1212463943]
 script = ExtResource("1_itxqv")
 player_input_session_scene = ExtResource("2_wp4xf")
 availableLevels = Array[ExtResource("2_v0l8b")]([SubResource("Resource_4j5ol"), SubResource("Resource_p1hux")])
+character_roster = ExtResource("4_p1hux")
 
-[node name="LevelContainer" type="Node2D" parent="."]
+[node name="LevelContainer" type="Node2D" parent="." unique_id=384417701]
 
-[node name="PlayerContainer" type="Node2D" parent="."]
+[node name="PlayerContainer" type="Node2D" parent="." unique_id=1803103510]
 
-[node name="PlayerInputSessionContainer" type="Node2D" parent="."]
+[node name="PlayerInputSessionContainer" type="Node2D" parent="." unique_id=1985850168]
 
-[node name="Hud" parent="." instance=ExtResource("4_brvut")]
+[node name="Hud" parent="." unique_id=1525563330 instance=ExtResource("4_brvut")]
 
-[node name="MenuLayer" type="CanvasLayer" parent="."]
+[node name="MenuLayer" type="CanvasLayer" parent="." unique_id=812440420]
 
-[node name="PlayerSelect" parent="MenuLayer" instance=ExtResource("6_4j5ol")]
+[node name="PlayerSelect" parent="MenuLayer" unique_id=601380588 instance=ExtResource("6_4j5ol")]
 
-[node name="StartScreen" parent="MenuLayer" instance=ExtResource("5_0ha60")]
+[node name="StartScreen" parent="MenuLayer" unique_id=470677192 instance=ExtResource("5_0ha60")]

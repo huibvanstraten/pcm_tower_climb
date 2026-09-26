@@ -3,6 +3,7 @@ extends Node
 
 @export var player_input_session_scene: PackedScene
 @export var availableLevels: Array[LevelData]
+@export var character_roster: CharacterRoster
 
 @onready var level_container: Node = $LevelContainer
 @onready var player_container: Node = $PlayerContainer
@@ -12,6 +13,9 @@ const MAX_PLAYERS := 4
 
 
 func _ready() -> void:
+	PlayerLifecycleManager.character_roster = character_roster
+	PlayerSessionManager.character_roster = character_roster
+	
 	PlayerSessionManager.setup(
 	player_input_session_scene,
 	input_session_container

@@ -3,6 +3,7 @@ extends Control
 
 @export var select_sound: AudioStream
 @export var start_sound: AudioStream
+@export var character_roster: CharacterRoster
 
 @export var music: AudioStream
 
@@ -21,6 +22,14 @@ var horizontal_axis_active: Dictionary = {}
 
 
 func _ready() -> void:
+	assert(
+		character_roster != null
+		and not character_roster.characters.is_empty(),
+		"PlayerSelect requires a populated CharacterRoster"
+	)
+
+	for slot in slots:
+		slot.character_roster = character_roster
 	EventManager.state_changed.connect(_on_game_state_changed)
 	EventManager.player_session_joined.connect(_on_player_session_joined)
 
@@ -94,6 +103,13 @@ func _handle_confirmed_session_input(
 
 
 func _start_game() -> void:
+	for session in PlayerSessionManager.get_sessions():
+		print(
+			"START GAME: slot=", session.player_slot,
+			" character=", session.selection.character_index,
+			" confirmed=", session.selection.confirmed
+		)
+	
 	if not are_all_sessions_confirmed():
 		return
 
@@ -212,16 +228,17 @@ func _select_next_character(
 ) -> void:
 	var unavailable := _get_unavailable_character_indices(session)
 	var current := session.selection.character_index
+	var count := character_roster.get_character_count()
 
-	for offset in range(1, PlayerSelection.CHARACTER_COUNT + 1):
+	for offset in range(1, count + 1):
 		var candidate := wrapi(
 			current + offset,
 			0,
-			PlayerSelection.CHARACTER_COUNT
+			count
 		)
 
 		if candidate not in unavailable:
-			session.selection.select_character(candidate)
+			session.selection.select_character(candidate, count)
 			return
 			
 
@@ -230,16 +247,17 @@ func _select_previous_character(
 ) -> void:
 	var unavailable := _get_unavailable_character_indices(session)
 	var current := session.selection.character_index
+	var count := character_roster.get_character_count()
 
-	for offset in range(1, PlayerSelection.CHARACTER_COUNT + 1):
+	for offset in range(1, count):
 		var candidate := wrapi(
 			current - offset,
 			0,
-			PlayerSelection.CHARACTER_COUNT
+			count
 		)
 
 		if candidate not in unavailable:
-			session.selection.select_character(candidate)
+			session.selection.select_character(candidate, count)
 			return
 
 
@@ -252,6 +270,12 @@ func _confirm_selection(
 		return
 
 	session.selection.confirm()
+	
+	print(
+		"PLAYER SELECT: slot=", session.player_slot,
+		" character=", session.selection.character_index,
+		" confirmed=", session.selection.confirmed
+	)
 
 	_resolve_selection_conflicts(session)
 	_update_start_game_state()

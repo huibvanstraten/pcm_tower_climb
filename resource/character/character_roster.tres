@@ -1,0 +1,54 @@
+[gd_resource type="Resource" script_class="CharacterRoster" format=3 uid="uid://d2ov8b7msolgf"]
+
+[ext_resource type="Script" uid="uid://cjkuy2r7blbsp" path="res://script/state/player/character/character_data.gd" id="1_a658o"]
+[ext_resource type="AnimationLibrary" uid="uid://cr84r0248055w" path="res://resource/animations/white_robot.res" id="2_j0l7k"]
+[ext_resource type="Script" uid="uid://b8qb7p5ou2bci" path="res://script/state/player/character/character_roster.gd" id="2_k1lmf"]
+[ext_resource type="Texture2D" uid="uid://cj2hw3iyn6l4u" path="res://asset/player/White pic.png" id="3_ox5pa"]
+[ext_resource type="Texture2D" uid="uid://dbr7r7tjkmy3e" path="res://asset/player/Blue pic.png" id="4_673u8"]
+[ext_resource type="Texture2D" uid="uid://cpyqux8rd0gh2" path="res://asset/player/Red pic.png" id="5_dt35o"]
+[ext_resource type="Texture2D" uid="uid://cue56e25gaqsf" path="res://asset/player/Green pic.png" id="6_p2aqd"]
+
+[sub_resource type="Resource" id="Resource_edt56"]
+script = ExtResource("1_a658o")
+id = &"white_robot"
+display_name = "WHITE"
+description = ".."
+portrait = ExtResource("3_ox5pa")
+animations = ExtResource("2_j0l7k")
+speed = 200.0
+metadata/_custom_type_script = "uid://cjkuy2r7blbsp"
+
+[sub_resource type="Resource" id="Resource_3woio"]
+script = ExtResource("1_a658o")
+id = &"blue_robot"
+display_name = "BLUE"
+description = ".."
+portrait = ExtResource("4_673u8")
+animations = ExtResource("2_j0l7k")
+speed = 100.2
+metadata/_custom_type_script = "uid://cjkuy2r7blbsp"
+
+[sub_resource type="Resource" id="Resource_iebgh"]
+script = ExtResource("1_a658o")
+id = &"red_robot"
+display_name = "RED"
+description = ".."
+portrait = ExtResource("5_dt35o")
+animations = ExtResource("2_j0l7k")
+speed = 200.0
+metadata/_custom_type_script = "uid://cjkuy2r7blbsp"
+
+[sub_resource type="Resource" id="Resource_d7sqe"]
+script = ExtResource("1_a658o")
+id = &"green_robot"
+display_name = "GREEN"
+description = "--"
+portrait = ExtResource("6_p2aqd")
+animations = ExtResource("2_j0l7k")
+speed = 100.2
+metadata/_custom_type_script = "uid://cjkuy2r7blbsp"
+
+[resource]
+script = ExtResource("2_k1lmf")
+characters = Array[ExtResource("1_a658o")]([SubResource("Resource_edt56"), SubResource("Resource_3woio"), SubResource("Resource_iebgh"), SubResource("Resource_d7sqe")])
+metadata/_custom_type_script = "uid://b8qb7p5ou2bci"

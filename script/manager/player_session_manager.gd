@@ -5,6 +5,7 @@ const MAX_PLAYERS := 4
 
 var player_input_session_scene: PackedScene
 var input_session_container: Node
+var character_roster: CharacterRoster
 
 
 func _input(event: InputEvent) -> void:
@@ -40,16 +41,44 @@ func setup(
 func join_device(
 	device: PlayerInputDevice
 ) -> PlayerInputSession:
+	var existing_session := get_session_for_device(device)
+
+	if existing_session != null:
+		return existing_session
+		
 	var player_slot := get_available_player_slot()
 
 	if player_slot == -1:
 		print("JOIN REQUEST REJECTED: no available player slot")
 		return null
+	
+	var character_index := -1
+
+	if GameFlowManager.state == GameState.Type.GAMEPLAY:
+		character_index = get_first_available_character_index()
+
+		if character_index == -1:
+			print("JOIN REJECTED: no available character")
+			return null
 
 	var session := create_input_session(
 		player_slot,
 		device
 	)
+
+	
+	if character_index != -1:
+		session.selection.select_character(
+			character_index,
+			character_roster.get_character_count()
+		)
+		session.selection.confirm()
+
+		print(
+			"AUTO ASSIGN: slot=", session.player_slot,
+			" character=", session.selection.character_index
+		)
+
 
 	EventManager.player_session_joined.emit(player_slot)
 
@@ -138,3 +167,27 @@ func get_sessions() -> Array[PlayerInputSession]:
 			sessions.append(session)
 
 	return sessions
+
+
+func get_first_available_character_index() -> int:
+	if character_roster == null:
+		push_error("CharacterRoster is not configured")
+		return -1
+
+	var unavailable: Array[int] = []
+
+	for session in get_sessions():
+		if not session.selection.confirmed:
+			continue
+
+		unavailable.append(
+			session.selection.character_index
+		)
+
+	for index in range(
+		character_roster.get_character_count()
+	):
+		if index not in unavailable:
+			return index
+
+	return -1
