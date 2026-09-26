@@ -4,8 +4,10 @@
 [ext_resource type="Texture2D" uid="uid://cgcvx0tfdwprt" path="res://asset/menu/Untitled 9.png" id="2_r6me7"]
 
 [node name="PlayerSelectSlot" type="PanelContainer" unique_id=1953978820]
-offset_right = 192.0
-offset_bottom = 257.0
+anchors_preset = -1
+anchor_right = 0.3
+anchor_bottom = 0.71400005
+offset_bottom = -0.040008545
 size_flags_horizontal = 3
 script = ExtResource("1_jcrtu")
 
@@ -26,14 +28,17 @@ horizontal_alignment = 1
 
 [node name="PortraitContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer" unique_id=1357733830]
 unique_name_in_owner = true
+propagate_maximum_size = false
 layout_mode = 2
 
 [node name="Portrait" type="TextureRect" parent="MarginContainer/VBoxContainer/PortraitContainer" unique_id=1051304370]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(90, 120)
+custom_maximum_size = Vector2(60, 80)
 layout_mode = 2
 texture = ExtResource("2_r6me7")
-expand_mode = 4
+expand_mode = 3
+stretch_mode = 5
 
 [node name="PreviousLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1694290727]
 unique_name_in_owner = true
@@ -41,15 +46,14 @@ layout_mode = 2
 text = "<                            >"
 horizontal_alignment = 1
 
-[node name="NextLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=871374496]
-unique_name_in_owner = true
-layout_mode = 2
-horizontal_alignment = 1
-
 [node name="CharacterLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1230326600]
 unique_name_in_owner = true
 layout_mode = 2
 horizontal_alignment = 1
+
+[node name="StatsLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=820101100]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="StatusLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1012747984]
 unique_name_in_owner = true
@@ -57,7 +61,3 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 12
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="StatsLabel" type="Label" parent="MarginContainer/VBoxContainer" unique_id=820101100]
-unique_name_in_owner = true
-layout_mode = 2

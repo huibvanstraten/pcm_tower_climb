@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cxrg77u8kwhp6" path="res://script/menu/player_select.gd" id="1_06nbu"]
 [ext_resource type="PackedScene" uid="uid://chpj71d0oo3xj" path="res://scene/menu/playerSelectSlot.tscn" id="2_c61e1"]
 [ext_resource type="AudioStream" uid="uid://wqf8va8kk357" path="res://asset/audio/sfx/ui/button_press.wav" id="2_lvupq"]
+[ext_resource type="Resource" uid="uid://d2ov8b7msolgf" path="res://resource/character/character_roster.tres" id="3_n3p5i"]
 [ext_resource type="AudioStream" uid="uid://c5xkwkh6r08j0" path="res://asset/audio/music/Intro.wav" id="4_yxhiv"]
 
 [sub_resource type="AudioStreamMP3" id="AudioStreamMP3_st0h6"]
@@ -18,6 +19,7 @@ grow_vertical = 2
 script = ExtResource("1_06nbu")
 select_sound = ExtResource("2_lvupq")
 start_sound = SubResource("AudioStreamMP3_st0h6")
+character_roster = ExtResource("3_n3p5i")
 music = ExtResource("4_yxhiv")
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=223067713]

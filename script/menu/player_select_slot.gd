@@ -17,7 +17,6 @@ enum State {
 @onready var portrait: TextureRect = %Portrait
 @onready var stats_label: Label = %StatsLabel
 @onready var previous_label: Label = %PreviousLabel
-@onready var next_label: Label = %NextLabel
 
 var state: PlayerSelectSlot.State = State.EMPTY
 var session: PlayerInputSession = null
@@ -96,7 +95,6 @@ func _update_ui() -> void:
 
 			portrait_container.hide()
 			previous_label.self_modulate.a = 0.0
-			next_label.self_modulate.a = 0.0
 			character_label.hide()
 			stats_label.hide()
 
@@ -108,7 +106,6 @@ func _update_ui() -> void:
 
 			portrait_container.show()
 			previous_label.self_modulate.a = 1.0
-			next_label.self_modulate.a = 1.0
 			character_label.show()
 			stats_label.show()
 			
@@ -120,7 +117,6 @@ func _update_ui() -> void:
 
 			portrait_container.show()
 			previous_label.self_modulate.a = 0.0
-			next_label.self_modulate.a = 0.0
 			character_label.show()
 			stats_label.show()
 

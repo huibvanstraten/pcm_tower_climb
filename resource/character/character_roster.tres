@@ -15,6 +15,7 @@ display_name = "WHITE"
 description = ".."
 portrait = ExtResource("3_ox5pa")
 animations = ExtResource("2_j0l7k")
+speed = 200.0
 metadata/_custom_type_script = "uid://cjkuy2r7blbsp"
 
 [sub_resource type="Resource" id="Resource_3woio"]
@@ -24,6 +25,7 @@ display_name = "BLUE"
 description = ".."
 portrait = ExtResource("4_673u8")
 animations = ExtResource("2_j0l7k")
+speed = 100.2
 metadata/_custom_type_script = "uid://cjkuy2r7blbsp"
 
 [sub_resource type="Resource" id="Resource_iebgh"]
@@ -33,6 +35,7 @@ display_name = "RED"
 description = ".."
 portrait = ExtResource("5_dt35o")
 animations = ExtResource("2_j0l7k")
+speed = 200.0
 metadata/_custom_type_script = "uid://cjkuy2r7blbsp"
 
 [sub_resource type="Resource" id="Resource_d7sqe"]
@@ -42,6 +45,7 @@ display_name = "GREEN"
 description = "--"
 portrait = ExtResource("6_p2aqd")
 animations = ExtResource("2_j0l7k")
+speed = 100.2
 metadata/_custom_type_script = "uid://cjkuy2r7blbsp"
 
 [resource]
