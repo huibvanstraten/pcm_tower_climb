@@ -1,15 +1,7 @@
 class_name HitComponent
 extends Area2D
 
-# not implemented.
-@export var pathFollow: PathFollow2D = null
-
-# not implemented
-@export var damage: float = 10.0
-
-# not implemented
-@export var removeBodyAtTouch: bool = false
-@export var removeAttackBodyAtTouch: bool = false
+@export var source: Entity
 
 @export var knockbackStrength: Vector2 = Vector2(250.0, 300.0)
 
@@ -23,12 +15,19 @@ func _on_area_entered(area: Area2D) -> void:
 
 	if hurtbox == null:
 		return
+	
+	if source != null and hurtbox.player == source:
+		return
 
 	var direction := Vector2(
 		sign(hurtbox.global_position.x - global_position.x),
 		0.0
 	)
 
-	hurtbox.receive_hit(
-		Hit.new(direction, knockbackStrength)
+	var hit := Hit.new(
+		direction,
+		knockbackStrength,
+		source
 	)
+
+	hurtbox.receive_hit(hit)

@@ -13,8 +13,10 @@ func exit() -> void:
 func physics_update(delta: float) -> String:
 	physics_component.apply_gravity(delta)
 
-	if entity.is_hit():
-		return HitState.NAME
+	# to be evaluated: get reaction to hit
+	var reaction := get_hit_transition()
+	if reaction != "None":
+		return reaction
 
 	if entity.velocity.y > 0.0:
 		return FallState.NAME

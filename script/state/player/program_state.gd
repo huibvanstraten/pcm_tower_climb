@@ -8,22 +8,29 @@ func _ready() -> void:
 	EventManager.programming_finished.connect(_finish_programming)
 
 func enter() -> void:
-	super()
 	move_component.accute_stop()
 	EventManager.programming_started.emit(entity)
+	
+	super()
+
 
 func exit() -> void:
+	programming_finished = false
+
 	super()
 
 func physics_update(delta: float) -> String:
-	if entity.is_hit():
-		return HitState.NAME
+	
+	# to be evaluated: get reaction to hit
+	var reaction := get_hit_transition()
+	if reaction != "None":
+		EventManager.programming_cancelled.emit(entity)
+		return reaction
 
 	if entity.velocity.y > 0.0:
 		return FallState.NAME
 
 	if programming_finished:
-		programming_finished = false
 		return IdleState.NAME
 
 	if entity.command.interact_pressed:

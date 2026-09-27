@@ -369,10 +369,11 @@ shape = SubResource("RectangleShape2D_5lugx")
 position = Vector2(0, -20.5)
 shape = SubResource("RectangleShape2D_thtid")
 
-[node name="Hit" type="Area2D" parent="." unique_id=1302947287]
+[node name="Hit" type="Area2D" parent="." unique_id=1302947287 node_paths=PackedStringArray("source")]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("2_kqmod")
+source = NodePath("..")
 knockbackStrength = Vector2(300, 300)
 
 [node name="Hit" type="CollisionShape2D" parent="Hit" unique_id=1920706461]
