@@ -17,7 +17,7 @@ func enter() -> void:
 	entity.hit = null
 
 	hit_animation_finished = false
-	animation_player.play(&"hit")
+
 
 func exit() -> void:
 	super()
@@ -37,4 +37,5 @@ func physics_update(delta: float) -> String:
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
 	if anim_name != &"hit":
 		return
+		
 	hit_animation_finished = true
