@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bwinqeypl23md" path="res://asset/sci-fi platformer - premium/player/player.png" id="2_bedqt"]
 [ext_resource type="AnimationLibrary" uid="uid://cr84r0248055w" path="res://resource/animations/white_robot.res" id="2_iot5p"]
 [ext_resource type="Script" uid="uid://cdlmt7cdiw02s" path="res://script/object/hit_component.gd" id="3_bedqt"]
+[ext_resource type="Texture2D" uid="uid://c5fx85ukboh5p" path="res://asset/explode.png" id="3_bi3cs"]
 [ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ct4mp"]
 [ext_resource type="Texture2D" uid="uid://b6bnpqftae5t7" path="res://asset/player/Player white.png" id="5_bi3cs"]
 [ext_resource type="Script" uid="uid://i5unc1xq0tfr" path="res://script/component/jump_component.gd" id="5_g2vtq"]
@@ -20,9 +21,40 @@
 [ext_resource type="Script" uid="uid://dt45jb0dt3xgd" path="res://script/state/player/idle_state.gd" id="13_34jf3"]
 [ext_resource type="Script" uid="uid://c2utu5ootr02n" path="res://script/state/player/die_state.gd" id="16_bup7g"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_bedqt"]
-atlas = ExtResource("2_bedqt")
-region = Rect2(96, 0, 32, 32)
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bi3cs"]
+load_path = "res://.godot/imported/explode.png-a7c856c4e92ff0a87814715cae5b8af7.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0exmv"]
+atlas = SubResource("CompressedTexture2D_bi3cs")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_swcfy"]
+atlas = SubResource("CompressedTexture2D_bi3cs")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l2ohs"]
+atlas = SubResource("CompressedTexture2D_bi3cs")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1fx6"]
+atlas = SubResource("CompressedTexture2D_bi3cs")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5qooo"]
+atlas = SubResource("CompressedTexture2D_bi3cs")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1dld"]
+atlas = SubResource("CompressedTexture2D_bi3cs")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_som4f"]
+atlas = SubResource("CompressedTexture2D_bi3cs")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_670ri"]
+atlas = ExtResource("3_bi3cs")
+region = Rect2(48, 16, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0bcsv"]
 atlas = ExtResource("2_bedqt")
@@ -179,7 +211,28 @@ region = Rect2(224, 224, 32, 32)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_bedqt")
+"texture": SubResource("AtlasTexture_0exmv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_swcfy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l2ohs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w1fx6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5qooo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1dld")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_som4f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_670ri")
 }],
 "loop": 0,
 "name": &"die",
@@ -362,6 +415,7 @@ animation = &"friendly_fire"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=33533074]
 position = Vector2(0, -8.5)
 shape = SubResource("RectangleShape2D_fiawc")
+disabled = true
 
 [node name="Hit" type="Area2D" parent="." unique_id=1828294056]
 collision_layer = 2
@@ -372,6 +426,7 @@ knockbackStrength = Vector2(0, 0)
 [node name="Hit" type="CollisionShape2D" parent="Hit" unique_id=2114211659]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_iot5p")
+disabled = true
 
 [node name="Components" type="Node2D" parent="." unique_id=609408952]
 
@@ -403,11 +458,12 @@ health_component = NodePath("../Health")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt" unique_id=1183469965]
 position = Vector2(0, -9.5)
 shape = SubResource("RectangleShape2D_bedqt")
+disabled = true
 
 [node name="Health" type="Node2D" parent="Components" unique_id=2132588864 node_paths=PackedStringArray("entity")]
 script = ExtResource("8_j4wxg")
 entity = NodePath("../..")
-intial_health = 3
+intial_health = 1
 
 [node name="StateMachine" type="Node2D" parent="." unique_id=2108489335 node_paths=PackedStringArray("jump_component", "entity", "initial_state")]
 script = ExtResource("8_u7b46")
@@ -504,3 +560,4 @@ start_animation_name = "die"
 [node name="FlipMarker" type="Node2D" parent="." unique_id=1053710373]
 
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Hit" method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Die" method="_on_animation_player_animation_finished"]

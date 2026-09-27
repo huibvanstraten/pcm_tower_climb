@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cen5vsst8ve0u"]
+[gd_scene format=3 uid="uid://cen5vsst8ve0u"]
 
 [ext_resource type="Script" uid="uid://de8ni5ly40irp" path="res://script/entity/respawn_point.gd" id="1_53nmy"]
 [ext_resource type="Texture2D" uid="uid://ja7e84qx1fio" path="res://asset/sci-fi platformer - premium/props/lamp.png" id="2_qkq3j"]
@@ -7,10 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://8lf70r54h6sv" path="res://asset/sci-fi platformer - premium/tiles/tiles.png" id="4_di4qu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
-size = Vector2(18, 32)
+size = Vector2(27, 23)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ni43k"]
-size = Vector2(26, 13)
+size = Vector2(13, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2nsfl"]
 size = Vector2(192, 32)
@@ -18,154 +18,154 @@ size = Vector2(192, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qkq3j"]
 size = Vector2(128, 32)
 
-[node name="RespawnStation" type="StaticBody2D"]
+[node name="RespawnStation" type="StaticBody2D" unique_id=1740110723]
 collision_layer = 8
 collision_mask = 6
 script = ExtResource("1_53nmy")
 
-[node name="ProgrammingArea" type="Area2D" parent="."]
+[node name="ProgrammingArea" type="Area2D" parent="." unique_id=904271474]
 position = Vector2(168, -32)
 collision_layer = 8
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ProgrammingArea"]
-position = Vector2(0, -16)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProgrammingArea" unique_id=1153332673]
+position = Vector2(-4.5, -11.5)
 shape = SubResource("RectangleShape2D_4toet")
 debug_color = Color(0.72919697, 0.37343937, 0.9726551, 0.41960785)
 
-[node name="ProgrammingTimer" type="Timer" parent="."]
+[node name="ProgrammingTimer" type="Timer" parent="." unique_id=934761088]
 wait_time = 3.0
 one_shot = true
 
-[node name="SpawnPoints" type="Node2D" parent="."]
+[node name="SpawnPoints" type="Node2D" parent="." unique_id=1389512122]
 position = Vector2(46, -29)
 
-[node name="Spawn1" type="Marker2D" parent="SpawnPoints"]
+[node name="Spawn1" type="Marker2D" parent="SpawnPoints" unique_id=1068755411]
 position = Vector2(-30, -32)
 
-[node name="Spawn2" type="Marker2D" parent="SpawnPoints"]
+[node name="Spawn2" type="Marker2D" parent="SpawnPoints" unique_id=1235127410]
 position = Vector2(2, -32)
 
-[node name="Spawn3" type="Marker2D" parent="SpawnPoints"]
+[node name="Spawn3" type="Marker2D" parent="SpawnPoints" unique_id=422891257]
 position = Vector2(34, -32)
 
-[node name="Spawn4" type="Marker2D" parent="SpawnPoints"]
+[node name="Spawn4" type="Marker2D" parent="SpawnPoints" unique_id=1289565981]
 position = Vector2(66, -32)
 
-[node name="TerminalSprite" type="Sprite2D" parent="."]
+[node name="TerminalSprite" type="Sprite2D" parent="." unique_id=1657461025]
 position = Vector2(155, -48)
 texture = ExtResource("3_2nsfl")
 region_enabled = true
 region_rect = Rect2(50, 0, 44, 32)
 
-[node name="TerminalCollision" type="CollisionShape2D" parent="."]
-position = Vector2(146, -38.5)
+[node name="TerminalCollision" type="CollisionShape2D" parent="." unique_id=1289835298]
+position = Vector2(139.5, -39)
 shape = SubResource("RectangleShape2D_ni43k")
 
-[node name="PlateauCollision" type="CollisionShape2D" parent="."]
+[node name="PlateauCollision" type="CollisionShape2D" parent="." unique_id=177565951]
 position = Vector2(96, -16)
 shape = SubResource("RectangleShape2D_2nsfl")
 
-[node name="SpawnerCollision" type="CollisionShape2D" parent="."]
+[node name="SpawnerCollision" type="CollisionShape2D" parent="." unique_id=650456463]
 position = Vector2(64, -80)
 shape = SubResource("RectangleShape2D_qkq3j")
 
-[node name="Beams" type="Node2D" parent="."]
+[node name="Beams" type="Node2D" parent="." unique_id=2130199836]
 position = Vector2(-104, -14)
 
-[node name="Beam1" type="Sprite2D" parent="Beams"]
+[node name="Beam1" type="Sprite2D" parent="Beams" unique_id=1455780618]
 position = Vector2(120, -34)
 texture = ExtResource("2_qkq3j")
 region_enabled = true
 region_rect = Rect2(48, 0, 32, 32)
 
-[node name="Projector1" type="Sprite2D" parent="Beams"]
+[node name="Projector1" type="Sprite2D" parent="Beams" unique_id=1789215168]
 position = Vector2(120, -66)
 scale = Vector2(1.0666667, 1.0666667)
 texture = ExtResource("4_2nsfl")
 region_enabled = true
 region_rect = Rect2(65, 33, 30, 30)
 
-[node name="Beam2" type="Sprite2D" parent="Beams"]
+[node name="Beam2" type="Sprite2D" parent="Beams" unique_id=1700820078]
 position = Vector2(152, -34)
 texture = ExtResource("2_qkq3j")
 region_enabled = true
 region_rect = Rect2(48, 0, 32, 32)
 
-[node name="Projector2" type="Sprite2D" parent="Beams"]
+[node name="Projector2" type="Sprite2D" parent="Beams" unique_id=889033513]
 position = Vector2(152, -66)
 scale = Vector2(1.0666667, 1.0666667)
 texture = ExtResource("4_2nsfl")
 region_enabled = true
 region_rect = Rect2(65, 33, 30, 30)
 
-[node name="Beam3" type="Sprite2D" parent="Beams"]
+[node name="Beam3" type="Sprite2D" parent="Beams" unique_id=1958821520]
 position = Vector2(184, -34)
 texture = ExtResource("2_qkq3j")
 region_enabled = true
 region_rect = Rect2(48, 0, 32, 32)
 
-[node name="Projector3" type="Sprite2D" parent="Beams"]
+[node name="Projector3" type="Sprite2D" parent="Beams" unique_id=391841095]
 position = Vector2(184, -66)
 scale = Vector2(1.0666667, 1.0666667)
 texture = ExtResource("4_2nsfl")
 region_enabled = true
 region_rect = Rect2(65, 33, 30, 30)
 
-[node name="Beam4" type="Sprite2D" parent="Beams"]
+[node name="Beam4" type="Sprite2D" parent="Beams" unique_id=1057651614]
 position = Vector2(216, -34)
 texture = ExtResource("2_qkq3j")
 region_enabled = true
 region_rect = Rect2(48, 0, 32, 32)
 
-[node name="Projector4" type="Sprite2D" parent="Beams"]
+[node name="Projector4" type="Sprite2D" parent="Beams" unique_id=1978580518]
 position = Vector2(216, -66)
 scale = Vector2(1.0666667, 1.0666667)
 texture = ExtResource("4_2nsfl")
 region_enabled = true
 region_rect = Rect2(65, 33, 30, 30)
 
-[node name="Plateau" type="Node2D" parent="."]
+[node name="Plateau" type="Node2D" parent="." unique_id=1007076]
 position = Vector2(31, 32)
 
-[node name="Plateau1" type="Sprite2D" parent="Plateau"]
+[node name="Plateau1" type="Sprite2D" parent="Plateau" unique_id=132713821]
 position = Vector2(-15, -48)
 texture = ExtResource("4_di4qu")
 region_enabled = true
 region_rect = Rect2(80, 48, 32, 32)
 
-[node name="Plateau2" type="Sprite2D" parent="Plateau"]
+[node name="Plateau2" type="Sprite2D" parent="Plateau" unique_id=315549845]
 position = Vector2(17, -48)
 texture = ExtResource("4_di4qu")
 region_enabled = true
 region_rect = Rect2(80, 48, 32, 32)
 
-[node name="Plateau3" type="Sprite2D" parent="Plateau"]
+[node name="Plateau3" type="Sprite2D" parent="Plateau" unique_id=327092386]
 position = Vector2(49, -48)
 texture = ExtResource("4_di4qu")
 region_enabled = true
 region_rect = Rect2(80, 48, 32, 32)
 
-[node name="Plateau4" type="Sprite2D" parent="Plateau"]
+[node name="Plateau4" type="Sprite2D" parent="Plateau" unique_id=1391784216]
 position = Vector2(81, -48)
 texture = ExtResource("4_di4qu")
 region_enabled = true
 region_rect = Rect2(80, 48, 32, 32)
 
-[node name="Plateau5" type="Sprite2D" parent="Plateau"]
+[node name="Plateau5" type="Sprite2D" parent="Plateau" unique_id=2085735066]
 position = Vector2(113, -48)
 texture = ExtResource("4_di4qu")
 region_enabled = true
 region_rect = Rect2(32, 96, 32, 32)
 
-[node name="Plateau6" type="Sprite2D" parent="Plateau"]
+[node name="Plateau6" type="Sprite2D" parent="Plateau" unique_id=467802201]
 position = Vector2(145, -48)
 texture = ExtResource("4_di4qu")
 flip_h = true
 region_enabled = true
 region_rect = Rect2(32, 96, 32, 32)
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=744003527]
 offset_left = 16.0
 offset_top = -119.0
 offset_right = 112.0

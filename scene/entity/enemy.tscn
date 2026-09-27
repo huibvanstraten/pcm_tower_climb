@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://wgls8s878624"]
+[gd_scene format=3 uid="uid://wgls8s878624"]
 
 [ext_resource type="Script" uid="uid://dnctevg8flony" path="res://script/entity/enemy.gd" id="1_8u16h"]
 [ext_resource type="Script" uid="uid://bhjoo6bce0vc0" path="res://script/state/enemy/enemy_state_machine.gd" id="1_f87vc"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://f5kx5j5a0rdu" path="res://asset/sci-fi platformer - premium/enemies/enemy-03.png" id="3_thtid"]
 [ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ulb22"]
 [ext_resource type="Script" uid="uid://c1mxmnssq41rd" path="res://script/component/flip_component.gd" id="5_1e552"]
+[ext_resource type="Texture2D" uid="uid://c5fx85ukboh5p" path="res://asset/explode.png" id="6_qq2du"]
 [ext_resource type="Script" uid="uid://c8ex33cds1l23" path="res://script/component/health_component.gd" id="7_rs6j2"]
 [ext_resource type="Script" uid="uid://b2o86htpra2go" path="res://script/state/enemy/enemy_hit_state.gd" id="8_vgurf"]
 [ext_resource type="Script" uid="uid://3wt1rt1lamc" path="res://script/state/enemy/enemy_fall_state.gd" id="10_qhqle"]
@@ -129,6 +130,38 @@ region = Rect2(48, 0, 48, 48)
 atlas = ExtResource("3_3cfia")
 region = Rect2(0, 0, 48, 48)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_2khni"]
+atlas = ExtResource("6_qq2du")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1qel"]
+atlas = ExtResource("6_qq2du")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1yv4s"]
+atlas = ExtResource("6_qq2du")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4matx"]
+atlas = ExtResource("6_qq2du")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61tf7"]
+atlas = ExtResource("6_qq2du")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6megw"]
+atlas = ExtResource("6_qq2du")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bg0vd"]
+atlas = ExtResource("6_qq2du")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_apumm"]
+atlas = ExtResource("6_qq2du")
+region = Rect2(48, 16, 16, 16)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_3cfia"]
 atlas = ExtResource("3_5lugx")
 region = Rect2(0, 0, 48, 48)
@@ -188,7 +221,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_f2a6n")
 }],
-"loop": true,
+"loop": 1,
 "name": &"fall",
 "speed": 12.0
 }, {
@@ -229,7 +262,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6vb1d")
 }],
-"loop": true,
+"loop": 1,
 "name": &"follow",
 "speed": 12.0
 }, {
@@ -242,10 +275,34 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_jfr36")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2khni")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m1qel")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1yv4s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4matx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61tf7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6megw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bg0vd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_apumm")
 }],
-"loop": false,
+"loop": 0,
 "name": &"hit",
-"speed": 3.0
+"speed": 13.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -263,7 +320,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_qq2du")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle",
 "speed": 6.0
 }, {
@@ -286,7 +343,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_e1ohs")
 }],
-"loop": true,
+"loop": 1,
 "name": &"patrol",
 "speed": 9.0
 }]
@@ -297,83 +354,80 @@ size = Vector2(24, 1)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bbjev"]
 size = Vector2(200, 22)
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
+[node name="Enemy" type="CharacterBody2D" unique_id=469903152 node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
 collision_layer = 4
 collision_mask = 11
 script = ExtResource("1_8u16h")
 bodyCollisionShape = NodePath("PhysicalBodyShape1")
 animationComponent = NodePath("AnimatedSprite2D")
 
-[node name="PhysicalBodyShape1" type="CollisionShape2D" parent="."]
+[node name="PhysicalBodyShape1" type="CollisionShape2D" parent="." unique_id=760992176]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_5lugx")
 
-[node name="PhysicalBodyShape2" type="CollisionShape2D" parent="."]
+[node name="PhysicalBodyShape2" type="CollisionShape2D" parent="." unique_id=2009645434]
 position = Vector2(0, -20.5)
 shape = SubResource("RectangleShape2D_thtid")
 
-[node name="Hit" type="Area2D" parent="."]
+[node name="Hit" type="Area2D" parent="." unique_id=1302947287]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("2_kqmod")
 knockbackStrength = Vector2(300, 300)
 
-[node name="Hit" type="CollisionShape2D" parent="Hit"]
+[node name="Hit" type="CollisionShape2D" parent="Hit" unique_id=1920706461]
 position = Vector2(0, -10.5)
 shape = SubResource("RectangleShape2D_pw261")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_3cfia")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1613949388]
+libraries/ = SubResource("AnimationLibrary_3cfia")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=69039667]
 position = Vector2(0, -10)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_f87vc")
-animation = &"follow"
-frame_progress = 0.3579264
+animation = &"hit"
 flip_h = true
 
-[node name="Components" type="Node2D" parent="."]
+[node name="Components" type="Node2D" parent="." unique_id=1129159119]
 
-[node name="Move" type="Node2D" parent="Components" node_paths=PackedStringArray("physics_component")]
+[node name="Move" type="Node2D" parent="Components" unique_id=1543108554 node_paths=PackedStringArray("physics_component")]
 script = ExtResource("2_yvcfn")
 physics_component = NodePath("../Physics")
 speed = 50.0
 
-[node name="Physics" type="Node2D" parent="Components" node_paths=PackedStringArray("character_body")]
+[node name="Physics" type="Node2D" parent="Components" unique_id=1353987609 node_paths=PackedStringArray("character_body")]
 script = ExtResource("3_ulb22")
 character_body = NodePath("../..")
 gravity_multiplier = 0.2
 
-[node name="Flip" type="Node2D" parent="Components" node_paths=PackedStringArray("animated_sprite")]
+[node name="Flip" type="Node2D" parent="Components" unique_id=1392840922 node_paths=PackedStringArray("animated_sprite")]
 script = ExtResource("5_1e552")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 
-[node name="Health" type="Node2D" parent="Components" node_paths=PackedStringArray("entity")]
+[node name="Health" type="Node2D" parent="Components" unique_id=1953922919 node_paths=PackedStringArray("entity")]
 script = ExtResource("7_rs6j2")
 entity = NodePath("../..")
 intial_health = 1
 
-[node name="Hurt" type="Area2D" parent="Components" node_paths=PackedStringArray("player", "health_component")]
+[node name="Hurt" type="Area2D" parent="Components" unique_id=1444060120 node_paths=PackedStringArray("player", "health_component")]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("11_pw261")
 player = NodePath("../..")
 health_component = NodePath("../Health")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt" unique_id=1873067139]
 position = Vector2(0, -21.5)
 shape = SubResource("RectangleShape2D_sj55t")
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("entity", "initial_state")]
+[node name="StateMachine" type="Node" parent="." unique_id=1532082896 node_paths=PackedStringArray("entity", "initial_state")]
 script = ExtResource("1_f87vc")
 entity = NodePath("..")
 initial_state = NodePath("Fall")
 metadata/_custom_type_script = "uid://cwjon3ym72k2d"
 
-[node name="Patrol" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("move_component", "flip_component", "wall_detection_left", "wall_detection_right", "ledge_detection_left", "ledge_detection_right", "enemy_detection_left", "enemy_detection_right", "physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
+[node name="Patrol" type="Node2D" parent="StateMachine" unique_id=628129468 node_paths=PackedStringArray("move_component", "flip_component", "wall_detection_left", "wall_detection_right", "ledge_detection_left", "ledge_detection_right", "enemy_detection_left", "enemy_detection_right", "physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("2_f87vc")
 move_component = NodePath("../../Components/Move")
 flip_component = NodePath("../../Components/Flip")
@@ -390,7 +444,7 @@ animation_player = NodePath("../../AnimationPlayer")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 start_animation_name = "patrol"
 
-[node name="Hit" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("health_component", "hurt", "physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
+[node name="Hit" type="Node2D" parent="StateMachine" unique_id=2047242488 node_paths=PackedStringArray("health_component", "hurt", "physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("8_vgurf")
 health_component = NodePath("../../Components/Health")
 hurt = NodePath("../../Components/Hurt")
@@ -401,7 +455,7 @@ animation_player = NodePath("../../AnimationPlayer")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 start_animation_name = "hit"
 
-[node name="Fall" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
+[node name="Fall" type="Node2D" parent="StateMachine" unique_id=606132238 node_paths=PackedStringArray("physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("10_qhqle")
 physics_component = NodePath("../../Components/Physics")
 state_machine = NodePath("..")
@@ -410,7 +464,7 @@ animation_player = NodePath("../../AnimationPlayer")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 start_animation_name = "fall"
 
-[node name="Die" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
+[node name="Die" type="Node2D" parent="StateMachine" unique_id=2127433452 node_paths=PackedStringArray("physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("13_5lugx")
 physics_component = NodePath("../../Components/Physics")
 state_machine = NodePath("..")
@@ -419,7 +473,7 @@ animation_player = NodePath("../../AnimationPlayer")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 start_animation_name = "die"
 
-[node name="Follow" type="Node2D" parent="StateMachine" node_paths=PackedStringArray("move_component", "flip_component", "wall_detection_left", "wall_detection_right", "ledge_detection_left", "ledge_detection_right", "enemy_detection_left", "enemy_detection_right", "physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
+[node name="Follow" type="Node2D" parent="StateMachine" unique_id=56847095 node_paths=PackedStringArray("move_component", "flip_component", "wall_detection_left", "wall_detection_right", "ledge_detection_left", "ledge_detection_right", "enemy_detection_left", "enemy_detection_right", "physics_component", "state_machine", "entity", "animation_player", "animated_sprite")]
 script = ExtResource("16_bbjev")
 move_component = NodePath("../../Components/Move")
 flip_component = NodePath("../../Components/Flip")
@@ -436,36 +490,36 @@ animation_player = NodePath("../../AnimationPlayer")
 animated_sprite = NodePath("../../AnimatedSprite2D")
 start_animation_name = "follow"
 
-[node name="EnvironmentDetection" type="Node2D" parent="."]
+[node name="EnvironmentDetection" type="Node2D" parent="." unique_id=2133822255]
 position = Vector2(0, -2)
 
-[node name="WallDetectionLeft" type="RayCast2D" parent="EnvironmentDetection"]
+[node name="WallDetectionLeft" type="RayCast2D" parent="EnvironmentDetection" unique_id=2120109307]
 target_position = Vector2(-24, 0)
 
-[node name="WallDetectionRight" type="RayCast2D" parent="EnvironmentDetection"]
+[node name="WallDetectionRight" type="RayCast2D" parent="EnvironmentDetection" unique_id=1435172381]
 target_position = Vector2(24, 0)
 
-[node name="LedgeDetectionLeft" type="RayCast2D" parent="EnvironmentDetection"]
+[node name="LedgeDetectionLeft" type="RayCast2D" parent="EnvironmentDetection" unique_id=1524954324]
 position = Vector2(-24, 0)
 
-[node name="LedgeDetectionRight" type="RayCast2D" parent="EnvironmentDetection"]
+[node name="LedgeDetectionRight" type="RayCast2D" parent="EnvironmentDetection" unique_id=571148017]
 position = Vector2(24, 0)
 
-[node name="EnemyDetectionLeft" type="RayCast2D" parent="EnvironmentDetection"]
+[node name="EnemyDetectionLeft" type="RayCast2D" parent="EnvironmentDetection" unique_id=2057208623]
 target_position = Vector2(-12, 0)
 collision_mask = 2
 
-[node name="EnemyDetectionRight" type="RayCast2D" parent="EnvironmentDetection"]
+[node name="EnemyDetectionRight" type="RayCast2D" parent="EnvironmentDetection" unique_id=2135443109]
 target_position = Vector2(12, 0)
 collision_mask = 2
 
-[node name="Attack" type="Area2D" parent="." node_paths=PackedStringArray("entity")]
+[node name="Attack" type="Area2D" parent="." unique_id=27076004 node_paths=PackedStringArray("entity")]
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("17_mkxcx")
 entity = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack" unique_id=1312288566]
 position = Vector2(0, -11)
 shape = SubResource("RectangleShape2D_bbjev")
 
