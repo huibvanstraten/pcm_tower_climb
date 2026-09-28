@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dn4da5p1qsvrp"]
+
+[ext_resource type="Script" uid="uid://drlyheth3ls8p" path="res://script/component/bounce_receiver_component.gd" id="1_b4otq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
+size = Vector2(14, 1)
+
+[node name="BounceReceiverComponent" type="Area2D" unique_id=1385673651]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("1_b4otq")
+
+[node name="BounceReceiver" type="CollisionShape2D" parent="." unique_id=500347241]
+shape = SubResource("RectangleShape2D_4toet")
