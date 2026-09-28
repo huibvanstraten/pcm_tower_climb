@@ -10,6 +10,7 @@ var hit: Hit = null
 
 @onready var move_component: MoveComponent = $Components/Move
 @onready var jump_component: JumpComponent = $Components/Jump
+@onready var hit_component: HitComponent = $Components/Hit
 
 
 func configure(character: CharacterData) -> void:

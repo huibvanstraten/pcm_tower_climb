@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dnctevg8flony" path="res://script/entity/enemy.gd" id="1_8u16h"]
 [ext_resource type="Script" uid="uid://bhjoo6bce0vc0" path="res://script/state/enemy/enemy_state_machine.gd" id="1_f87vc"]
 [ext_resource type="Script" uid="uid://c67u3v5wcrj3a" path="res://script/state/enemy/patrol_state.gd" id="2_f87vc"]
-[ext_resource type="Script" uid="uid://cdlmt7cdiw02s" path="res://script/object/hit_component.gd" id="2_kqmod"]
+[ext_resource type="Script" uid="uid://cdlmt7cdiw02s" path="res://script/component/hit_component.gd" id="2_kqmod"]
 [ext_resource type="Script" uid="uid://co207pvwufuqm" path="res://script/component/move_component.gd" id="2_yvcfn"]
 [ext_resource type="Texture2D" uid="uid://bp0y76mxdodr4" path="res://asset/sci-fi platformer - premium/enemies/enemy-01.png" id="3_3cfia"]
 [ext_resource type="Texture2D" uid="uid://dqnyp8nwe3k4o" path="res://asset/sci-fi platformer - premium/enemies/enemy-02.png" id="3_5lugx"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://b2o86htpra2go" path="res://script/state/enemy/enemy_hit_state.gd" id="8_vgurf"]
 [ext_resource type="Script" uid="uid://3wt1rt1lamc" path="res://script/state/enemy/enemy_fall_state.gd" id="10_qhqle"]
 [ext_resource type="Script" uid="uid://dvok0kakc82vy" path="res://script/component/hurt_component.gd" id="11_pw261"]
+[ext_resource type="PackedScene" uid="uid://gqryk07xbr3w" path="res://scene/bounceComponent.tscn" id="12_polyx"]
 [ext_resource type="Script" uid="uid://bkk6knmjwie2n" path="res://script/state/enemy/enemy_die_state.gd" id="13_5lugx"]
 [ext_resource type="Script" uid="uid://dp5ejo5bn4rm5" path="res://script/state/enemy/enemy_follow_state.gd" id="16_bbjev"]
 [ext_resource type="Script" uid="uid://brrwa5er6jyou" path="res://script/component/attack_component.gd" id="17_mkxcx"]
@@ -23,9 +24,6 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_thtid"]
 size = Vector2(24, 1)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pw261"]
-size = Vector2(24, 19)
 
 [sub_resource type="Animation" id="Animation_5lugx"]
 length = 0.001
@@ -348,6 +346,9 @@ animations = [{
 "speed": 9.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pw261"]
+size = Vector2(24, 19)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sj55t"]
 size = Vector2(24, 1)
 
@@ -369,17 +370,6 @@ shape = SubResource("RectangleShape2D_5lugx")
 position = Vector2(0, -20.5)
 shape = SubResource("RectangleShape2D_thtid")
 
-[node name="Hit" type="Area2D" parent="." unique_id=1302947287 node_paths=PackedStringArray("source")]
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("2_kqmod")
-source = NodePath("..")
-knockbackStrength = Vector2(300, 300)
-
-[node name="Hit" type="CollisionShape2D" parent="Hit" unique_id=1920706461]
-position = Vector2(0, -10.5)
-shape = SubResource("RectangleShape2D_pw261")
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1613949388]
 libraries/ = SubResource("AnimationLibrary_3cfia")
 
@@ -387,10 +377,21 @@ libraries/ = SubResource("AnimationLibrary_3cfia")
 position = Vector2(0, -10)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_f87vc")
-animation = &"hit"
+animation = &"idle"
 flip_h = true
 
 [node name="Components" type="Node2D" parent="." unique_id=1129159119]
+
+[node name="Hit" type="Area2D" parent="Components" unique_id=1302947287 node_paths=PackedStringArray("source")]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("2_kqmod")
+source = NodePath("../..")
+knockbackStrength = Vector2(300, 300)
+
+[node name="Hit" type="CollisionShape2D" parent="Components/Hit" unique_id=1920706461]
+position = Vector2(0, -10.5)
+shape = SubResource("RectangleShape2D_pw261")
 
 [node name="Move" type="Node2D" parent="Components" unique_id=1543108554 node_paths=PackedStringArray("physics_component")]
 script = ExtResource("2_yvcfn")
@@ -412,8 +413,8 @@ entity = NodePath("../..")
 intial_health = 1
 
 [node name="Hurt" type="Area2D" parent="Components" unique_id=1444060120 node_paths=PackedStringArray("player", "health_component")]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 32
+collision_mask = 0
 script = ExtResource("11_pw261")
 player = NodePath("../..")
 health_component = NodePath("../Health")
@@ -421,6 +422,9 @@ health_component = NodePath("../Health")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt" unique_id=1873067139]
 position = Vector2(0, -21.5)
 shape = SubResource("RectangleShape2D_sj55t")
+
+[node name="BounceComponent" parent="Components" unique_id=180206596 instance=ExtResource("12_polyx")]
+position = Vector2(0, -20)
 
 [node name="StateMachine" type="Node" parent="." unique_id=1532082896 node_paths=PackedStringArray("entity", "initial_state")]
 script = ExtResource("1_f87vc")
