@@ -42,6 +42,12 @@ func can_jump() -> bool:
 	return (jump_buffer_remaining > 0.0 and coyote_remaining > 0.0)
 
 
+func bounce(strength: float) -> void:
+	character_body.velocity.y = -max(
+		abs(character_body.velocity.y),
+		strength
+	)
+
 func _update_jump_buffer(delta: float, command: PlayerCommand) -> void:
 	if command.jump_pressed:
 		jump_buffer_remaining = jump_buffer_time
@@ -60,3 +66,7 @@ func _update_coyote_time(delta: float) -> void:
 			coyote_remaining - delta,
 			0.0
 		)
+
+
+func is_falling() -> bool:
+	return character_body.velocity.y > 0.0

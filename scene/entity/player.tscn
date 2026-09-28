@@ -2,10 +2,11 @@
 
 [ext_resource type="Script" uid="uid://jiqfcha8y5u8" path="res://script/entity/player.gd" id="1_ct4mp"]
 [ext_resource type="AnimationLibrary" uid="uid://cw16f40yfnlhg" path="res://resource/animations/green_robot.res" id="2_bi3cs"]
-[ext_resource type="Script" uid="uid://cdlmt7cdiw02s" path="res://script/object/hit_component.gd" id="3_bedqt"]
+[ext_resource type="Script" uid="uid://cdlmt7cdiw02s" path="res://script/component/hit_component.gd" id="3_bedqt"]
 [ext_resource type="Texture2D" uid="uid://c5fx85ukboh5p" path="res://asset/explode.png" id="3_bi3cs"]
 [ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ct4mp"]
 [ext_resource type="Texture2D" uid="uid://0ltcvukg6cvh" path="res://asset/player/Player green.png" id="4_0l74y"]
+[ext_resource type="PackedScene" uid="uid://gqryk07xbr3w" path="res://scene/bounceComponent.tscn" id="5_0l74y"]
 [ext_resource type="Script" uid="uid://i5unc1xq0tfr" path="res://script/component/jump_component.gd" id="5_g2vtq"]
 [ext_resource type="Script" uid="uid://c1mxmnssq41rd" path="res://script/component/flip_component.gd" id="6_2fvbb"]
 [ext_resource type="Script" uid="uid://co207pvwufuqm" path="res://script/component/move_component.gd" id="6_g2vtq"]
@@ -18,6 +19,7 @@
 [ext_resource type="Script" uid="uid://d34lv7m2fxo8g" path="res://script/state/player/program_state.gd" id="11_ihjo1"]
 [ext_resource type="Script" uid="uid://beyt88c3y7u03" path="res://script/state/player/hit_state.gd" id="12_dk1vr"]
 [ext_resource type="Script" uid="uid://dt45jb0dt3xgd" path="res://script/state/player/idle_state.gd" id="13_34jf3"]
+[ext_resource type="PackedScene" uid="uid://dn4da5p1qsvrp" path="res://scene/bounceReceiverComponent.tscn" id="13_f6tgk"]
 [ext_resource type="Script" uid="uid://c2utu5ootr02n" path="res://script/state/player/die_state.gd" id="16_bup7g"]
 [ext_resource type="Script" uid="uid://cmbvfdyl17rfp" path="res://script/state/player/swear_state.gd" id="21_0l74y"]
 
@@ -385,11 +387,11 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fiawc"]
 size = Vector2(12, 17)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_iot5p"]
-size = Vector2(14, 2)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bedqt"]
 size = Vector2(14, 17)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iot5p"]
+size = Vector2(14, 2)
 
 [node name="Player" type="CharacterBody2D" unique_id=1342249911 node_paths=PackedStringArray("animation_player", "bodyCollisionShape", "animationComponent")]
 collision_layer = 2
@@ -414,19 +416,10 @@ position = Vector2(0, -8.5)
 shape = SubResource("RectangleShape2D_fiawc")
 disabled = true
 
-[node name="Hit" type="Area2D" parent="." unique_id=1828294056 node_paths=PackedStringArray("source")]
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("3_bedqt")
-source = NodePath("..")
-knockbackStrength = Vector2(0, 0)
-
-[node name="Hit" type="CollisionShape2D" parent="Hit" unique_id=2114211659]
-position = Vector2(0, 1)
-shape = SubResource("RectangleShape2D_iot5p")
-disabled = true
-
 [node name="Components" type="Node2D" parent="." unique_id=609408952]
+
+[node name="BounceComponent" parent="Components" unique_id=180206596 instance=ExtResource("5_0l74y")]
+position = Vector2(0, -16)
 
 [node name="Physics" type="Node2D" parent="Components" unique_id=2078599144 node_paths=PackedStringArray("character_body")]
 script = ExtResource("3_ct4mp")
@@ -447,21 +440,37 @@ physics_component = NodePath("../Physics")
 speed = 200.0
 
 [node name="Hurt" type="Area2D" parent="Components" unique_id=1231249687 node_paths=PackedStringArray("player", "health_component")]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 32
+collision_mask = 0
 script = ExtResource("7_u7b46")
 player = NodePath("../..")
 health_component = NodePath("../Health")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt" unique_id=1183469965]
+[node name="Hurt" type="CollisionShape2D" parent="Components/Hurt" unique_id=1183469965]
 position = Vector2(0, -9.5)
 shape = SubResource("RectangleShape2D_bedqt")
+disabled = true
+
+[node name="Hit" type="Area2D" parent="Components" unique_id=1828294056 node_paths=PackedStringArray("source")]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("3_bedqt")
+source = NodePath("../..")
+knockbackStrength = Vector2(0, 0)
+
+[node name="Hit" type="CollisionShape2D" parent="Components/Hit" unique_id=2114211659]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_iot5p")
 disabled = true
 
 [node name="Health" type="Node2D" parent="Components" unique_id=2132588864 node_paths=PackedStringArray("entity")]
 script = ExtResource("8_j4wxg")
 entity = NodePath("../..")
 intial_health = 3
+
+[node name="BounceReceiverComponent" parent="Components" unique_id=1385673651 node_paths=PackedStringArray("jump_component") instance=ExtResource("13_f6tgk")]
+position = Vector2(0, 2)
+jump_component = NodePath("../Jump")
 
 [node name="StateMachine" type="Node2D" parent="." unique_id=2108489335 node_paths=PackedStringArray("jump_component", "entity", "initial_state")]
 script = ExtResource("8_u7b46")
