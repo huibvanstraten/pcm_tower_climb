@@ -18,8 +18,10 @@ func physics_update(delta: float) -> String:
 		move_component.apply_air_resistance(delta)
 	flip_component.update_facing(entity.command.move_direction)
 
-	if entity.is_hit():
-		return HitState.NAME
+	# to be evaluated: get reaction to hit
+	var reaction := get_hit_transition()
+	if reaction != "None":
+		return reaction
 
 	if entity.command.jump_released:
 		jump_component.stop_jump()

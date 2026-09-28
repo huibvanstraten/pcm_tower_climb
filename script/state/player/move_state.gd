@@ -14,8 +14,10 @@ func physics_update(delta: float) -> String:
 	move_component.move(delta, entity.command.move_direction)
 	flip_component.update_facing(entity.command.move_direction)
 
-	if entity.is_hit():
-		return HitState.NAME
+	# to be evaluated: get reaction to hit
+	var reaction := get_hit_transition()
+	if reaction != "None":
+		return reaction
 	
 	if entity.velocity.x == 0.0:
 		return IdleState.NAME
