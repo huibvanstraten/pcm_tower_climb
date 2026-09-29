@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://drd68b3s75ss2"]
 
 [ext_resource type="Script" uid="uid://jiqfcha8y5u8" path="res://script/entity/player.gd" id="1_ct4mp"]
-[ext_resource type="AnimationLibrary" uid="uid://cw16f40yfnlhg" path="res://resource/animations/green_robot.res" id="2_bi3cs"]
 [ext_resource type="Script" uid="uid://cdlmt7cdiw02s" path="res://script/component/hit_component.gd" id="3_bedqt"]
 [ext_resource type="Texture2D" uid="uid://c5fx85ukboh5p" path="res://asset/explode.png" id="3_bi3cs"]
 [ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ct4mp"]
@@ -408,19 +407,16 @@ bodyCollisionShape = NodePath("CollisionShape2D")
 animationComponent = NodePath("AnimatedSprite2D")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=447469652]
-libraries/ = ExtResource("2_bi3cs")
-autoplay = &"idle"
+autoplay = &"white_robot/idle"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1858912840]
 position = Vector2(1, -7)
-rotation = 6.2831855
 sprite_frames = SubResource("SpriteFrames_34jf3")
-animation = &"friendly_fire"
+animation = &"die"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=33533074]
 position = Vector2(0, -8.5)
 shape = SubResource("RectangleShape2D_fiawc")
-disabled = true
 
 [node name="Components" type="Node2D" parent="." unique_id=609408952]
 
@@ -452,7 +448,6 @@ health_component = NodePath("../Health")
 [node name="Hurt" type="CollisionShape2D" parent="Components/Hurt" unique_id=1183469965]
 position = Vector2(0, -9.5)
 shape = SubResource("RectangleShape2D_bedqt")
-disabled = true
 
 [node name="Hit" type="Area2D" parent="Components" unique_id=1828294056 node_paths=PackedStringArray("source")]
 collision_layer = 0
@@ -464,7 +459,6 @@ knockbackStrength = Vector2(0, 0)
 [node name="Hit" type="CollisionShape2D" parent="Components/Hit" unique_id=2114211659]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_iot5p")
-disabled = true
 
 [node name="Health" type="Node2D" parent="Components" unique_id=2132588864 node_paths=PackedStringArray("entity")]
 script = ExtResource("8_j4wxg")
