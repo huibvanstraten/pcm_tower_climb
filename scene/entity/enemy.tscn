@@ -15,8 +15,8 @@
 [ext_resource type="Script" uid="uid://b2o86htpra2go" path="res://script/state/enemy/enemy_hit_state.gd" id="8_vgurf"]
 [ext_resource type="Script" uid="uid://3wt1rt1lamc" path="res://script/state/enemy/enemy_fall_state.gd" id="10_qhqle"]
 [ext_resource type="Script" uid="uid://dvok0kakc82vy" path="res://script/component/hurt_component.gd" id="11_pw261"]
-[ext_resource type="PackedScene" uid="uid://gqryk07xbr3w" path="res://scene/bounceComponent.tscn" id="12_polyx"]
 [ext_resource type="Script" uid="uid://bkk6knmjwie2n" path="res://script/state/enemy/enemy_die_state.gd" id="13_5lugx"]
+[ext_resource type="Script" uid="uid://b0400y5fheaxy" path="res://script/component/bounce_component.gd" id="13_polyx"]
 [ext_resource type="Script" uid="uid://dp5ejo5bn4rm5" path="res://script/state/enemy/enemy_follow_state.gd" id="16_bbjev"]
 [ext_resource type="Script" uid="uid://brrwa5er6jyou" path="res://script/component/attack_component.gd" id="17_mkxcx"]
 
@@ -346,14 +346,17 @@ animations = [{
 "speed": 9.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bbjev"]
+size = Vector2(200, 22)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pw261"]
 size = Vector2(24, 19)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sj55t"]
 size = Vector2(24, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bbjev"]
-size = Vector2(200, 22)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
+size = Vector2(26, 7.5)
 
 [node name="Enemy" type="CharacterBody2D" unique_id=469903152 node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
 collision_layer = 4
@@ -382,17 +385,6 @@ flip_h = true
 
 [node name="Components" type="Node2D" parent="." unique_id=1129159119]
 
-[node name="Hit" type="Area2D" parent="Components" unique_id=1302947287 node_paths=PackedStringArray("source")]
-collision_layer = 0
-collision_mask = 32
-script = ExtResource("2_kqmod")
-source = NodePath("../..")
-knockbackStrength = Vector2(300, 300)
-
-[node name="Hit" type="CollisionShape2D" parent="Components/Hit" unique_id=1920706461]
-position = Vector2(0, -10.5)
-shape = SubResource("RectangleShape2D_pw261")
-
 [node name="Move" type="Node2D" parent="Components" unique_id=1543108554 node_paths=PackedStringArray("physics_component")]
 script = ExtResource("2_yvcfn")
 physics_component = NodePath("../Physics")
@@ -412,6 +404,27 @@ script = ExtResource("7_rs6j2")
 entity = NodePath("../..")
 intial_health = 1
 
+[node name="Attack" type="Area2D" parent="Components" unique_id=27076004 node_paths=PackedStringArray("entity")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("17_mkxcx")
+entity = NodePath("../..")
+
+[node name="Attack" type="CollisionShape2D" parent="Components/Attack" unique_id=1312288566]
+position = Vector2(0, -11)
+shape = SubResource("RectangleShape2D_bbjev")
+
+[node name="Hit" type="Area2D" parent="Components" unique_id=1302947287 node_paths=PackedStringArray("source")]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("2_kqmod")
+source = NodePath("../..")
+knockbackStrength = Vector2(300, 300)
+
+[node name="Hit" type="CollisionShape2D" parent="Components/Hit" unique_id=1920706461]
+position = Vector2(0, -10.5)
+shape = SubResource("RectangleShape2D_pw261")
+
 [node name="Hurt" type="Area2D" parent="Components" unique_id=1444060120 node_paths=PackedStringArray("player", "health_component")]
 collision_layer = 32
 collision_mask = 0
@@ -419,12 +432,20 @@ script = ExtResource("11_pw261")
 player = NodePath("../..")
 health_component = NodePath("../Health")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Components/Hurt" unique_id=1873067139]
-position = Vector2(0, -21.5)
+[node name="Hurt" type="CollisionShape2D" parent="Components/Hurt" unique_id=1873067139]
+position = Vector2(0, -21)
 shape = SubResource("RectangleShape2D_sj55t")
 
-[node name="BounceComponent" parent="Components" unique_id=180206596 instance=ExtResource("12_polyx")]
-position = Vector2(0, -20)
+[node name="Bounce" type="Area2D" parent="Components" unique_id=975586421]
+position = Vector2(44, -28)
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("13_polyx")
+
+[node name="Bounce" type="CollisionShape2D" parent="Components/Bounce" unique_id=1397988047]
+position = Vector2(-44, 10)
+shape = SubResource("RectangleShape2D_4toet")
+debug_color = Color(0.7180335, 0.4815476, 0, 0.41960785)
 
 [node name="StateMachine" type="Node" parent="." unique_id=1532082896 node_paths=PackedStringArray("entity", "initial_state")]
 script = ExtResource("1_f87vc")
@@ -518,16 +539,6 @@ collision_mask = 2
 target_position = Vector2(12, 0)
 collision_mask = 2
 
-[node name="Attack" type="Area2D" parent="." unique_id=27076004 node_paths=PackedStringArray("entity")]
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("17_mkxcx")
-entity = NodePath("..")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Attack" unique_id=1312288566]
-position = Vector2(0, -11)
-shape = SubResource("RectangleShape2D_bbjev")
-
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Hit" method="_on_animation_player_animation_finished"]
-[connection signal="body_entered" from="Attack" to="Attack" method="_on_body_entered"]
-[connection signal="body_exited" from="Attack" to="Attack" method="_on_body_exited"]
+[connection signal="body_entered" from="Components/Attack" to="Components/Attack" method="_on_body_entered"]
+[connection signal="body_exited" from="Components/Attack" to="Components/Attack" method="_on_body_exited"]
