@@ -1,16 +1,10 @@
 [gd_scene format=3 uid="uid://cen5vsst8ve0u"]
 
 [ext_resource type="Script" uid="uid://de8ni5ly40irp" path="res://script/entity/respawn_point.gd" id="1_53nmy"]
+[ext_resource type="PackedScene" uid="uid://drd35jtoctx7p" path="res://scene/object/terminal.tscn" id="2_2nsfl"]
 [ext_resource type="Texture2D" uid="uid://ja7e84qx1fio" path="res://asset/sci-fi platformer - premium/props/lamp.png" id="2_qkq3j"]
-[ext_resource type="Texture2D" uid="uid://da0h0cjgmuht7" path="res://asset/sci-fi platformer - premium/props/props.png" id="3_2nsfl"]
 [ext_resource type="Texture2D" uid="uid://cqxjul47ni1df" path="res://asset/sci-fi platformer - premium/background-wall/fans.png" id="4_2nsfl"]
 [ext_resource type="Texture2D" uid="uid://8lf70r54h6sv" path="res://asset/sci-fi platformer - premium/tiles/tiles.png" id="4_di4qu"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
-size = Vector2(27, 23)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ni43k"]
-size = Vector2(13, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2nsfl"]
 size = Vector2(192, 32)
@@ -23,19 +17,8 @@ collision_layer = 8
 collision_mask = 6
 script = ExtResource("1_53nmy")
 
-[node name="ProgrammingArea" type="Area2D" parent="." unique_id=904271474]
-position = Vector2(168, -32)
-collision_layer = 8
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ProgrammingArea" unique_id=1153332673]
-position = Vector2(-4.5, -11.5)
-shape = SubResource("RectangleShape2D_4toet")
-debug_color = Color(0.72919697, 0.37343937, 0.9726551, 0.41960785)
-
-[node name="ProgrammingTimer" type="Timer" parent="." unique_id=934761088]
-wait_time = 3.0
-one_shot = true
+[node name="Terminal" parent="." unique_id=1878655401 instance=ExtResource("2_2nsfl")]
+position = Vector2(155, -43)
 
 [node name="SpawnPoints" type="Node2D" parent="." unique_id=1389512122]
 position = Vector2(46, -29)
@@ -51,16 +34,6 @@ position = Vector2(34, -32)
 
 [node name="Spawn4" type="Marker2D" parent="SpawnPoints" unique_id=1289565981]
 position = Vector2(66, -32)
-
-[node name="TerminalSprite" type="Sprite2D" parent="." unique_id=1657461025]
-position = Vector2(155, -48)
-texture = ExtResource("3_2nsfl")
-region_enabled = true
-region_rect = Rect2(50, 0, 44, 32)
-
-[node name="TerminalCollision" type="CollisionShape2D" parent="." unique_id=1289835298]
-position = Vector2(139.5, -39)
-shape = SubResource("RectangleShape2D_ni43k")
 
 [node name="PlateauCollision" type="CollisionShape2D" parent="." unique_id=177565951]
 position = Vector2(96, -16)
@@ -172,6 +145,3 @@ offset_right = 112.0
 offset_bottom = -96.0
 text = "RESPAWNER"
 metadata/_edit_use_anchors_ = true
-
-[connection signal="body_entered" from="ProgrammingArea" to="." method="_on_detection_area_body_entered"]
-[connection signal="body_exited" from="ProgrammingArea" to="." method="_on_detection_area_body_exited"]

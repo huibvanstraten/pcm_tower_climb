@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://senve070ygk4"]
+
+[ext_resource type="PackedScene" uid="uid://drd35jtoctx7p" path="res://scene/object/terminal.tscn" id="1_4mgxp"]
+[ext_resource type="Texture2D" uid="uid://b5r53ieo1hyd0" path="res://asset/sci-fi platformer - premium/tiles/platform.png" id="2_685ex"]
+[ext_resource type="Script" uid="uid://bf1ps0qv07hw4" path="res://script/object/programmable_platform.gd" id="2_3372d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3372d"]
+size = Vector2(32, 32)
+
+[node name="ProgrammablePlatform" type="Node2D" unique_id=1242735009]
+script = ExtResource("2_3372d")
+
+[node name="Terminal" parent="." unique_id=1878655401 instance=ExtResource("1_4mgxp")]
+position = Vector2(46, 52)
+
+[node name="Platform" type="StaticBody2D" parent="." unique_id=1462606060]
+
+[node name="Sprite2D" type="Sprite2D" parent="Platform" unique_id=783439728]
+texture = ExtResource("2_685ex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform" unique_id=540450664]
+shape = SubResource("RectangleShape2D_3372d")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Platform" unique_id=1716150636]

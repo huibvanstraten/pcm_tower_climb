@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://drd35jtoctx7p"]
+
+[ext_resource type="Script" uid="uid://3bn5355s8u11" path="res://script/component/programmable_component.gd" id="1_wc21a"]
+[ext_resource type="Texture2D" uid="uid://dt0ughxnk06ix" path="res://asset/sci-fi platformer - premium/props/terminal.png" id="2_jyyl6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
+size = Vector2(24, 25)
+
+[node name="Terminal" type="Node2D" unique_id=1878655401]
+script = ExtResource("1_wc21a")
+
+[node name="ProgrammingArea" type="Area2D" parent="." unique_id=1335041159]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ProgrammingArea" unique_id=937421352]
+position = Vector2(2, -2.5)
+shape = SubResource("RectangleShape2D_4toet")
+debug_color = Color(0.81401837, 0.0020313102, 0.9798811, 0.41960785)
+
+[node name="ProgrammingTimer" type="Timer" parent="." unique_id=78070746]
+wait_time = 3.0
+one_shot = true
+
+[node name="Terminal" type="Sprite2D" parent="." unique_id=1578452667]
+position = Vector2(3, -1)
+texture = ExtResource("2_jyyl6")
