@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://c5fx85ukboh5p" path="res://asset/explode.png" id="3_bi3cs"]
 [ext_resource type="Script" uid="uid://c5rai6fxhvej4" path="res://script/component/physics_component.gd" id="3_ct4mp"]
 [ext_resource type="Texture2D" uid="uid://0ltcvukg6cvh" path="res://asset/player/Player green.png" id="4_0l74y"]
-[ext_resource type="PackedScene" uid="uid://gqryk07xbr3w" path="res://scene/bounceComponent.tscn" id="5_0l74y"]
 [ext_resource type="Script" uid="uid://i5unc1xq0tfr" path="res://script/component/jump_component.gd" id="5_g2vtq"]
 [ext_resource type="Script" uid="uid://c1mxmnssq41rd" path="res://script/component/flip_component.gd" id="6_2fvbb"]
 [ext_resource type="Script" uid="uid://co207pvwufuqm" path="res://script/component/move_component.gd" id="6_g2vtq"]
@@ -17,9 +16,10 @@
 [ext_resource type="Script" uid="uid://ch17otwx0uqrw" path="res://script/state/player/fall_state.gd" id="9_ml7e8"]
 [ext_resource type="Script" uid="uid://dw15e7uqw7kde" path="res://script/state/player/move_state.gd" id="10_ihjo1"]
 [ext_resource type="Script" uid="uid://d34lv7m2fxo8g" path="res://script/state/player/program_state.gd" id="11_ihjo1"]
+[ext_resource type="Script" uid="uid://b0400y5fheaxy" path="res://script/component/bounce_component.gd" id="12_0l74y"]
 [ext_resource type="Script" uid="uid://beyt88c3y7u03" path="res://script/state/player/hit_state.gd" id="12_dk1vr"]
 [ext_resource type="Script" uid="uid://dt45jb0dt3xgd" path="res://script/state/player/idle_state.gd" id="13_34jf3"]
-[ext_resource type="PackedScene" uid="uid://dn4da5p1qsvrp" path="res://scene/bounceReceiverComponent.tscn" id="13_f6tgk"]
+[ext_resource type="Script" uid="uid://drlyheth3ls8p" path="res://script/component/bounce_receiver_component.gd" id="13_f6tgk"]
 [ext_resource type="Script" uid="uid://c2utu5ootr02n" path="res://script/state/player/die_state.gd" id="16_bup7g"]
 [ext_resource type="Script" uid="uid://cmbvfdyl17rfp" path="res://script/state/player/swear_state.gd" id="21_0l74y"]
 
@@ -393,6 +393,12 @@ size = Vector2(14, 17)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iot5p"]
 size = Vector2(14, 2)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
+size = Vector2(14, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ni43k"]
+size = Vector2(14, 4)
+
 [node name="Player" type="CharacterBody2D" unique_id=1342249911 node_paths=PackedStringArray("animation_player", "bodyCollisionShape", "animationComponent")]
 collision_layer = 2
 collision_mask = 32783
@@ -406,7 +412,7 @@ libraries/ = ExtResource("2_bi3cs")
 autoplay = &"idle"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1858912840]
-position = Vector2(5, -7)
+position = Vector2(1, -7)
 rotation = 6.2831855
 sprite_frames = SubResource("SpriteFrames_34jf3")
 animation = &"friendly_fire"
@@ -417,9 +423,6 @@ shape = SubResource("RectangleShape2D_fiawc")
 disabled = true
 
 [node name="Components" type="Node2D" parent="." unique_id=609408952]
-
-[node name="BounceComponent" parent="Components" unique_id=180206596 instance=ExtResource("5_0l74y")]
-position = Vector2(0, -16)
 
 [node name="Physics" type="Node2D" parent="Components" unique_id=2078599144 node_paths=PackedStringArray("character_body")]
 script = ExtResource("3_ct4mp")
@@ -468,9 +471,23 @@ script = ExtResource("8_j4wxg")
 entity = NodePath("../..")
 intial_health = 3
 
-[node name="BounceReceiverComponent" parent="Components" unique_id=1385673651 node_paths=PackedStringArray("jump_component") instance=ExtResource("13_f6tgk")]
-position = Vector2(0, 2)
+[node name="Bounce" type="Area2D" parent="Components" unique_id=48124593]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("12_0l74y")
+
+[node name="Bounce" type="CollisionShape2D" parent="Components/Bounce" unique_id=1835703700]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_4toet")
+
+[node name="BounceReceiver" type="Area2D" parent="Components" unique_id=2019613283 node_paths=PackedStringArray("jump_component")]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("13_f6tgk")
 jump_component = NodePath("../Jump")
+
+[node name="BounceReceiver" type="CollisionShape2D" parent="Components/BounceReceiver" unique_id=1295774762]
+shape = SubResource("RectangleShape2D_ni43k")
 
 [node name="StateMachine" type="Node2D" parent="." unique_id=2108489335 node_paths=PackedStringArray("jump_component", "entity", "initial_state")]
 script = ExtResource("8_u7b46")
