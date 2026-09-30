@@ -28,7 +28,7 @@ display_name = "BLUE"
 description = ".."
 portrait = ExtResource("4_673u8")
 animations = ExtResource("4_dt35o")
-speed = 100.2
+speed = 200.0
 metadata/_custom_type_script = "uid://cjkuy2r7blbsp"
 
 [sub_resource type="Resource" id="Resource_iebgh"]
@@ -48,7 +48,7 @@ display_name = "GREEN"
 description = "--"
 portrait = ExtResource("6_p2aqd")
 animations = ExtResource("8_p2aqd")
-speed = 100.2
+speed = 200.0
 metadata/_custom_type_script = "uid://cjkuy2r7blbsp"
 
 [resource]
