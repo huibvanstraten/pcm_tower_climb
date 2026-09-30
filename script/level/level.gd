@@ -11,16 +11,26 @@ var currentAreaId: int = 1
 
 
 func _ready() -> void:
+	EventManager.transition_to_area.connect(
+		_on_transition_to_area
+	)
+
 	currentAreaId = startAreaId
 
-	var area = get_current_area()
+	var start_area := get_current_area()
 
-	if area == null:
-		push_error("Could not find start area: %s" % startAreaId)
+	if start_area == null:
+		push_error(
+			"Could not find start area: %s"
+			% startAreaId
+		)
 		return
 
-	area.activate()
-	
+	_activate_area(start_area)
+
+
+func _on_transition_to_area(area_id: int) -> void:
+	transition_to_area(area_id)
 
 func get_area(area_id: int) -> Area:
 	for area in $Areas.get_children():
@@ -33,6 +43,7 @@ func get_area(area_id: int) -> Area:
 func get_current_area() -> Area:
 	return get_area(currentAreaId)
 
+
 func set_current_area(areaId: int):
 	currentAreaId = areaId
 
@@ -44,7 +55,10 @@ func transition_to_area(area_id: int) -> void:
 	var next_area := get_area(area_id)
 
 	if next_area == null:
-		push_error("Could not find area: %s" % area_id)
+		push_error(
+			"Could not find area: %s"
+			% area_id
+		)
 		return
 
 	var current_area := get_current_area()
@@ -53,8 +67,14 @@ func transition_to_area(area_id: int) -> void:
 		current_area.deactivate()
 
 	currentAreaId = area_id
-	next_area.activate()
-	
+
+	_activate_area(next_area)
+
+
+func _activate_area(area: Area) -> void:
+	area.activate()
+	camera_rig.set_area(area)
+
 
 func get_player_start_position(player_id: int) -> Vector2:
 	var marker_name := "Start_%s" % player_id
@@ -68,7 +88,3 @@ func get_player_start_position(player_id: int) -> Vector2:
 		return Vector2.ZERO
 
 	return marker.global_position
-
-
-func _on_game_paused(isPaused: bool):
-	get_tree().paused = isPaused
