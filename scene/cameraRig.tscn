@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://2b8l7oadkcai"]
+[gd_scene format=3 uid="uid://2b8l7oadkcai"]
 
-[ext_resource type="Script" uid="uid://d0j7rq0nymta0" path="res://script/camera_rig.gd" id="1_aej5r"]
+[ext_resource type="Script" uid="uid://d0j7rq0nymta0" path="res://script/camera/camera_rig.gd" id="1_aej5r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
 
@@ -10,37 +10,37 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_f645t"]
 
-[node name="CameraRig" type="Node2D"]
+[node name="CameraRig" type="Node2D" unique_id=917423185]
 script = ExtResource("1_aej5r")
 
-[node name="PlayerBounds" type="Node2D" parent="."]
+[node name="PlayerBounds" type="Node2D" parent="." unique_id=1419398680]
 
-[node name="LeftBoundary" type="StaticBody2D" parent="PlayerBounds"]
+[node name="LeftBoundary" type="StaticBody2D" parent="PlayerBounds" unique_id=151057145]
 collision_layer = 32768
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBounds/LeftBoundary"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBounds/LeftBoundary" unique_id=978185138]
 shape = SubResource("RectangleShape2D_4toet")
 
-[node name="RightBoundary" type="StaticBody2D" parent="PlayerBounds"]
+[node name="RightBoundary" type="StaticBody2D" parent="PlayerBounds" unique_id=1625759348]
 collision_layer = 32768
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBounds/RightBoundary"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBounds/RightBoundary" unique_id=1523434150]
 shape = SubResource("RectangleShape2D_ni43k")
 
-[node name="TopBoundary" type="StaticBody2D" parent="PlayerBounds"]
+[node name="TopBoundary" type="StaticBody2D" parent="PlayerBounds" unique_id=1252178983]
 collision_layer = 32768
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBounds/TopBoundary"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerBounds/TopBoundary" unique_id=1075122233]
 shape = SubResource("RectangleShape2D_dr4yn")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1646721133]
 
-[node name="DeathZone" type="Area2D" parent="."]
+[node name="DeathZone" type="Area2D" parent="." unique_id=1348392876]
 collision_layer = 32768
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DeathZone" unique_id=1560515856]
 shape = SubResource("RectangleShape2D_f645t")
