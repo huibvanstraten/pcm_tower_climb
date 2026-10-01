@@ -1,54 +1,53 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0i0y551rj7un"]
+[gd_scene format=3 uid="uid://b0i0y551rj7un"]
 
 [ext_resource type="Script" uid="uid://cexpkb6ejttqo" path="res://script/hud/player_hud_info.gd" id="1_1er7l"]
 [ext_resource type="Texture2D" uid="uid://cg0lr5joctidy" path="res://icon.svg" id="2_eh55v"]
 
-[node name="PlayerHudInfo" type="MarginContainer"]
+[node name="PlayerHudInfo" type="MarginContainer" unique_id=460881820]
 script = ExtResource("1_1er7l")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=76236190]
 layout_mode = 2
 
-[node name="PortraitPanel" type="PanelContainer" parent="HBoxContainer"]
+[node name="PortraitPanel" type="PanelContainer" parent="HBoxContainer" unique_id=1195407426]
 layout_mode = 2
 
-[node name="Portrait" type="TextureRect" parent="HBoxContainer/PortraitPanel"]
+[node name="Portrait" type="TextureRect" parent="HBoxContainer/PortraitPanel" unique_id=864777502]
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 texture = ExtResource("2_eh55v")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Info" type="VBoxContainer" parent="HBoxContainer"]
+[node name="Info" type="VBoxContainer" parent="HBoxContainer" unique_id=171172936]
 layout_mode = 2
 
-[node name="PlayerName" type="Label" parent="HBoxContainer/Info"]
+[node name="PlayerName" type="Label" parent="HBoxContainer/Info" unique_id=1058580997]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 
-[node name="HealthRow" type="HBoxContainer" parent="HBoxContainer/Info"]
+[node name="HealthRow" type="HBoxContainer" parent="HBoxContainer/Info" unique_id=780995421]
 layout_mode = 2
 
-[node name="HealthTitle" type="Label" parent="HBoxContainer/Info/HealthRow"]
+[node name="HealthTitle" type="Label" parent="HBoxContainer/Info/HealthRow" unique_id=1414538835]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "HEALTH"
 
-[node name="HealthValue" type="Label" parent="HBoxContainer/Info/HealthRow"]
+[node name="HealthValue" type="Label" parent="HBoxContainer/Info/HealthRow" unique_id=390263543]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 
-[node name="AbilityRow" type="HBoxContainer" parent="HBoxContainer/Info"]
+[node name="FragmentRow" type="HBoxContainer" parent="HBoxContainer/Info" unique_id=129088664]
 layout_mode = 2
 
-[node name="AbilityTitle" type="Label" parent="HBoxContainer/Info/AbilityRow"]
+[node name="FragmentIcon" type="TextureRect" parent="HBoxContainer/Info/FragmentRow" unique_id=1333459803]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "ABILITY"
+texture = ExtResource("2_eh55v")
 
-[node name="AbilityValue" type="Label" parent="HBoxContainer/Info/AbilityRow"]
+[node name="FragmentLabel" type="Label" parent="HBoxContainer/Info/FragmentRow" unique_id=1926024139]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 8

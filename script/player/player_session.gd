@@ -13,6 +13,7 @@ enum State {
 
 var state: PlayerSession.State = State.READY
 var selection := PlayerSelection.new()
+var progress := PlayerProgress.new()
 
 @onready var input: PlayerInput = $PlayerInput
 

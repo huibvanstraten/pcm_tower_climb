@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://b0400y5fheaxy" path="res://script/component/bounce_component.gd" id="12_0l74y"]
 [ext_resource type="Script" uid="uid://beyt88c3y7u03" path="res://script/state/player/hit_state.gd" id="12_dk1vr"]
 [ext_resource type="Script" uid="uid://dt45jb0dt3xgd" path="res://script/state/player/idle_state.gd" id="13_34jf3"]
+[ext_resource type="Script" uid="uid://cdoro7a8byw7t" path="res://script/component/pickup_component.gd" id="13_73c0v"]
 [ext_resource type="Script" uid="uid://drlyheth3ls8p" path="res://script/component/bounce_receiver_component.gd" id="13_f6tgk"]
 [ext_resource type="Script" uid="uid://c2utu5ootr02n" path="res://script/state/player/die_state.gd" id="16_bup7g"]
 [ext_resource type="Script" uid="uid://cmbvfdyl17rfp" path="res://script/state/player/swear_state.gd" id="21_0l74y"]
@@ -398,6 +399,9 @@ size = Vector2(14, 4)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ni43k"]
 size = Vector2(14, 4)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dr4yn"]
+size = Vector2(14, 20)
+
 [node name="Player" type="CharacterBody2D" unique_id=1342249911 node_paths=PackedStringArray("animation_player", "bodyCollisionShape", "animationComponent")]
 collision_layer = 2
 collision_mask = 32783
@@ -482,6 +486,17 @@ jump_component = NodePath("../Jump")
 
 [node name="BounceReceiver" type="CollisionShape2D" parent="Components/BounceReceiver" unique_id=1295774762]
 shape = SubResource("RectangleShape2D_ni43k")
+
+[node name="Pickup" type="Area2D" parent="Components" unique_id=1021576102 node_paths=PackedStringArray("player")]
+collision_layer = 4096
+collision_mask = 4096
+script = ExtResource("13_73c0v")
+player = NodePath("../..")
+
+[node name="Pickup" type="CollisionShape2D" parent="Components/Pickup" unique_id=472598856]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_dr4yn")
+debug_color = Color(0.34230244, 0.61840546, 0.17266619, 0.41960785)
 
 [node name="StateMachine" type="Node2D" parent="." unique_id=2108489335 node_paths=PackedStringArray("jump_component", "entity", "initial_state")]
 script = ExtResource("8_u7b46")
@@ -593,3 +608,4 @@ start_animation_name = "swear"
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Hit" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Die" method="_on_animation_player_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayer" to="StateMachine/Swear" method="_on_animation_player_animation_finished"]
+[connection signal="area_entered" from="Components/Pickup" to="Components/Pickup" method="_on_area_entered"]

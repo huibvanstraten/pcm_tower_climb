@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bchi7gatrpujr" path="res://script/level/level_4.gd" id="1_oc4a2"]
 [ext_resource type="PackedScene" uid="uid://wgls8s878624" path="res://scene/entity/enemy.tscn" id="2_dfr33"]
 [ext_resource type="Texture2D" uid="uid://8lf70r54h6sv" path="res://asset/sci-fi platformer - premium/tiles/tiles.png" id="2_oc4a2"]
+[ext_resource type="PackedScene" uid="uid://dqfrpwu4mnxtk" path="res://scene/object/fragment.tscn" id="2_tqrtc"]
 [ext_resource type="Texture2D" uid="uid://c20yr0ix17bd3" path="res://asset/sci-fi platformer - premium/platforms/platforms.png" id="3_fqhe8"]
 [ext_resource type="Texture2D" uid="uid://w2nfpyj62n7f" path="res://asset/sci-fi platformer - premium/background-wall/wall-tiles.png" id="4_dfr33"]
 [ext_resource type="Texture2D" uid="uid://6i738yoalk6u" path="res://asset/sci-fi platformer - premium/background-wall/pipes.png" id="5_o31v3"]
@@ -336,6 +337,15 @@ size = Vector2(2848.5, 20)
 
 [node name="Level4" type="Node2D" unique_id=2095397145]
 script = ExtResource("1_oc4a2")
+
+[node name="Fragment" parent="." unique_id=1107363685 instance=ExtResource("2_tqrtc")]
+position = Vector2(338, -26)
+
+[node name="Fragment2" parent="." unique_id=1123805659 instance=ExtResource("2_tqrtc")]
+position = Vector2(448, -28)
+
+[node name="Fragment3" parent="." unique_id=1427716551 instance=ExtResource("2_tqrtc")]
+position = Vector2(388, -28)
 
 [node name="Enemy" parent="." unique_id=469903152 instance=ExtResource("2_dfr33")]
 position = Vector2(1163, -25)
