@@ -1,1676 +1,184 @@
-# PCM Tower Climb --- Architecture and Game Systems
+# PCM Tower Climb
 
-## Project overview
+PCM Tower Climb is a local multiplayer 2D tower-climbing platformer built in Godot 4. Up to four players can join with independent input devices, climb through shared levels, interact with programmable world objects, and compete while still depending on each other to progress.
 
-PCM Tower Climb is a local multiplayer 2D platformer with an
-arcade-style approach to player participation. Multiple participants can
-join through independent input devices, and the architecture keeps
-participation, player entities, control, spawning, and the currently
-loaded world as separate concepts.
+The project is intentionally built around a small set of architectural ideas rather than putting gameplay logic directly into scene scripts. The main goal is to keep features easy to extend without turning the player, level, or `Main` into a central dependency for everything.
 
-The project builds a small gameplay architecture on top of Godot rather
-than putting most behaviour directly into scene scripts. Gameplay
-entities are composed from focused capabilities, while state machines
-coordinate what those entities are currently doing. Player input is
-translated into semantic commands before reaching gameplay, which keeps
-physical devices separate from the entities they control.
+## Architecture at a glance
 
-Players belong to the game rather than to an individual level. Levels
-provide the playable environment, areas, boundaries, and positions where
-players can appear. This allows levels to be replaced while
-participating players persist. Movement follows the same separation of
-concerns: input expresses intent, states determine current behaviour,
-components provide movement capabilities, and Godot resolves physical
-movement and collisions.
+The most important distinction is between a **participant in the game** and their current **physical Player entity**.
 
-Audio follows an ownership model as well. Areas define environmental
-music, gameplay capabilities or states own the sounds associated with
-their behaviour, and global audio managers provide the actual playback
-mechanism.
+A session survives death and respawning. The `Player` does not have to.
 
-The architecture is intentionally focused on **responsibilities and
-intent rather than current implementation details**. Implementations may
-remain simple while features are being developed, as long as the
-responsibility boundaries remain clear.
+```mermaid
+flowchart TD
+	S[PlayerInputSession] --> I[Input / Device]
+	S --> C[Character Selection]
+	S --> P[Persistent Player State]
+	S --> L[Lifecycle State]
+	S --> T[Control Target]
 
-## Contents
+	T -->|while playing| E[Player Entity]
 
-### Architecture
-
--   [Entities, Components and
-	Capabilities](#entities-components-and-capabilities)
--   [Entity State Machines](#entity-state-machines)
--   [Player Movement and Physics](#player-movement-and-physics)
-
-### Multiplayer
-
--   [Player Input and Control](#player-input-and-control)
--   [Player Lifecycle and Spawning](#player-lifecycle-and-spawning)
-
-### World
-
--   [Levels, Areas and World
-	Boundaries](#levels-areas-and-world-boundaries)
--   [Level Loading and Transitions](#level-loading-and-transitions)
-
-### Audio
-
--   [Music and Sound Effects](#music-and-sound-effects)
-
-------------------------------------------------------------------------
-
-# Entities, Components and Capabilities
-
-Gameplay entities are composed from small, reusable capabilities rather
-than implementing all behaviour directly in the entity itself.
-
-``` text
-Entity
- ├── Physics
- ├── Jump
- ├── Health
- ├── ...
- └── State Machine
+	E --> SM[State Machine]
+	SM --> ST[Current State]
+	ST --> CO[Components]
+	CO --> G[Godot Physics / World]
 ```
 
-The exact components differ between entities. An entity only receives
-the capabilities it needs.
+This separation allows a participant to remain in the game while their physical entity is removed, for example after falling into a death zone. A fresh `Player` can later be created for the same session without losing character selection, input ownership, fragments, score, or other persistent run state.
 
-### Entities
+The current implementation uses `PlayerInputSession` for this broader session role. If persistent player responsibilities continue to grow, input may eventually become one concern of a more general `PlayerSession`, but that refactor should be driven by an actual need rather than naming alone.
 
-An **entity** is an object that exists and participates in gameplay,
-such as a player or enemy.
+## Gameplay design
 
-The entity represents the whole gameplay object and owns its components,
-but should contain as little capability-specific behaviour as possible.
+### Entities, states and components
 
-``` text
-Player
- ├── Jump capability
- ├── Physics capability
- └── ...
+Gameplay entities are built through composition.
 
-Enemy
- ├── Physics capability
- └── ...
+```mermaid
+flowchart LR
+	CMD[PlayerCommand] --> STATE[Player State]
+	STATE --> MOVE[MoveComponent]
+	STATE --> JUMP[JumpComponent]
+	STATE --> HEALTH[HealthComponent]
+	STATE --> OTHER[Other Components]
+	MOVE --> ENGINE[Godot]
+	JUMP --> ENGINE
+	HEALTH --> ENGINE
 ```
 
-Entities therefore define **what something is**, while components define
-**what it can do**.
+The responsibilities are deliberately different:
 
-### Components
+- **Entity** — what exists in the world.
+- **State** — what the entity is currently doing and which transitions are valid.
+- **Component** — a focused capability the entity can use.
+- **Godot** — physics, collisions, scene lifecycle, rendering, and other engine mechanics.
 
-A **component** provides a focused piece of reusable behaviour or state.
+States coordinate capabilities; they should not reimplement them. Components should remain focused and reusable instead of deciding the complete behavior of an entity.
 
-For example, a jump component knows how to perform a jump, while a
-physics component provides movement-related behaviour.
+Composition is preferred over increasingly specialized inheritance. A bouncing surface, for example, supplies its bounce strength through a component; the Player only needs the capability to receive and apply that bounce.
 
-Components should not decide **when** their capability is used. They
-provide the behaviour so another part of the entity can coordinate it.
+### Input and control
 
-``` text
-JumpComponent
-	  ↑
-	  │ use
-	  │
-JumpState
+Physical input is kept separate from gameplay behavior.
+
+```mermaid
+flowchart LR
+	EVENT[InputEvent] --> DEVICE[PlayerInputDevice]
+	DEVICE --> SOURCE[PlayerInputSource]
+	SOURCE --> COMMAND[PlayerCommand]
+	COMMAND --> SESSION[PlayerInputSession]
+	SESSION --> TARGET[Current Control Target]
 ```
 
-This keeps capabilities independent from the situations in which they
-are used.
+This lets each local player have an independent device and allows control to temporarily move to another object without changing who owns the device. Gameplay entities work with semantic commands such as move, jump, or interact rather than keyboard or controller events.
 
-### Capabilities through composition
+### Player lifecycle
 
-Capabilities are added through composition rather than through
-increasingly specialized entity classes.
+Joining the game, having a Player entity, and being physically present in a level are related but separate concepts.
 
-Instead of:
-
-``` text
-Entity
-  ↓
-MovingEntity
-  ↓
-JumpingEntity
-  ↓
-Player
+```mermaid
+stateDiagram-v2
+	[*] --> READY: Join
+	READY --> PLAYING: Player created / spawned
+	PLAYING --> WAITING: Player dies or cannot spawn
+	WAITING --> PLAYING: Respawn opportunity
 ```
 
-the project favors:
+`PlayerLifecycleManager` coordinates this lifecycle. `SpawnManager` handles creating, positioning, tracking, and removing the physical Player entities.
 
-``` text
-Player
- ├── Physics
- └── Jump
+A useful ownership rule is:
+
+> If something must survive destruction of the Player entity, it does not belong on the Player.
+
+Position, velocity, current health, collisions, animation and state-machine state belong to the physical entity. Character choice, input ownership, collected fragments, score and similar run state belong to the persistent participant/session side.
+
+### Levels and the world
+
+Players and levels have different lifetimes.
+
+```mermaid
+flowchart TD
+	GAME[Game] --> SESSIONS[Player Sessions]
+	GAME --> PLAYERS[PlayerContainer]
+	GAME --> LEVEL[Current Level]
+
+	LEVEL --> WORLD[Geometry / Hazards / Enemies]
+	LEVEL --> CAMERA[CameraRig]
+	LEVEL --> SPAWNS[Spawn / Respawn Points]
+	LEVEL --> OBJECTS[World Objects / Pickups]
 ```
 
-Another entity can reuse the same capability where its behaviour is
-compatible.
+A level owns its temporary world: geometry, enemies, hazards, camera boundaries, programmable objects, spawn locations, and world collectibles. Persistent participant state lives outside that world.
 
-This makes it possible to add, remove or replace gameplay capabilities
-without redesigning the entity hierarchy.
+`LevelManager` changes the active environment. The shared `CameraRig` belongs to that environment and tracks whichever Player entities are currently active.
 
-### Coordination
+### Interactions
 
-Components provide capabilities, but they do not coordinate the entity
-as a whole.
-
-That responsibility belongs to higher-level behaviour such as the
-entity's state machine.
+Interactions should express who **provides** a mechanic and who **receives** it instead of putting object-specific knowledge into the Player.
 
 For example:
 
-``` text
-PlayerCommand
-      ↓
-Player State
-      ↓
-Components
-      ↓
-Godot
+```mermaid
+flowchart LR
+	SURFACE[BounceComponent<br/>strength = 500] --> RECEIVER[BounceReceiverComponent]
+	RECEIVER --> JUMP[JumpComponent]
 ```
 
-A state may interpret the current situation and use several capabilities
-together, such as applying air movement while a jump is in progress.
+Programming follows the same loose-coupling principle. A Player can program a source, which activates a channel; matching receivers decide what that activation means.
 
-This separates three concerns:
-
-``` text
-Entity       → what exists
-State        → what it is currently doing
-Component    → what it is capable of doing
-```
-
-### Godot integration
-
-Components ultimately build on Godot functionality rather than replacing
-it.
-
-For example, a physics capability can manipulate velocity while the
-entity's `CharacterBody2D` remains responsible for Godot's collision and
-movement behaviour.
-
-The component layer gives the game a reusable gameplay abstraction
-around those Godot features.
-
-### Design intent
-
-The goal is not to turn every piece of logic into a component.
-
-A component is useful when a behaviour represents a distinct capability
-that benefits from being isolated, composed or reused.
-
-Entity-specific coordination can remain with the entity or its states,
-while reusable gameplay behaviour belongs in components.
-
-This keeps entities small and allows new gameplay objects to be built
-primarily by composing the capabilities they need.
-
-------------------------------------------------------------------------
-
-# Entity State Machines
-
-Entities use state machines to represent **what they are currently
-doing** and to coordinate the capabilities required for that behaviour.
-
-``` text
-Entity
-  ↓
-State Machine
-  ↓
-Current State
-  ↓
-Components
-```
-
-A state is therefore not a capability itself. It decides how existing
-capabilities should be used in a particular situation.
-
-### States represent behaviour
-
-A state describes a meaningful mode of behaviour, such as:
-
-``` text
-Idle
-Running
-Jumping
-Falling
-Programming
-Dead
-```
-
-While a state is active, it is responsible for the behaviour that
-belongs to that situation.
-
-For example, a jumping state may apply air movement, monitor vertical
-velocity and decide when the entity should start falling.
-
-### States coordinate capabilities
-
-Components provide reusable capabilities such as movement, jumping or
-physics.
-
-States decide **when and how those capabilities are combined**.
-
-``` text
-JumpState
- ├── uses Jump capability
- ├── uses Physics capability
- └── decides when to transition to Fall
-```
-
-This prevents components from needing to understand the complete
-behaviour of the entity.
-
-The relationship is:
-
-``` text
-Component → can do something
-State     → decides what should happen now
-```
-
-### Transitions
-
-States do not normally replace themselves directly.
-
-Instead, they indicate that a transition should happen.
-
-``` text
-Idle
-  ↓ movement starts
-Run
-  ↓ jump starts
-Jump
-  ↓ vertical movement turns downward
-Fall
-  ↓ ground reached
-Idle
-```
-
-The state machine owns changing the active state.
-
-This keeps the lifecycle of states centralized and makes transitions
-easier to reason about.
-
-### Input and state
-
-Input expresses player intent through commands such as move, jump or
-interact.
-
-The current state interprets that intent according to the entity's
-current situation.
-
-``` text
-PlayerCommand
-	  ↓
-Current State
-	  ↓
-Capabilities
-```
-
-The same command can therefore result in different behaviour depending
-on the active state.
-
-For example, a jump command while standing may start a jump, while the
-same command during another state may be ignored or interpreted
-differently.
-
-### State lifecycle
-
-States can react when they become active, while they remain active, and
-when they are left.
-
-Conceptually:
-
-``` text
-enter
-  ↓
-update / physics update
-  ↓
-transition
-  ↓
-exit
-```
-
-This gives behaviour a clear lifetime.
-
-Temporary behaviour can initialize itself on entry and clean itself up
-when another state takes over.
-
-### Entity-specific behaviour
-
-Not every entity needs the same states.
-
-``` text
-Player
- ├── Idle
- ├── Run
- ├── Jump
- └── Fall
-
-Enemy
- ├── Patrol
- ├── Chase
- └── Stunned
-```
-
-The state machine provides the structure, while each entity defines the
-behaviour relevant to it.
-
-### Design intent
-
-State machines are used to keep behaviour explicit and mutually
-understandable.
-
-They are especially useful when an entity has several modes that should
-not all run at the same time.
-
-The intended separation is:
-
-``` text
-Entity       → what exists
-State        → what it is currently doing
-Component    → what it is capable of doing
-Input        → what the participant wants to do
-```
-
-The goal is not to create a state for every small action.
-
-States should represent meaningful behavioural modes where separating
-lifecycle, rules and transitions makes the entity easier to understand
-and extend.
-
-------------------------------------------------------------------------
-
-# Player Movement and Physics
-
-Player movement separates **player intent**, **gameplay behaviour**, and
-**physical movement**.
-
-``` text
-PlayerCommand
-	  ↓
-Current State
-	  ↓
-Movement capabilities
-	  ↓
-Velocity
-	  ↓
-Godot physics
-```
-
-Input does not move the player directly. It describes what the
-participant wants to do, while the player's current state determines how
-that intent affects movement.
-
-### Movement intent
-
-Player input is translated into semantic commands such as:
-
-``` text
-move left/right
-jump pressed
-jump held
-interact
-```
-
-These commands contain intent rather than physics.
-
-For example, moving right does not directly change the player's
-position. It tells the current player state that movement to the right
-is requested.
-
-This keeps physical input devices independent from player movement.
-
-### States determine movement behaviour
-
-The active player state determines how movement should behave in the
-current situation.
-
-``` text
-Grounded state
-	  ↓
-ground movement
-
-Jump state
-	  ↓
-air movement + upward velocity
-
-Fall state
-	  ↓
-air movement + falling
-```
-
-The same movement command can therefore behave differently depending on
-whether the player is standing, jumping, falling or in another state.
-
-States coordinate movement but delegate reusable physical behaviour to
-components.
-
-### Movement capabilities
-
-Components provide focused movement capabilities such as applying
-horizontal movement, jumping, gravity or stopping upward movement.
-
-Conceptually:
-
-``` text
-State
- ├── movement capability
- ├── jump capability
- └── physics capability
-```
-
-This allows states to describe behaviour without implementing all of the
-underlying movement calculations themselves.
-
-It also allows movement capabilities to be reused or changed
-independently from the state machine.
-
-### Velocity and position
-
-Gameplay movement primarily works by changing **velocity**, rather than
-directly changing the player's position.
-
-``` text
-Player intent
-      ↓
-desired movement
-      ↓
-velocity
-      ↓
-move_and_slide()
-      ↓
-position + collisions
-```
-
-The game determines how the player should move. Godot then resolves that
-velocity against the physical world.
-
-This distinction is important: gameplay code expresses movement
-behaviour, while Godot remains responsible for collision-aware movement.
-
-### Fixed physics updates
-
-Physical movement runs on Godot's fixed physics updates.
-
-The physics delta represents the amount of simulated time for the
-current physics step.
-
-Movement calculations that depend on time use this delta so behaviour
-remains based on elapsed time rather than the number of updates
-performed.
-
-``` text
-physics tick
-	↓
-read current command
-	↓
-update state / velocity
-	↓
-perform physical movement
-	↓
-resolve collisions
-```
-
-Gameplay state transitions can then react to the resulting physical
-situation.
-
-### Collisions inform behaviour
-
-Godot's physics results provide information such as whether the player
-is on the floor, against a wall or touching a ceiling.
-
-States can use this information to decide what should happen next.
-
-``` text
-Jump
-  ↓
-ceiling reached / upward movement ends
-  ↓
-Fall
-  ↓
-floor reached
-  ↓
-Grounded
-```
-
-Collision detection therefore belongs to the physical world, while
-interpreting those collisions belongs to gameplay behaviour.
-
-### Design intent
-
-Player movement is deliberately split across several responsibilities:
-
-``` text
-Input       → what the participant wants
-State       → how movement behaves right now
-Component   → reusable movement capabilities
-Velocity    → requested physical motion
-Godot       → movement and collision resolution
-```
-
-No single layer should need to understand the entire movement system.
-
-This makes it possible to change movement rules, introduce new player
-states or reuse physical capabilities without coupling input, gameplay
-behaviour and Godot physics together.
-
-------------------------------------------------------------------------
-
-# Player Input and Control
-
-The game supports multiple local input devices and allows each joined
-participant to be controlled independently.
-
-Input is separated into three concerns:
-
-``` text
-Physical device
-    ↓
-PlayerInputSession
-    ↓
-Game context
-    ↓
-Session context
-    ↓
-Control target
-```
-
-### PlayerInputSession
-
-A `PlayerInputSession` represents a joined participant and their input
-device. Physical device details stay in the input layer; gameplay
-receives semantic `PlayerCommand`s such as move, jump and interact.
-
-A session does not fundamentally imply that a `Player` entity exists.
-
-### Input contexts
-
-Contexts determine **what input currently means**.
-
-The **game context** applies to the game as a whole, for example
-`GAMEPLAY`, `MAIN_MENU`, `PLAYER_SELECT` or `PAUSE_MENU`.
-
-A **session context** can temporarily override gameplay for one
-participant, for example while that player uses an inventory.
-
-``` text
-Game: GAMEPLAY
-P1: INVENTORY
-P2: <none>
-
-P1 → inventory
-P2 → gameplay
-```
-
-Game and session contexts are stacks, so closing a temporary context
-restores the previous one.
-
-### Control targets
-
-Control targets determine **which gameplay entity a participant
-controls**.
-
-``` text
-[Player]
-[Player, Crane]
-```
-
-The top target receives the session's `PlayerCommand`. Popping it
-restores control to the previous target.
-
-Context and control-target stacks are independent: opening a menu does
-not change the controlled entity, and temporarily controlling another
-entity does not change the input context.
-
-Player creation, spawning and positioning are documented separately
-under **Player Lifecycle and Spawning**.
-
-------------------------------------------------------------------------
-
-# Player Lifecycle and Spawning
-
-Player participation, player entities, and spawning are separate
-lifecycle concepts.
-
-```text 
-Participant joins     
-↓ 
-PlayerInputSession exists     
-↓ 
-Player entity exists     
-↓ 
-Player is spawned into a level
-```
-
-These steps may happen together, but they do not fundamentally depend on
-each other.
-
-### Joining
-
-Joining represents a participant entering the game with an input device.
-
-A joined participant is represented by a `PlayerInputSession` and
-receives an available player slot.
-
-This can happen before a `Player` entity exists. For example,
-participants may join on a player-select screen before gameplay starts.
-
-### Player creation
-
-A `Player` is the participant's gameplay entity.
-
-Creating a Player and joining are separate concerns:
-
-```text 
-PlayerInputSession = participant/input
-Player = gameplay entity
-```
-
-This allows game flow to decide when a joined participant actually needs a Player.
-
-### Spawning
-
-Spawning places an existing or newly created Player into the current level.
-
-Levels define suitable spawn positions. The spawning system decides which position belongs to each player and positions players without making the level responsible for player lifecycle.
-
-This supports multiple players independently:
-
-```text
-    Level
-        ├── spawn position P1
-        ├── spawn position P2
-        ├── spawn position P3
-        └── spawn position P4
-```
-
-The same principle can later be used for level transitions, checkpoints and respawning: the Player belongs to the game, while the loaded level provides the location where that Player should appear.
-
-### Level independence
-
-Players live outside loaded levels:
-
-```text
-Main 
-├── PlayerContainer 
-│  └── Player 1 
-│  └── Player 2 
-└── LevelContainer     
-└── CurrentLevel
-```
-
-Loading or replacing a level therefore does not inherently create or destroy the players.
-
-This keeps these responsibilities separate:
-
-```text
-PlayerInputSession  
-→ who joined Player              
-→ gameplay entity Level               
-→ playable environment and spawn locations SpawnManager        
-→ player creation/positioning LevelManager        
-→ loaded level
-```
-
-### Current implementation
-
-Currently, joining during gameplay immediately creates/spawns a `Player`
-and establishes it as the session's base control target.
-
-This is intentionally simpler than the lifecycle model above. When
-player selection or other pre-game flows are introduced, joining, Player
-creation and spawning can be separated without changing their
-responsibilities.
-
-------------------------------------------------------------------------
-
-# Levels, Areas and World Boundaries
-
-Levels describe the playable world and expose the spatial information
-that gameplay systems need.
-
-A level is more than a visual scene. It defines the environment in which
-gameplay takes place, including usable areas, boundaries and spawn
-locations.
-
-``` text
-Level
- ├── Areas
- ├── World geometry
- ├── Boundaries
- └── Spawn positions
-```
-
-### Levels
-
-A **level** represents a playable environment.
-
-It owns the world-specific objects and geometry that belong to that
-environment, but it does not own persistent player lifecycle.
-
-``` text
-Game
- ├── Players
- └── Current Level
-	   ├── geometry
-	   ├── enemies
-	   ├── areas
-	   └── spawn positions
-```
-
-Replacing a level therefore changes the environment without
-fundamentally changing who the players are.
-
-### Areas
-
-A level can be divided into **areas** when different parts of the level
-need their own spatial rules.
-
-An area represents a meaningful section of the playable world.
-
-``` text
-Level
- ├── Area A
- ├── Area B
- └── Area C
-```
-
-Areas can be used to describe where gameplay is currently taking place
-without requiring every system to understand the entire level scene.
-
-For example, an area may define the space relevant to the current
-camera, encounters or local level behaviour.
-
-### World boundaries
-
-Playable areas need explicit boundaries.
-
-These boundaries describe the usable world space rather than relying on
-assumptions about sprite sizes, collision geometry or scene coordinates.
-
-``` text
-Area
- ├── left
- ├── right
- ├── top
- └── bottom
-```
-
-Other systems can use these boundaries to understand the available
-space.
-
-For example, a camera can remain inside the current playable area
-without knowing how that area was constructed.
-
-### Boundaries are gameplay information
-
-Collision shapes and world boundaries are related but serve different
-purposes.
-
-Collision geometry determines what physical objects collide with.
-
-World boundaries describe the meaningful extent of a playable area.
-
-``` text
-Collision geometry
-	  → what blocks movement
-
-Area boundaries
-	  → where the playable area exists
-```
-
-They may sometimes occupy the same physical location, but one should not
-have to be derived implicitly from the other.
-
-### Spawn locations
-
-Levels also provide suitable positions where players or other gameplay
-entities can appear.
-
-``` text
-Level
- ├── Player 1 start
- ├── Player 2 start
- ├── Player 3 start
- └── Player 4 start
-```
-
-The level defines **where** an entity can appear.
-
-The spawning system remains responsible for deciding **which entity**
-should be placed there.
-
-This keeps level design independent from player lifecycle.
-
-### Level-specific knowledge stays in the level
-
-Systems outside the level should not need to know the internal node
-structure of a specific level.
-
-Instead, the level exposes meaningful information such as:
-
-``` text
-current area
-area boundaries
-player spawn position
-```
-
-This creates a stable contract between level design and gameplay
-systems.
-
-The internal scene structure can then evolve without requiring unrelated
-systems to be rewritten.
-
-### Design intent
-
-The intended responsibility split is:
-
-``` text
-Level        → playable environment
-Area         → meaningful section of that environment
-Boundaries   → usable spatial extent
-Spawn points → valid positions for entering the world
-Game systems → consume this information without owning it
-```
-
-The goal is to make levels self-describing.
-
-A developer creating or modifying a level should define the spatial
-information that gameplay depends on as part of that level, instead of
-relying on hidden assumptions elsewhere in the project.
-
-------------------------------------------------------------------------
-
-# Level Loading and Transitions
-
-The game separates the lifecycle of the playable environment from the
-lifecycle of players.
-
-A level can be loaded, replaced or transitioned without recreating the
-players participating in the game.
-
-``` text
-Players persist
-
-Level A
-   ↓
-Level transition
-   ↓
-Level B
-```
-
-### The current level
-
-At any moment, the game has a **current level** that represents the
-active playable environment.
-
-``` text
-Game
- ├── Players
- └── Current Level
-```
-
-Level management is responsible for changing that environment.
-
-Other systems can work with the current level without needing to know
-how it was loaded or where its scene is stored.
-
-### Loading a level
-
-Loading establishes a new playable environment.
-
-Conceptually:
-
-``` text
-Level requested
-	  ↓
-Previous level removed
-	  ↓
-New level loaded
-	  ↓
-New level becomes current
-	  ↓
-Players positioned in level
-```
-
-Loading the scene and placing players are related steps, but they remain
-separate responsibilities.
-
-The level provides the environment and valid positions. Player lifecycle
-and spawning determine which players should appear there.
-
-### Players exist outside levels
-
-Players are not fundamentally children of the currently loaded level.
-
-``` text
-Main
-├── PlayerContainer
-│    ├── Player 1
-│    └── Player 2
-│
-└── LevelContainer
-	 └── CurrentLevel
-```
-
-This allows the environment to be replaced while player entities
-continue to exist.
-
-A level transition therefore means:
-
-``` text
-replace environment
-+
-reposition players
-```
-
-rather than:
-
-``` text
-destroy players
-+
-destroy level
-+
-create level
-+
-create players
-```
-
-### Entering the new level
-
-Once a level becomes active, participating players need suitable
-positions within it.
-
-The new level provides those positions.
-
-``` text
-Player 1 ──→ Level spawn position 1
-Player 2 ──→ Level spawn position 2
-```
-
-The transition system does not need to know the internal structure of
-the level to determine these coordinates.
-
-It asks the level for meaningful world information and uses the
-spawning/lifecycle system to position the players.
-
-### Transition destinations
-
-Not every transition needs to mean starting a level from its default
-beginning.
-
-The same model can support different destinations:
-
-``` text
-Level transition
-	  ↓
-destination
-	  ↓
-start / entrance / checkpoint / other position
-```
-
-The destination describes **where players should enter**, while level
-loading remains concerned with **which environment should be active**.
-
-This allows transition rules to evolve independently from the
-level-loading mechanism.
-
-### Level-local state
-
-Objects that belong specifically to a level normally share that level's
-lifetime.
-
-``` text
-Level
- ├── world geometry
- ├── enemies
- ├── local objects
- └── areas
-```
-
-Replacing the level removes that level-local world.
-
-Objects that should survive transitions need to belong to a longer-lived
-game-level system instead.
-
-This makes scene ownership communicate lifecycle.
-
-### Transition responsibility
-
-A transition coordinates several existing responsibilities rather than
-owning all of them.
-
-``` text
-Level management
-      → changes the environment
-
-Level
-      → describes valid world positions
-
-Player lifecycle
-      → determines participating players
-
-Spawning
-      → positions those players
-```
-
-Keeping these responsibilities separate prevents level loading from
-becoming responsible for player creation, input or gameplay state.
-
-### Design intent
-
-The central rule is:
-
-``` text
-Players belong to the game.
-Levels belong to the current environment.
-```
-
-Level transitions replace the environment around persistent game-level
-entities.
-
-The goal is for gameplay systems to depend on the concept of a **current
-level**, rather than on a particular scene tree or loading
-implementation. This allows the loading mechanism, transition effects
-and level structure to evolve without changing the fundamental lifecycle
-model.
-
-------------------------------------------------------------------------
-
-# Shared Multiplayer Camera
-
-The game uses one shared camera for all active players.
-
-The camera belongs to the loaded level rather than to an individual
-player or area. Players remain persistent outside the level, while the
-`CameraRig` tracks the players currently participating in gameplay.
-
-``` text
-Level
- ├── CameraRig
- │    ├── Camera2D
- │    ├── PlayerBounds
- │    │    ├── LeftBoundary
- │    │    ├── RightBoundary
- │    │    └── TopBoundary
- │    └── DeathZone
- └── Areas
-```
-
-### Player tracking
-
-Players register with the `CameraRig` when they join. The camera
-calculates the outer bounds of all registered players, so the same
-behaviour works for two or more players.
-
-The camera uses a tracking rectangle inside the viewport. As long as all
-players fit inside this rectangle, the camera only moves when a player
-reaches one of its margins.
-
-``` text
-viewport
-┌─────────────────────────────────────┐
-│     ┌── tracking rectangle ──┐      │
-│     │       P1    P2          │      │
-│     └─────────────────────────┘      │
-└─────────────────────────────────────┘
-```
-
-The vertical tracking margins are asymmetric. More space is reserved
-below the players than above them so upward movement remains visible
-while the camera can still follow intentional descent.
-
-### Player separation
-
-Tracking margins are preferred camera positions, not hard player limits.
-
-When the players become too far apart to fit inside the tracking
-rectangle, tracking for that axis becomes separated. The camera then
-prioritizes keeping the group within the hard viewport constraints
-instead of choosing one player to follow.
-
-``` text
-NORMAL
-   ↓ players no longer fit in tracking range
-SEPARATED
-   ↓ players fit again
-RECOVERING
-   ↓ camera reaches tracking range
-NORMAL
-```
-
-Recovery is gradual. This prevents the camera from snapping when
-separated players move back together.
-
-Horizontal and vertical tracking use the same principle independently.
-
-### Camera-relative player bounds
-
-`PlayerBounds` contains physical `StaticBody2D` boundaries that move
-with the `CameraRig`.
-
-Left and right boundaries prevent players from leaving opposite sides of
-the shared view. This allows the camera to stop when players pull in
-opposite directions without allowing one player to disappear
-indefinitely.
-
-The top boundary is placed slightly above the visible viewport. This
-gives a player room to jump toward a platform near the top of the screen
-without the visible edge behaving like a ceiling.
-
-There is deliberately no bottom boundary.
-
-``` text
-             TopBoundary
-──────────────────────────────────
-          small overflow
-
-┌────────────────────────────────┐
-│                                │
-│          visible view          │
-│                                │
-└────────────────────────────────┘
-              ↓
-         player may fall
-```
-
-The physical top overflow and the camera's visible-player constraint
-have different purposes. The camera should not deliberately move a
-stationary player out of the visible top of the screen, while the
-physical boundary may allow temporary movement above it.
-
-### Falling and the death zone
-
-A `DeathZone` follows below the camera.
-
-A player descending normally continues to pull the camera downward while
-the other players allow it. If another player prevents further downward
-camera movement, the falling player can leave the bottom of the screen
-and eventually enter the death zone.
-
-``` text
-┌────────────────────────────────┐
-│ P1                             │
-│                                │
-│                                │
-└────────────────────────────────┘
-				  P2
-				  ↓
-
-──────────────────────────────────
-			 DeathZone
-```
-
-The death zone detects that a player has fallen out of the playable
-shared camera space. It does not decide where that player should
-respawn.
-
-Respawning is part of player lifecycle and spawning rather than camera
-responsibility.
-
-------------------------------------------------------------------------
-
-# Player Death, Respawning and Programming
-
-Death removes a Player from active gameplay without removing the
-participant from the game.
-
-``` text
-Player falls into DeathZone
-	↓
-Player dies
-	↓
-Player entity is removed
-	↓
-PlayerInputSession remains joined but inactive
-	↓
-another Player activates a RespawnPoint
-	↓
-dead Players are recreated
-```
-
-A `PlayerInputSession` represents the participant and therefore survives
-death.
-
-A `Player` represents the participant's current gameplay entity and can
-be destroyed and recreated during the game.
-
-## Death
-
-A `DeathZone` detects when a Player has fallen out of the playable
-shared-camera space.
-
-The DeathZone only detects the event. It does not own player lifecycle
-or spawning.
-
-When a Player dies:
-
--   the Player is removed from camera tracking;
--   the Player entity is destroyed;
--   its `PlayerInputSession` becomes inactive;
--   the input device remains assigned to the participant.
-
-An inactive session does not produce gameplay commands until a new
-Player has been spawned and assigned to it.
-
-Death is not a `PlayerState`. Player states describe the behaviour of an
-existing Player entity. After death, that entity no longer exists.
-
-## Programming
-
-Programming is a Player state used for interactions that require the
-Player to temporarily stop normal movement and work with another
-gameplay object.
-
-``` text
-Player approaches programmable object
-    ↓
-Player presses interact
-    ↓
-ProgrammingState
-    ↓
-nearby object accepts programming
-```
-
-The Player does not need to know which specific object is being
-programmed.
-
-Programmable objects define their own interaction range and decide what
-programming means for that object.
-
-For example:
-
-``` text
-RespawnPoint
-    → wait for programming to complete
-    → respawn dead Players
-
-ProgrammingBlock
-    → create or configure a block
-
-Crane
-    → transfer temporary control to the crane
-```
-
-This keeps `ProgrammingState` generic instead of adding object-specific
-behaviour to the Player.
-
-## Programming lifecycle
-
-The Player decides when to start or cancel programming.
-
-The programmed object decides when programming has successfully
-completed.
-
-``` text
-Programming starts
-    │
-    ├── object completes
-    │      ↓
-    │   programming finished
-    │      ↓
-    │   Player leaves ProgrammingState
-    │
-    └── Player cancels
-           ↓
-        object aborts interaction
-           ↓
-        Player leaves ProgrammingState
-```
-
-Programming may be instantaneous or take time.
-
-Cancelling does not preserve partial progress unless an object's design
-explicitly requires it. A later attempt starts that object's programming
-process again.
-
-The Player cannot perform normal movement while in `ProgrammingState`.
-
-## RespawnPoint
-
-A `RespawnPoint` is a programmable world object that allows a living
-Player to bring dead participants back into the game.
-
-``` text
-RespawnPoint
-├── DetectionArea
-├── ProgrammingTimer
-└── SpawnPoints
-    ├── Spawn1
-    ├── Spawn2
-    ├── Spawn3
-    └── Spawn4
-```
-
-The `DetectionArea` determines which Players are close enough to program
-the object.
-
-Entering the area alone does not activate the RespawnPoint. The Player
-must explicitly enter `ProgrammingState`.
-
-Programming a RespawnPoint currently takes three seconds.
-
-If the Player cancels before completion, the timer is reset and no
-respawn occurs.
-
-When programming completes, all currently dead joined participants are
-respawned.
-
-## Respawn positions
-
-A RespawnPoint provides multiple explicit spawn positions.
-
-Each returning Player receives a different position:
-
-``` text
-          RespawnPoint
-
-     P2       P3       P4
-      ↓        ↓        ↓
-    Spawn1   Spawn2   Spawn3
-──────────────────────────────
-           safe floor
-```
-
-Spawn positions are defined explicitly by the level designer rather than
-inferred from collision geometry.
-
-This guarantees that the positions are intentional safe locations and
-prevents multiple Players from being spawned on top of each other.
-
-Spawn markers are available positions rather than permanently belonging
-to a particular player slot. Only Players that currently need to respawn
-consume a position.
-
-## Responsibilities
-
-The responsibilities remain separated:
-
-``` text
-DeathZone
-    → detects that a Player left playable space
-
-Player lifecycle
-    → deactivates/reactivates participants and their Player entities
-
-PlayerInputSession
-    → preserves participant and input-device identity
-
-ProgrammingState
-    → represents the Player performing a programming interaction
-
-Programmable object
-    → decides whether programming is accepted and when it completes
-
-RespawnPoint
-    → provides respawn interaction and safe spawn positions
-
-SpawnManager
-    → creates and positions Player entities
-
-CameraRig
-    → tracks active Player entities
-```
-
-The CameraRig does not manage spawning.
-
-The RespawnPoint does not manage participant identity or input sessions.
-
-The Player does not contain special-case knowledge of RespawnPoints,
-cranes or other programmable objects.
-
-## Interaction design
-
-Programming is intended as the common entry point for world interactions
-that temporarily interrupt normal Player movement.
-
-Objects can build different behaviour on the same lifecycle:
-
-``` text
-start programming
-    ↓
-object accepts interaction
-    ↓
-object-specific behaviour
-    ↓
-complete or cancel
-    ↓
-return Player to normal gameplay
-```
-
-Some objects may complete after a timer, some after another condition,
-and some may temporarily move the participant's control target to
-another entity.
-
-The existing control-target stack remains responsible for temporary
-control:
-
-``` text
-[Player]
-
-		↓ program crane
-
-[Player, Crane]
-
-		↓ crane interaction ends
-
-[Player]
-```
-
-Programming and control targets therefore remain separate concepts.
-
-`ProgrammingState` describes what the Player is doing. The
-control-target stack determines which entity receives the participant's
-commands.
-
-This allows future programmable objects to introduce different
-interactions without requiring a separate Player state or input-routing
-system for every object.
-
-
-------------------------------------------------------------------------
-
-# Music and Sound Effects
-
-Audio is separated into **music ownership**, **sound-effect ownership**,
-and **playback**.
-
-Gameplay systems decide **what should be heard**, while global audio
-managers are responsible for **how it is played**.
-
-``` text
-Environment                         Gameplay
-     │                                  │
-   Area                        Component / State
-     │                                  │
-     ▼                                  ▼
-MusicManager                       SfxManager
-     │                                  │
-     └────────── audio playback ────────┘
-```
-
-### Music
-
-Music belongs to the environment in which gameplay takes place.
-
-An **Area** defines the music associated with that part of the world.
-
-``` text
-Level
- ├── Area 1 → tower music
- ├── Area 2 → factory music
- └── Area 3 → boss music
-```
-
-When the active area changes, its music becomes the desired music for
-the game.
-
-The Area determines **what should be playing**. It does not manage audio
-playback itself.
-
-### MusicManager
-
-`MusicManager` provides global music playback.
-
-``` text
-Area
-  ↓
-desired music
-  ↓
-MusicManager
-  ↓
-audio playback
-```
-
-It owns the lifetime of music independently from individual levels and
-areas.
-
-This allows music to continue, stop or change when the environment
-changes without making level objects responsible for managing an
-`AudioStreamPlayer`.
-
-The manager deals with playback behaviour. Areas only provide the
-desired `AudioStream`.
-
-### Sound effects
-
-Sound effects belong to the gameplay behaviour that causes them.
-
-For capability-related actions, the sound is normally owned by the
-corresponding component.
-
-``` text
-JumpComponent
- ├── performs jump
- └── jump sound
-
-HealthComponent
- ├── applies damage
- └── damage sound
-```
-
-This means the sound occurs when the capability actually performs its
-behaviour, rather than because another system assumes that behaviour
-happened.
-
-### State sounds
-
-Some sounds belong to a behavioural state rather than an individual
-capability.
-
-This is appropriate when the lifetime of the sound corresponds to the
-lifetime of the state.
-
-``` text
-ProgrammingState
-
-enter
-  ↓
-start programming sound
-
-exit
-  ↓
-stop programming sound
-```
-
-The distinction is based on ownership:
-
-``` text
-Component → sound belongs to performing a capability
-
-State     → sound belongs to being in a behavioural state
-```
-
-The goal is not to enforce one location for all sound effects, but to
-keep each sound with the gameplay concept responsible for it.
-
-### SfxManager
-
-`SfxManager` provides global playback for short gameplay sounds.
-
-``` text
-Gameplay behaviour
-       ↓
-   AudioStream
-       ↓
-   SfxManager
-       ↓
-available audio player
-       ↓
-     playback
-```
-
-Gameplay objects do not need to create and manage their own
-`AudioStreamPlayer`s for ordinary one-shot effects.
-
-The manager maintains multiple audio players so independent sounds can
-overlap.
-
-If all available players are occupied, new one-shot sounds may be
-discarded rather than delayed. Immediate gameplay feedback is generally
-more important than playing every requested sound later.
-
-### Audio resources
-
-Gameplay objects reference `AudioStream` resources rather than
-filesystem paths.
-
-For example, a component can expose its sound as configuration:
-
-``` text
-JumpComponent
- └── jump_sfx: AudioStream
+```mermaid
+flowchart LR
+	PLAYER[Player] --> PROGRAM[ProgrammableComponent]
+	PROGRAM -->|activation channel| EVENT[Activation]
+	EVENT --> PLATFORM[Platform]
+	EVENT --> SPAWNER[Spawner]
+	EVENT --> OTHER[Other Receiver]
 ```
-
-The scene determines which actual audio resource is assigned.
 
-This keeps resource selection configurable through Godot while keeping
-filesystem knowledge out of gameplay behaviour.
+The source and receiver do not need direct references to one another. This allows switches, respawn systems, platforms, spawners, and future programmable objects to reuse the same interaction model.
 
-### Ownership
+## Managers and communication
 
-Audio follows the same ownership principles as the rest of the gameplay
-architecture.
+Managers are used for responsibilities whose lifetime or coordination extends beyond a single entity. Examples include game flow, sessions, player lifecycle, spawning, levels, music, and sound effects.
 
-``` text
-Area
-  → music associated with a location
+They should not become a default location for gameplay logic. A mechanic that naturally belongs to an entity, state, component, or level object should stay there.
 
-Component
-  → SFX associated with performing a capability
+Likewise, global events are useful when systems genuinely need to remain decoupled, but they are not a replacement for normal dependencies. Prefer a direct call when one object clearly owns or composes another; prefer signals/events for meaningful occurrences across ownership boundaries or when multiple independent systems may react.
 
-State
-  → SFX associated with a behavioural state
+## Adding a feature
 
-MusicManager
-  → global music playback
+Before deciding which script to modify, first decide **who owns the feature and how long it lives**.
 
-SfxManager
-  → global concurrent SFX playback
+```mermaid
+flowchart TD
+	F[New feature or data] --> Q{What does it belong to?}
+	Q -->|Whole game / cross-level| M[Manager or persistent game state]
+	Q -->|Participating player| S[Session-owned state]
+	Q -->|Physical incarnation| E[Player / Entity]
+	Q -->|Reusable capability| C[Component]
+	Q -->|Current behavior| ST[State]
+	Q -->|Temporary world object| W[Level-owned object]
+	Q -->|Presentation only| UI[HUD / Menu]
 ```
 
-Managers do not know what jumping, programming, enemies or areas mean.
+A few questions catch most architectural mistakes early:
 
-Likewise, gameplay systems do not need to know how audio players are
-allocated or managed.
+- Should this survive Player death and recreation?
+- Should it survive a level change?
+- Is this a capability or a temporary behavioral state?
+- Who provides the mechanic, and who receives it?
+- Is the dependency local, or does it cross system/lifetime boundaries?
+- Does the design still work with several players joining, dying, and respawning independently?
+- Is there already an abstraction that owns this responsibility?
 
-### Design intent
+Prefer the smallest change that fits these boundaries. Avoid introducing generic systems before a concrete feature needs them, and avoid solving a local mechanic by adding another global manager.
 
-The central separation is:
+## Development approach
 
-``` text
-Gameplay
-   → decides WHAT should be heard
-
-Audio managers
-   → decide HOW it is played
-```
+When extending or debugging the game, follow the existing execution path before redesigning it. Make changes incrementally, verify multiplayer and lifecycle transitions, and keep unrelated refactors separate.
 
-Audio should be attached to the gameplay concept that owns it rather
-than to whichever script happens to have convenient access to an audio
-player.
+The architecture is intended to evolve with the game. The important part is not preserving every current class forever, but preserving clear ownership between **persistent participants, disposable world entities, behavioral states, reusable capabilities, temporary level state, orchestration, and presentation**.
 
-This allows audio resources and playback implementation to change
-without coupling them to gameplay behaviour.
+For implementation-specific rules and guidance for coding agents, see [`AGENTS.md`](./AGENTS.md).
