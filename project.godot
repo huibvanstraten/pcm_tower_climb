@@ -29,6 +29,7 @@ SpawnManager="*uid://cfral3wr3jws6"
 GameFlowManager="*uid://cytavpvh40jul"
 PlayerSessionManager="*uid://cg3i6exm32vg1"
 PlayerLifecycleManager="*uid://bjb8iwnix35m7"
+FragmentSpawnManager="*uid://cim3n75kkuy4"
 
 [display]
 

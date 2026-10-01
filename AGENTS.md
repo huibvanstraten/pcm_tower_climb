@@ -73,6 +73,10 @@ Examples:
 Do not bypass the context/session system with direct input handling unless
 the input is intentionally global.
 
+Prefer domain ownership over convenient observation points.
+When adding a gameplay consequence, attach it to the interaction or capability that semantically causes it, not to a downstream component that merely happens to observe or process the interaction. A component should not become the trigger for unrelated behavior simply because it provides a convenient lifecycle hook.  
+Keep reusable effects/capabilities independent of their triggers. For example, if multiple interactions can invoke the same effect, model the effect as a composable capability and let each initiating interaction decide whether/configure how to invoke it.
+
 ### Levels
 
 Players do not belong to levels.

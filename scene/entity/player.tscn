@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://dt45jb0dt3xgd" path="res://script/state/player/idle_state.gd" id="13_34jf3"]
 [ext_resource type="Script" uid="uid://cdoro7a8byw7t" path="res://script/component/pickup_component.gd" id="13_73c0v"]
 [ext_resource type="Script" uid="uid://drlyheth3ls8p" path="res://script/component/bounce_receiver_component.gd" id="13_f6tgk"]
+[ext_resource type="Script" uid="uid://4038wovak83x" path="res://script/component/fragment_scatter_component.gd" id="14_73c0v"]
 [ext_resource type="Script" uid="uid://c2utu5ootr02n" path="res://script/state/player/die_state.gd" id="16_bup7g"]
 [ext_resource type="Script" uid="uid://cmbvfdyl17rfp" path="res://script/state/player/swear_state.gd" id="21_0l74y"]
 
@@ -497,6 +498,11 @@ player = NodePath("../..")
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_dr4yn")
 debug_color = Color(0.34230244, 0.61840546, 0.17266619, 0.41960785)
+
+[node name="FragmentScatter" type="Node2D" parent="Components" unique_id=181244604 node_paths=PackedStringArray("player", "hurt_component")]
+script = ExtResource("14_73c0v")
+player = NodePath("../..")
+hurt_component = NodePath("../Hurt")
 
 [node name="StateMachine" type="Node2D" parent="." unique_id=2108489335 node_paths=PackedStringArray("jump_component", "entity", "initial_state")]
 script = ExtResource("8_u7b46")

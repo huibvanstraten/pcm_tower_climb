@@ -420,6 +420,7 @@ collision_mask = 32
 script = ExtResource("2_kqmod")
 source = NodePath("../..")
 knockbackStrength = Vector2(300, 300)
+fragment_scatter_amount = 3
 
 [node name="Hit" type="CollisionShape2D" parent="Components/Hit" unique_id=1920706461]
 position = Vector2(0, -10.5)

@@ -348,7 +348,7 @@ position = Vector2(448, -28)
 position = Vector2(388, -28)
 
 [node name="Enemy" parent="." unique_id=469903152 instance=ExtResource("2_dfr33")]
-position = Vector2(1163, -25)
+position = Vector2(357, -143)
 
 [node name="Enemy2" parent="." unique_id=32252738 instance=ExtResource("2_dfr33")]
 position = Vector2(1152, -267)
@@ -472,3 +472,6 @@ position = Vector2(745, -298)
 
 [node name="ElectricBall3" parent="." unique_id=497708470 instance=ExtResource("12_o31v3")]
 position = Vector2(828, -298)
+
+[node name="LevelObjects" type="Node2D" parent="." unique_id=678478215]
+unique_name_in_owner = true
