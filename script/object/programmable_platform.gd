@@ -2,36 +2,38 @@ class_name ProgrammablePlatform
 extends Node2D
 
 
-@onready var programmable_component: ProgrammableComponent = \
-	$Terminal
+@export var activation_channel: StringName
 
-@onready var platform: StaticBody2D = \
-	$Platform
-
-@onready var platform_sprite: Sprite2D = \
-	$Platform/Sprite2D
+@onready var platform_sprite: AnimatedSprite2D = \
+	$AnimatedSprite2D
 
 @onready var platform_collision: CollisionShape2D = \
 	$Platform/CollisionShape2D
 
-@onready var animation_player: AnimationPlayer = \
-	$Platform/AnimationPlayer
 
 var active := false
 
 
 func _ready() -> void:
-	programmable_component.programming_completed.connect(
-		_on_programming_completed
+	EventManager.programmable_activated.connect(
+		_on_programmable_activated
 	)
 
-	_set_platform_active(false)
+	platform_sprite.animation_finished.connect(
+		_on_platform_animation_finished
+	)
+
+	platform_collision.disabled = true
+	platform_sprite.play("preview")
 
 
-func _on_programming_completed(player: Player) -> void:
+func _on_programmable_activated(
+	channel: StringName
+) -> void:
+	if channel != activation_channel:
+		return
+
 	activate()
-
-	EventManager.programming_finished.emit(player)
 
 
 func activate() -> void:
@@ -39,13 +41,16 @@ func activate() -> void:
 		return
 
 	active = true
-	_set_platform_active(true)
+	platform_sprite.play("appear")
 
 
-func _set_platform_active(value: bool) -> void:
-	platform_sprite.visible = value
+func _on_platform_animation_finished() -> void:
+	if platform_sprite.animation != &"appear":
+		return
+
+	platform_sprite.play("block")
 
 	platform_collision.set_deferred(
 		"disabled",
-		not value
+		false
 	)

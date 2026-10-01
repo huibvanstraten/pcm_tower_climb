@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cen5vsst8ve0u"]
 
 [ext_resource type="Script" uid="uid://de8ni5ly40irp" path="res://script/entity/respawn_point.gd" id="1_53nmy"]
-[ext_resource type="PackedScene" uid="uid://drd35jtoctx7p" path="res://scene/object/terminal.tscn" id="2_2nsfl"]
 [ext_resource type="Texture2D" uid="uid://ja7e84qx1fio" path="res://asset/sci-fi platformer - premium/props/lamp.png" id="2_qkq3j"]
 [ext_resource type="Texture2D" uid="uid://cqxjul47ni1df" path="res://asset/sci-fi platformer - premium/background-wall/fans.png" id="4_2nsfl"]
 [ext_resource type="Texture2D" uid="uid://8lf70r54h6sv" path="res://asset/sci-fi platformer - premium/tiles/tiles.png" id="4_di4qu"]
@@ -16,9 +15,6 @@ size = Vector2(128, 32)
 collision_layer = 8
 collision_mask = 6
 script = ExtResource("1_53nmy")
-
-[node name="Terminal" parent="." unique_id=1878655401 instance=ExtResource("2_2nsfl")]
-position = Vector2(155, -43)
 
 [node name="SpawnPoints" type="Node2D" parent="." unique_id=1389512122]
 position = Vector2(46, -29)

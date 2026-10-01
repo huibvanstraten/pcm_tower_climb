@@ -1,24 +1,27 @@
 class_name RespawnPoint
 extends Node2D
 
+
+@export var activation_channel: StringName
+
 @onready var spawn_points: Node2D = $SpawnPoints
-@onready var programmable_component: ProgrammableComponent = $Terminal
 
 
 func _ready() -> void:
-	programmable_component.programming_completed.connect(
-		_on_programming_completed
+	EventManager.programmable_activated.connect(
+		_on_programmable_activated
 	)
 
 
-func _on_programming_completed(player: Player) -> void:
+func _on_programmable_activated(
+	channel: StringName
+) -> void:
+	if channel != activation_channel:
+		return
+
 	EventManager.respawn_requested.emit(
 		get_spawn_positions()
 	)
-
-	EventManager.programming_finished.emit(player)
-
-	print("RESPAWN PROGRAMMING COMPLETED")
 
 
 func get_spawn_positions() -> Array[Vector2]:
