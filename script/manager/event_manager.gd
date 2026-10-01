@@ -22,6 +22,7 @@ signal remove_attack_body
 signal programming_started(player: Player)
 signal programming_cancelled(player: Player)
 signal programming_finished(player: Player)
+signal programmable_activated(activation_channel: StringName)
 
 signal respawn_requested(spawn_positions: Array[Vector2])
 

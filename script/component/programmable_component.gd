@@ -1,16 +1,24 @@
 class_name ProgrammableComponent
 extends Node
 
-signal programming_completed(player: Player)
 
 var players_in_range: Array[Player] = []
 var programming_player: Player = null
+
+@export var activation_channel: StringName
 
 @onready var programming_area: Area2D = $ProgrammingArea
 @onready var programming_timer: Timer = $ProgrammingTimer
 
 
 func _ready() -> void:
+	
+	assert(
+		not activation_channel.is_empty(),
+		"ProgrammableComponent requires an activation_channel"
+	)
+
+	
 	EventManager.programming_started.connect(
 		_on_programming_started
 	)
@@ -56,7 +64,11 @@ func _on_programming_completed() -> void:
 	var player := programming_player
 	programming_player = null
 
-	programming_completed.emit(player)
+	EventManager.programmable_activated.emit(
+		activation_channel
+	)
+
+	EventManager.programming_finished.emit(player)
 
 
 func _on_body_entered(body: Node2D) -> void:

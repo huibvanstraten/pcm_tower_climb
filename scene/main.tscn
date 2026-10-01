@@ -22,10 +22,17 @@ levelName = "Level3"
 levelPath = "res://scene/level/Level3.tscn"
 metadata/_custom_type_script = "uid://ys0ho1wihei4"
 
+[sub_resource type="Resource" id="Resource_dt35o"]
+script = ExtResource("2_v0l8b")
+levelId = 4
+levelName = "Level4"
+levelPath = "res://scene/level/Level4.tscn"
+metadata/_custom_type_script = "uid://ys0ho1wihei4"
+
 [node name="Main" type="Node2D" unique_id=1212463943]
 script = ExtResource("1_itxqv")
 player_input_session_scene = ExtResource("2_wp4xf")
-availableLevels = Array[ExtResource("2_v0l8b")]([SubResource("Resource_4j5ol"), SubResource("Resource_p1hux")])
+availableLevels = Array[ExtResource("2_v0l8b")]([SubResource("Resource_4j5ol"), SubResource("Resource_p1hux"), SubResource("Resource_dt35o")])
 character_roster = ExtResource("4_p1hux")
 
 [node name="LevelContainer" type="Node2D" parent="." unique_id=384417701]
