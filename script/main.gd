@@ -1,13 +1,14 @@
 class_name Main
 extends Node
 
-@export var player_input_session_scene: PackedScene
+@export var player_session_scene: PackedScene
 @export var availableLevels: Array[LevelData]
 @export var character_roster: CharacterRoster
 
 @onready var level_container: Node = $LevelContainer
 @onready var player_container: Node = $PlayerContainer
-@onready var input_session_container: Node = $PlayerInputSessionContainer
+@onready var session_container: Node = \
+	$PlayerSessionContainer
 
 const MAX_PLAYERS := 4
 
@@ -17,8 +18,8 @@ func _ready() -> void:
 	PlayerSessionManager.character_roster = character_roster
 	
 	PlayerSessionManager.setup(
-	player_input_session_scene,
-	input_session_container
+	player_session_scene,
+	session_container
 )
 	
 	EventManager.state_changed.connect(_on_game_state_changed)

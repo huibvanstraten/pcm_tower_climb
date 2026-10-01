@@ -66,7 +66,7 @@ func _update_start_game_state() -> void:
 
 func _handle_session_input(
 	event: InputEvent,
-	session: PlayerInputSession
+	session: PlayerSession
 ) -> void:
 	if session.selection.confirmed:
 		_handle_confirmed_session_input(event)
@@ -121,7 +121,7 @@ func _start_game() -> void:
 	
 
 func _refresh_slot(
-	session: PlayerInputSession
+	session: PlayerSession
 ) -> void:
 	var slot := get_slot(session.player_slot)
 
@@ -190,7 +190,7 @@ func _on_player_session_joined(
 
 
 func _ensure_available_character(
-	session: PlayerInputSession
+	session: PlayerSession
 ) -> void:
 	var unavailable := _get_unavailable_character_indices(session)
 
@@ -207,7 +207,7 @@ func _update_visibility(
 	
 
 func _get_unavailable_character_indices(
-	excluded_session: PlayerInputSession = null
+	excluded_session: PlayerSession = null
 ) -> Array[int]:
 	var unavailable: Array[int] = []
 
@@ -224,7 +224,7 @@ func _get_unavailable_character_indices(
 
 
 func _select_next_character(
-	session: PlayerInputSession
+	session: PlayerSession
 ) -> void:
 	var unavailable := _get_unavailable_character_indices(session)
 	var current := session.selection.character_index
@@ -243,7 +243,7 @@ func _select_next_character(
 			
 
 func _select_previous_character(
-	session: PlayerInputSession
+	session: PlayerSession
 ) -> void:
 	var unavailable := _get_unavailable_character_indices(session)
 	var current := session.selection.character_index
@@ -262,7 +262,7 @@ func _select_previous_character(
 
 
 func _confirm_selection(
-	session: PlayerInputSession
+	session: PlayerSession
 ) -> void:
 	var unavailable := _get_unavailable_character_indices(session)
 
@@ -295,7 +295,7 @@ func are_all_sessions_confirmed() -> bool:
 
 
 func _resolve_selection_conflicts(
-	confirmed_session: PlayerInputSession
+	confirmed_session: PlayerSession
 ) -> void:
 	var confirmed_character := (
 		confirmed_session.selection.character_index
@@ -319,7 +319,7 @@ func _resolve_selection_conflicts(
 
 func _handle_joypad_motion(
 	event: InputEventJoypadMotion,
-	session: PlayerInputSession
+	session: PlayerSession
 ) -> void:
 	if event.axis != JOY_AXIS_LEFT_X:
 		return

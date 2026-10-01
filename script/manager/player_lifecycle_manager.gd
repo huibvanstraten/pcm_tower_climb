@@ -10,7 +10,7 @@ func _ready() -> void:
 
 
 func get_session_character(
-	session: PlayerInputSession
+	session: PlayerSession
 ) -> CharacterData:
 	if character_roster == null:
 		push_error("CharacterRoster is not configured")
@@ -30,7 +30,7 @@ func get_session_character(
 
 
 func activate_session_player(
-	session: PlayerInputSession
+	session: PlayerSession
 ) -> void:
 	var character := get_session_character(session)
 
@@ -86,7 +86,7 @@ func respawn_players(
 	var spawn_index := 0
 
 	for session in PlayerSessionManager.get_sessions():
-		if session.state != PlayerInputSession.State.WAITING:
+		if session.state != PlayerSession.State.WAITING:
 			continue
 
 		if spawn_index >= spawn_positions.size():
@@ -121,7 +121,7 @@ func position_joined_players() -> void:
 	var level = LevelManager.get_current_level()
 
 	for session in PlayerSessionManager.get_sessions():
-		if session.input_device == null:
+		if not session.is_joined():
 			continue
 
 		var player = SpawnManager.get_player(session.player_slot)
