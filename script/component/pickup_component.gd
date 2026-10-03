@@ -6,9 +6,23 @@ extends Node
 
 
 func _on_area_entered(area: Area2D) -> void:
-	var pickup := area as Pickup
+	print(
+		"PICKUP COMPONENT detected: ",
+		area,
+		" type=",
+		area.get_class()
+	)
 
-	if pickup == null:
+	var pickup_area := area as PickupArea
+
+	if pickup_area == null:
+		print("NOT A PICKUP AREA")
 		return
-	print("componentttt")
-	pickup.collect(player)
+
+	if pickup_area.pickup == null:
+		print("PICKUP AREA HAS NO PICKUP")
+		return
+
+	print("COLLECTING: ", pickup_area.pickup)
+
+	pickup_area.pickup.collect(player)

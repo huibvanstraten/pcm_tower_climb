@@ -347,8 +347,26 @@ position = Vector2(448, -28)
 [node name="Fragment3" parent="." unique_id=1427716551 instance=ExtResource("2_tqrtc")]
 position = Vector2(388, -28)
 
+[node name="Fragment5" parent="." unique_id=277660141 instance=ExtResource("2_tqrtc")]
+position = Vector2(388, -28)
+
+[node name="Fragment6" parent="." unique_id=576319939 instance=ExtResource("2_tqrtc")]
+position = Vector2(388, -28)
+
+[node name="Fragment7" parent="." unique_id=1578378569 instance=ExtResource("2_tqrtc")]
+position = Vector2(388, -28)
+
+[node name="Fragment4" parent="." unique_id=575795227 instance=ExtResource("2_tqrtc")]
+position = Vector2(388, -28)
+
 [node name="Enemy" parent="." unique_id=469903152 instance=ExtResource("2_dfr33")]
 position = Vector2(357, -143)
+
+[node name="Enemy5" parent="." unique_id=94562065 instance=ExtResource("2_dfr33")]
+position = Vector2(495, -141)
+
+[node name="Enemy6" parent="." unique_id=154720830 instance=ExtResource("2_dfr33")]
+position = Vector2(244, -26)
 
 [node name="Enemy2" parent="." unique_id=32252738 instance=ExtResource("2_dfr33")]
 position = Vector2(1152, -267)

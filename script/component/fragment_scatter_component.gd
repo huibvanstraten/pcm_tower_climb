@@ -13,11 +13,8 @@ func _ready() -> void:
 
 
 func _on_hit_received(hit: Hit) -> void:
-	print("test1")
-
 	if hit.fragment_scatter <= 0:
 		return
-	print("test2")
 
 	scatter(hit.fragment_scatter)
 
