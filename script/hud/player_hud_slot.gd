@@ -16,7 +16,8 @@ enum State {
 @onready var waiting_label: RichTextLabel = %WaitingLabel
 @onready var playing_container: Control = %PlayingContainer
 
-var player_hud_info: Control = null
+var fragments: int = 0
+var player_hud_info: PlayerHUDInfo = null
 
 
 func _ready() -> void:
@@ -38,18 +39,46 @@ func set_state(
 		State.READY:
 			ready_label.visible = true
 
-
 		State.PLAYING:
 			playing_container.visible = true
-			ensure_player_hud_info(player_id)
+			ensure_player_hud_info(
+				player_id
+			)
 
 		State.WAITING:
 			waiting_label.visible = true
 
 
-func ensure_player_hud_info(player_id: int) -> void:
+func ensure_player_hud_info(
+	player_id: int
+) -> void:
 	if player_hud_info == null:
-		player_hud_info = player_hud_info_scene.instantiate()
-		playing_container.add_child(player_hud_info)
+		player_hud_info = (
+			player_hud_info_scene.instantiate()
+			as PlayerHUDInfo
+		)
 
-	player_hud_info.setup(player_id)
+		playing_container.add_child(
+			player_hud_info
+		)
+
+	player_hud_info.setup(
+		player_id
+	)
+
+	player_hud_info.set_fragments(
+		fragments
+	)
+
+
+func set_fragments(
+	amount: int
+) -> void:
+	fragments = amount
+
+	if player_hud_info == null:
+		return
+
+	player_hud_info.set_fragments(
+		fragments
+	)

@@ -1,6 +1,7 @@
 class_name Player
 extends Entity
 
+var session: PlayerSession
 var character_data: CharacterData
 var player_id: int
 var command: PlayerCommand = PlayerCommand.new()

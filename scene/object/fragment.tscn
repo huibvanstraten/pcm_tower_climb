@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://dqfrpwu4mnxtk"]
+
+[ext_resource type="Script" uid="uid://bo11rhd1rid3t" path="res://script/pickup/fragment_pickup.gd" id="1_esi87"]
+[ext_resource type="Texture2D" uid="uid://bspj54v4x6062" path="res://asset/object/fragment.png" id="2_54a6x"]
+[ext_resource type="Script" uid="uid://b1w2u1xebso7j" path="res://script/pickup/pickup_area.gd" id="3_v5brn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4toet"]
+radius = 2.236068
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v5brn"]
+atlas = ExtResource("2_54a6x")
+region = Rect2(0, 0, 5, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xg3or"]
+atlas = ExtResource("2_54a6x")
+region = Rect2(5, 0, 5, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lis1g"]
+atlas = ExtResource("2_54a6x")
+region = Rect2(10, 0, 5, 6)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4toet"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v5brn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xg3or")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lis1g")
+}],
+"loop": 1,
+"name": &"glimmer",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ni43k"]
+radius = 2.0
+
+[node name="Fragment" type="Node2D" unique_id=277660141]
+script = ExtResource("1_esi87")
+
+[node name="Body" type="RigidBody2D" parent="." unique_id=1039215330]
+collision_layer = 0
+
+[node name="CollectionArea" type="Area2D" parent="Body" unique_id=1635900376 node_paths=PackedStringArray("pickup")]
+position = Vector2(-7, 1)
+collision_layer = 4096
+collision_mask = 4096
+script = ExtResource("3_v5brn")
+pickup = NodePath("../..")
+
+[node name="CollectionShape" type="CollisionShape2D" parent="Body/CollectionArea" unique_id=1506255956]
+position = Vector2(7, 0)
+shape = SubResource("CircleShape2D_4toet")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body" unique_id=1199218948]
+sprite_frames = SubResource("SpriteFrames_4toet")
+animation = &"glimmer"
+autoplay = "glimmer"
+frame_progress = 0.4072704
+
+[node name="PhysicsShape" type="CollisionShape2D" parent="Body" unique_id=1600445264]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_ni43k")

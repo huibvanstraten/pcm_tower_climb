@@ -4,6 +4,8 @@ extends Node
 @export var levelId: int
 @export var startAreaId: int = 1
 
+
+@onready var level_objects: Node2D = %LevelObjects
 @onready var camera_rig: CameraRig = $CameraRig
 
 var levelData: LevelData

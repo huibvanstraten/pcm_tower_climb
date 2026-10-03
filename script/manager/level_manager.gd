@@ -28,6 +28,10 @@ func load_level(levelId: int):
 	if levelRes:
 		loadedLevel = levelRes.instantiate()
 		mainScene.add_child(loadedLevel)
+	
+	FragmentSpawnManager.set_level_container(
+		loadedLevel.level_objects
+	)
 
 func get_level_data_by_id(levelId: int) -> LevelData:
 	var levelToReturn: LevelData = null

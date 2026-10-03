@@ -1,6 +1,10 @@
 class_name HurtComponent
 extends Area2D
 
+
+signal hit_received(hit: Hit)
+
+
 @export var player: CharacterBody2D
 @export var health_component: HealthComponent
 
@@ -19,7 +23,7 @@ func receive_hit(hit: Hit) -> void:
 	elif not accepts_enemy_hits:
 		return
 
-	# enemy-hit priority.
+	# Enemy-hit priority.
 	if player.hit != null:
 		if player.hit.kind == Hit.Kind.NORMAL:
 			return
@@ -28,3 +32,4 @@ func receive_hit(hit: Hit) -> void:
 			return
 
 	player.hit = hit
+	hit_received.emit(hit)

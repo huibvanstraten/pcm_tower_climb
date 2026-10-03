@@ -19,7 +19,7 @@ enum State {
 @onready var previous_label: Label = %PreviousLabel
 
 var state: PlayerSelectSlot.State = State.EMPTY
-var session: PlayerInputSession = null
+var session: PlayerSession = null
 var character_roster: CharacterRoster
 
 var empty_style := StyleBoxFlat.new()
@@ -62,9 +62,9 @@ func _update_character() -> void:
 	
 	
 func assign_session(
-	player_input_session: PlayerInputSession
+	player_session: PlayerSession
 ) -> void:
-	session = player_input_session
+	session = player_session
 
 	if session.selection.confirmed:
 		state = State.CONFIRMED

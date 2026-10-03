@@ -22,15 +22,12 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5lugx"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_thtid"]
-size = Vector2(24, 1)
-
 [sub_resource type="Animation" id="Animation_5lugx"]
 length = 0.001
 
 [sub_resource type="Animation" id="Animation_siwfd"]
 resource_name = "enemy_hit"
-length = 0.4
+length = 0.56666666
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -350,13 +347,13 @@ animations = [{
 size = Vector2(200, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pw261"]
-size = Vector2(24, 19)
+size = Vector2(24, 18)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sj55t"]
-size = Vector2(24, 1)
+size = Vector2(22, 2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
-size = Vector2(26, 7.5)
+size = Vector2(22, 0.875)
 
 [node name="Enemy" type="CharacterBody2D" unique_id=469903152 node_paths=PackedStringArray("bodyCollisionShape", "animationComponent")]
 collision_layer = 4
@@ -368,10 +365,7 @@ animationComponent = NodePath("AnimatedSprite2D")
 [node name="PhysicalBodyShape1" type="CollisionShape2D" parent="." unique_id=760992176]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_5lugx")
-
-[node name="PhysicalBodyShape2" type="CollisionShape2D" parent="." unique_id=2009645434]
-position = Vector2(0, -20.5)
-shape = SubResource("RectangleShape2D_thtid")
+debug_color = Color(0.83014625, 0.3939382, 0, 0.41960785)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1613949388]
 libraries/ = SubResource("AnimationLibrary_3cfia")
@@ -380,7 +374,7 @@ libraries/ = SubResource("AnimationLibrary_3cfia")
 position = Vector2(0, -10)
 scale = Vector2(-1, 1)
 sprite_frames = SubResource("SpriteFrames_f87vc")
-animation = &"idle"
+animation = &"patrol"
 flip_h = true
 
 [node name="Components" type="Node2D" parent="." unique_id=1129159119]
@@ -405,6 +399,7 @@ entity = NodePath("../..")
 intial_health = 1
 
 [node name="Attack" type="Area2D" parent="Components" unique_id=27076004 node_paths=PackedStringArray("entity")]
+visible = false
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("17_mkxcx")
@@ -420,9 +415,10 @@ collision_mask = 32
 script = ExtResource("2_kqmod")
 source = NodePath("../..")
 knockbackStrength = Vector2(300, 300)
+fragment_scatter_amount = 10
 
 [node name="Hit" type="CollisionShape2D" parent="Components/Hit" unique_id=1920706461]
-position = Vector2(0, -10.5)
+position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_pw261")
 
 [node name="Hurt" type="Area2D" parent="Components" unique_id=1444060120 node_paths=PackedStringArray("player", "health_component")]
@@ -433,19 +429,19 @@ player = NodePath("../..")
 health_component = NodePath("../Health")
 
 [node name="Hurt" type="CollisionShape2D" parent="Components/Hurt" unique_id=1873067139]
-position = Vector2(0, -21)
+position = Vector2(0, -20)
 shape = SubResource("RectangleShape2D_sj55t")
 
 [node name="Bounce" type="Area2D" parent="Components" unique_id=975586421]
-position = Vector2(44, -28)
+position = Vector2(70, -44)
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("13_polyx")
 
 [node name="Bounce" type="CollisionShape2D" parent="Components/Bounce" unique_id=1397988047]
-position = Vector2(-44, 10)
+position = Vector2(-70, 23.5625)
 shape = SubResource("RectangleShape2D_4toet")
-debug_color = Color(0.7180335, 0.4815476, 0, 0.41960785)
+debug_color = Color(0.75574666, 0.23913923, 0.95068175, 0.41960785)
 
 [node name="StateMachine" type="Node" parent="." unique_id=1532082896 node_paths=PackedStringArray("entity", "initial_state")]
 script = ExtResource("1_f87vc")

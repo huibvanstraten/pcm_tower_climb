@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bchi7gatrpujr" path="res://script/level/level_4.gd" id="1_oc4a2"]
 [ext_resource type="PackedScene" uid="uid://wgls8s878624" path="res://scene/entity/enemy.tscn" id="2_dfr33"]
 [ext_resource type="Texture2D" uid="uid://8lf70r54h6sv" path="res://asset/sci-fi platformer - premium/tiles/tiles.png" id="2_oc4a2"]
+[ext_resource type="PackedScene" uid="uid://dqfrpwu4mnxtk" path="res://scene/object/fragment.tscn" id="2_tqrtc"]
 [ext_resource type="Texture2D" uid="uid://c20yr0ix17bd3" path="res://asset/sci-fi platformer - premium/platforms/platforms.png" id="3_fqhe8"]
 [ext_resource type="Texture2D" uid="uid://w2nfpyj62n7f" path="res://asset/sci-fi platformer - premium/background-wall/wall-tiles.png" id="4_dfr33"]
 [ext_resource type="Texture2D" uid="uid://6i738yoalk6u" path="res://asset/sci-fi platformer - premium/background-wall/pipes.png" id="5_o31v3"]
@@ -337,8 +338,35 @@ size = Vector2(2848.5, 20)
 [node name="Level4" type="Node2D" unique_id=2095397145]
 script = ExtResource("1_oc4a2")
 
+[node name="Fragment" parent="." unique_id=1107363685 instance=ExtResource("2_tqrtc")]
+position = Vector2(338, -26)
+
+[node name="Fragment2" parent="." unique_id=1123805659 instance=ExtResource("2_tqrtc")]
+position = Vector2(448, -28)
+
+[node name="Fragment3" parent="." unique_id=1427716551 instance=ExtResource("2_tqrtc")]
+position = Vector2(388, -28)
+
+[node name="Fragment5" parent="." unique_id=277660141 instance=ExtResource("2_tqrtc")]
+position = Vector2(388, -28)
+
+[node name="Fragment6" parent="." unique_id=576319939 instance=ExtResource("2_tqrtc")]
+position = Vector2(388, -28)
+
+[node name="Fragment7" parent="." unique_id=1578378569 instance=ExtResource("2_tqrtc")]
+position = Vector2(388, -28)
+
+[node name="Fragment4" parent="." unique_id=575795227 instance=ExtResource("2_tqrtc")]
+position = Vector2(388, -28)
+
 [node name="Enemy" parent="." unique_id=469903152 instance=ExtResource("2_dfr33")]
-position = Vector2(1163, -25)
+position = Vector2(357, -143)
+
+[node name="Enemy5" parent="." unique_id=94562065 instance=ExtResource("2_dfr33")]
+position = Vector2(495, -141)
+
+[node name="Enemy6" parent="." unique_id=154720830 instance=ExtResource("2_dfr33")]
+position = Vector2(244, -26)
 
 [node name="Enemy2" parent="." unique_id=32252738 instance=ExtResource("2_dfr33")]
 position = Vector2(1152, -267)
@@ -462,3 +490,6 @@ position = Vector2(745, -298)
 
 [node name="ElectricBall3" parent="." unique_id=497708470 instance=ExtResource("12_o31v3")]
 position = Vector2(828, -298)
+
+[node name="LevelObjects" type="Node2D" parent="." unique_id=678478215]
+unique_name_in_owner = true

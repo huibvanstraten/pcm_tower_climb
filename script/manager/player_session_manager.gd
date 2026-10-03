@@ -3,8 +3,8 @@ extends Node
 
 const MAX_PLAYERS := 4
 
-var player_input_session_scene: PackedScene
-var input_session_container: Node
+var player_session_scene: PackedScene
+var session_container: Node
 var character_roster: CharacterRoster
 
 
@@ -26,21 +26,30 @@ func _input(event: InputEvent) -> void:
 		join_device(device)
 		return
 
-	if session.state == PlayerInputSession.State.READY:
+	if session.state == PlayerSession.State.READY:
 		PlayerLifecycleManager.activate_session_player(session)
 
 
 func setup(
 	session_scene: PackedScene,
-	session_container: Node
+	container: Node
 ) -> void:
-	player_input_session_scene = session_scene
-	input_session_container = session_container
+	assert(
+		session_scene != null,
+		"PlayerSessionManager requires a PlayerSession scene"
+	)
+	assert(
+		container != null,
+		"PlayerSessionManager requires a session container"
+	)
+	
+	player_session_scene = session_scene
+	session_container = container
 
 
 func join_device(
 	device: PlayerInputDevice
-) -> PlayerInputSession:
+) -> PlayerSession:
 	var existing_session := get_session_for_device(device)
 
 	if existing_session != null:
@@ -61,7 +70,7 @@ func join_device(
 			print("JOIN REJECTED: no available character")
 			return null
 
-	var session := create_input_session(
+	var session := create_session(
 		player_slot,
 		device
 	)
@@ -85,30 +94,35 @@ func join_device(
 	return session
 
 
-func create_input_session(
+func create_session(
 	player_slot: int,
 	device: PlayerInputDevice
-) -> PlayerInputSession:
+) -> PlayerSession:
+
 	var session := (
-		player_input_session_scene.instantiate()
-		as PlayerInputSession
+		player_session_scene.instantiate()
+		as PlayerSession
 	)
 
-	session.game_input_contexts = GameFlowManager.input_contexts
 	session.player_slot = player_slot
-	session.name = "PlayerInputSession%s" % player_slot
+	session.name = "PlayerSession%s" % player_slot
 
-	input_session_container.add_child(session)
-	session.assign_device(device)
+	session_container.add_child(session)
+
+	session.input.game_input_contexts = (
+		GameFlowManager.input_contexts
+	)
+
+	session.input.assign_device(device)
 
 	return session
 
 
 func get_session(
 	player_slot: int
-) -> PlayerInputSession:
-	for child in input_session_container.get_children():
-		var session := child as PlayerInputSession
+) -> PlayerSession:
+	for child in session_container.get_children():
+		var session := child as PlayerSession
 
 		if session != null and session.player_slot == player_slot:
 			return session
@@ -118,17 +132,12 @@ func get_session(
 
 func get_session_for_device(
 	device: PlayerInputDevice
-) -> PlayerInputSession:
-	for child in input_session_container.get_children():
-		var session := child as PlayerInputSession
-
-		if session == null:
+) -> PlayerSession:
+	for session in get_sessions():
+		if not session.input.is_assigned():
 			continue
 
-		if session.input_device == null:
-			continue
-
-		if session.input_device.matches(device):
+		if session.input.device.matches(device):
 			return session
 
 	return null
@@ -145,8 +154,8 @@ func get_available_player_slot() -> int:
 func is_player_slot_used(
 	player_slot: int
 ) -> bool:
-	for child in input_session_container.get_children():
-		var session := child as PlayerInputSession
+	for child in session_container.get_children():
+		var session := child as PlayerSession
 
 		if session == null:
 			continue
@@ -157,11 +166,11 @@ func is_player_slot_used(
 	return false
 
 
-func get_sessions() -> Array[PlayerInputSession]:
-	var sessions: Array[PlayerInputSession] = []
+func get_sessions() -> Array[PlayerSession]:
+	var sessions: Array[PlayerSession] = []
 
-	for child in input_session_container.get_children():
-		var session := child as PlayerInputSession
+	for child in session_container.get_children():
+		var session := child as PlayerSession
 
 		if session != null:
 			sessions.append(session)
