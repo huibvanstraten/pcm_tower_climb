@@ -480,11 +480,12 @@ script = ExtResource("12_0l74y")
 position = Vector2(0, -16)
 shape = SubResource("RectangleShape2D_4toet")
 
-[node name="BounceReceiver" type="Area2D" parent="Components" unique_id=2019613283 node_paths=PackedStringArray("jump_component")]
+[node name="BounceReceiver" type="Area2D" parent="Components" unique_id=2019613283 node_paths=PackedStringArray("jump_component", "physics_component")]
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("13_f6tgk")
 jump_component = NodePath("../Jump")
+physics_component = NodePath("../Physics")
 
 [node name="BounceReceiver" type="CollisionShape2D" parent="Components/BounceReceiver" unique_id=1295774762]
 shape = SubResource("RectangleShape2D_ni43k")

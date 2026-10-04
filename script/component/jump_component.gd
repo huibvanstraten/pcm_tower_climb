@@ -19,11 +19,6 @@ var jump_buffer_remaining: float = 0.0
 var coyote_remaining: float = 0.0
 
 
-#func physics_update(delta: float, command: PlayerCommand) -> void:
-	#_update_jump_buffer(delta, command)
-	#_update_coyote_time(delta)
-
-
 func jump() -> void:
 	character_body.velocity.y = jump_velocity
 	SfxManager.play(jump_sfx)
@@ -43,10 +38,11 @@ func can_jump() -> bool:
 
 
 func bounce(strength: float) -> void:
-	character_body.velocity.y = -max(
-		abs(character_body.velocity.y),
-		strength
+	character_body.velocity.y = min(
+		character_body.velocity.y,
+		-strength
 	)
+
 
 func _update_jump_buffer(delta: float, command: PlayerCommand) -> void:
 	if command.jump_pressed:
@@ -66,6 +62,10 @@ func _update_coyote_time(delta: float) -> void:
 			coyote_remaining - delta,
 			0.0
 		)
+
+
+func get_velocity() -> Vector2:
+	return character_body.velocity
 
 
 func is_falling() -> bool:

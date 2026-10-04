@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://rmqkwltyc4eg"]
+
+[ext_resource type="Texture2D" uid="uid://dafbjxtbvdkue" path="res://asset/bounce.png" id="1_1ppum"]
+[ext_resource type="Script" uid="uid://b5in0aao8v3u2" path="res://script/object/bounce_box.gd" id="1_h4abg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cs2gn"]
+atlas = ExtResource("1_1ppum")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4toet"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cs2gn")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4toet"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ni43k"]
+size = Vector2(16, 2)
+
+[node name="BounceBox" type="StaticBody2D" unique_id=1087539772]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=966919482]
+sprite_frames = SubResource("SpriteFrames_4toet")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1843970430]
+shape = SubResource("RectangleShape2D_4toet")
+
+[node name="Bounce" type="Area2D" parent="." unique_id=845419474]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_h4abg")
+fall_velocity_multiplier = null
+max_fall_boost = null
+bounce_strength = null
+
+[node name="Bounce" type="CollisionShape2D" parent="Bounce" unique_id=305966214]
+position = Vector2(0, -7)
+shape = SubResource("RectangleShape2D_ni43k")
+debug_color = Color(0.9945876, 0, 0.22705972, 0.41960785)

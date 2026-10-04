@@ -13,3 +13,4 @@ script = ExtResource("1_wqn1u")
 [node name="Bounce" type="CollisionShape2D" parent="." unique_id=1478622809]
 position = Vector2(-1.5, -1)
 shape = SubResource("RectangleShape2D_4toet")
+debug_color = Color(1, 0.00036035493, 0.10184962, 0.41960785)
