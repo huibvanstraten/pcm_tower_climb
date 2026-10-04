@@ -7,6 +7,7 @@ extends Node
 @export var gravity_multiplier: float = 1.0
 
 var direction: float = 0.0
+var fall_speed: float = 0.0
 
 var gravity: float:
 	get:
@@ -15,12 +16,24 @@ var gravity: float:
 			* gravity_multiplier
 		)
 
+
 func apply_gravity(delta: float) -> void:
 	if character_body.is_on_floor():
+		fall_speed = 0.0
 		return
 
 	character_body.velocity.y += gravity * delta
 
+	if character_body.velocity.y > 0.0:
+		fall_speed = character_body.velocity.y
+	else:
+		fall_speed = 0.0
+		
+
+func get_fall_speed() -> float:
+	return fall_speed
+
+	
 func move_horizontal(
 	delta: float,
 	input_direction: float,
